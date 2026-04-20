@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Семья Андросовых — Родословное Древо</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+:root{--bg:#FBF7F0;--bg2:#F2EBE0;--green:#1C3829;--green2:#2A5240;--green3:#3d7a5d;--gold:#C9A84C;--gold2:#E8C96A;--text:#2C1A0E;--text2:#5C4033;--text3:#9C7E6A;--border:#E0D5C5;--shadow:rgba(44,26,14,0.10);--card:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;display:flex;flex-direction:column}
+/* HEADER */
+.hdr{background:var(--green);padding:0 20px;display:flex;align-items:center;gap:16px;height:56px;flex-shrink:0;z-index:10}
+.hdr-crest{width:36px;height:36px;cursor:pointer;flex-shrink:0}
+.hdr-title{font-family:'Playfair Display',serif;font-size:22px;color:var(--gold);letter-spacing:.04em;flex:1;white-space:nowrap}
+.hdr-sub{font-size:11px;color:rgba(255,255,255,0.45);margin-top:1px;font-style:italic}
+.hdr-nav{display:flex;gap:4px}
+.nav-btn{background:transparent;border:1px solid rgba(201,168,76,.35);color:rgba(255,255,255,.8);padding:6px 14px;border-radius:20px;cursor:pointer;font-size:13px;transition:all .2s;white-space:nowrap}
+.nav-btn.active,.nav-btn:hover{background:var(--gold);color:var(--green);border-color:var(--gold);font-weight:600}
+.hdr-search{position:relative;margin-left:8px}
+.search-inp{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:white;padding:6px 12px 6px 32px;border-radius:20px;font-size:13px;width:180px;transition:all .2s}
+.search-inp:focus{outline:none;border-color:var(--gold);background:rgba(255,255,255,.15);width:220px}
+.search-inp::placeholder{color:rgba(255,255,255,.4)}
+.search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,.4);font-size:14px;pointer-events:none}
+/* FILTER BAR */
+.filter-bar{background:var(--green2);padding:6px 20px;display:flex;align-items:center;gap:12px;flex-shrink:0}
+.filter-label{color:rgba(255,255,255,.6);font-size:12px}
+.filter-chip{padding:3px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);cursor:pointer;font-size:12px;transition:all .2s}
+.filter-chip.active{background:var(--gold);color:var(--green);border-color:var(--gold);font-weight:600}
+.stats{margin-left:auto;display:flex;gap:20px}
+.stat{color:rgba(255,255,255,.5);font-size:11px}
+.stat b{color:var(--gold)}
+/* MAIN */
+.main{flex:1;overflow:hidden;position:relative}
+/* CARDS */
+.cards-wrap{padding:20px;overflow-y:auto;height:100%}
+.gen-section{margin-bottom:28px}
+.gen-title{font-family:'Playfair Display',serif;font-size:16px;color:var(--text2);margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.gen-line{flex:1;height:1px;background:var(--border)}
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px}
+.pcard{background:var(--card);border-radius:12px;padding:16px 12px;text-align:center;cursor:pointer;border:1px solid var(--border);box-shadow:0 2px 8px var(--shadow);transition:all .25s;position:relative;overflow:hidden}
+.pcard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold2));opacity:0;transition:opacity .2s}
+.pcard:hover{transform:translateY(-4px);box-shadow:0 10px 30px var(--shadow);border-color:var(--gold)}
+.pcard:hover::before{opacity:1}
+.pcard.me{border-color:var(--gold);background:linear-gradient(160deg,#fff 0%,#fffbf2 100%)}
+.pcard.me::before{opacity:1}
+.pcard.deceased{opacity:.85}
+.avatar{width:72px;height:72px;border-radius:50%;margin:0 auto 10px;border:2.5px solid var(--gold);overflow:hidden;display:flex;align-items:center;justify-content:center;background:var(--bg2);position:relative}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.avatar.male{border-color:#4a7eb5}
+.avatar.female{border-color:#c97fa0}
+.avatar.me-av{border-color:var(--gold);border-width:3px}
+.card-name{font-family:'Playfair Display',serif;font-size:13px;font-weight:600;line-height:1.3;margin-bottom:3px;color:var(--text)}
+.card-dates{font-size:11px;color:var(--text3)}
+.card-rel{font-size:10px;color:var(--gold);margin-top:4px;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+.card-died{font-size:10px;color:#a0522d;margin-top:2px}
+/* TREE */
+.tree-wrap{width:100%;height:100%;overflow:hidden;background:radial-gradient(ellipse at center,#f9f4eb 0%,var(--bg) 70%)}
+.tree-wrap svg{width:100%;height:100%}
+.tree-controls{position:absolute;bottom:20px;right:20px;display:flex;flex-direction:column;gap:6px}
+.tc-btn{background:white;border:1px solid var(--border);border-radius:8px;width:36px;height:36px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 2px 8px var(--shadow);transition:all .2s}
+.tc-btn:hover{background:var(--green);color:white}
+.tree-legend{position:absolute;bottom:20px;left:20px;background:rgba(255,255,255,.9);border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:11px;backdrop-filter:blur(4px)}
+.legend-item{display:flex;align-items:center;gap:6px;margin-bottom:3px;color:var(--text2)}
+.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+/* MODAL */
+.overlay{position:fixed;inset:0;background:rgba(28,56,41,.6);z-index:1000;display:flex;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(4px)}
+.modal{background:white;border-radius:16px;width:100%;max-width:580px;max-height:92vh;overflow-y:auto;box-shadow:0 32px 80px rgba(0,0,0,.3);animation:slideUp .25s ease}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-hdr{background:var(--green);padding:20px 20px 16px;border-radius:16px 16px 0 0;position:sticky;top:0;z-index:1}
+.modal-hdr-row{display:flex;justify-content:space-between;align-items:flex-start}
+.modal-name{font-family:'Playfair Display',serif;font-size:20px;color:white;line-height:1.2}
+.modal-rel{font-size:12px;color:var(--gold);margin-top:3px;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+.modal-close{background:rgba(255,255,255,.15);border:none;color:white;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:background .2s;flex-shrink:0}
+.modal-close:hover{background:rgba(255,255,255,.3)}
+.modal-body{padding:20px}
+.modal-photo-area{text-align:center;margin-bottom:20px;position:relative}
+.modal-avatar{width:110px;height:110px;border-radius:50%;margin:0 auto;border:4px solid var(--gold);overflow:hidden;display:flex;align-items:center;justify-content:center;background:var(--bg2);position:relative;cursor:pointer}
+.modal-avatar img{width:100%;height:100%;object-fit:cover}
+.modal-avatar-overlay{position:absolute;inset:0;background:rgba(0,0,0,.5);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;color:white;font-size:11px;gap:4px}
+.modal-avatar:hover .modal-avatar-overlay{opacity:1}
+.photo-inp{display:none}
+/* TABS */
+.tabs{display:flex;border-bottom:2px solid var(--border);margin-bottom:16px}
+.tab{padding:8px 16px;cursor:pointer;font-size:13px;color:var(--text3);border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .2s;white-space:nowrap}
+.tab.active{color:var(--green);border-bottom-color:var(--gold);font-weight:600}
+/* INFO */
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.info-item{background:var(--bg);border-radius:8px;padding:10px 12px}
+.info-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px}
+.info-val{font-family:'Crimson Text',serif;font-size:16px;color:var(--text)}
+.note-box{background:linear-gradient(135deg,#fffbf0,#fff8e8);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:12px 14px;margin-bottom:16px;font-family:'Crimson Text',serif;font-size:15px;color:var(--text2);font-style:italic;line-height:1.5}
+/* RELATIVES */
+.rel-section{margin-bottom:16px}
+.rel-section-title{font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;font-weight:600}
+.rel-list{display:flex;flex-wrap:wrap;gap:6px}
+.rel-chip{display:flex;align-items:center;gap:6px;background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:5px 10px 5px 5px;cursor:pointer;transition:all .2s;font-size:13px}
+.rel-chip:hover{background:var(--green);color:white;border-color:var(--green)}
+.rel-chip-av{width:24px;height:24px;border-radius:50%;overflow:hidden;background:var(--bg2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.rel-chip-av img{width:100%;height:100%;object-fit:cover}
+.rel-chip-lbl{font-size:10px;color:var(--text3);display:block}
+.rel-chip:hover .rel-chip-lbl{color:rgba(255,255,255,.6)}
+/* PHOTOS TAB */
+.photos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+.photo-thumb{aspect-ratio:1;border-radius:8px;overflow:hidden;cursor:pointer;border:1px solid var(--border);transition:all .2s}
+.photo-thumb img{width:100%;height:100%;object-fit:cover}
+.photo-thumb:hover{border-color:var(--gold);transform:scale(1.03)}
+.photo-add-btn{aspect-ratio:1;border-radius:8px;border:2px dashed var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer;color:var(--text3);font-size:12px;transition:all .2s;background:var(--bg)}
+.photo-add-btn:hover{border-color:var(--gold);color:var(--gold)}
+/* ADMIN */
+.admin-dot{position:fixed;bottom:8px;right:12px;background:none;border:none;color:var(--border);cursor:pointer;font-size:10px;z-index:100;transition:color .3s}
+.admin-dot:hover{color:var(--text3)}
+/* LOGIN */
+.login-box{background:white;border-radius:16px;padding:32px;width:340px;box-shadow:0 24px 60px rgba(0,0,0,.3);text-align:center}
+.login-title{font-family:'Playfair Display',serif;font-size:22px;margin-bottom:6px}
+.login-sub{font-size:13px;color:var(--text3);margin-bottom:24px}
+.form-field{margin-bottom:12px;text-align:left}
+.form-field label{display:block;font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;font-weight:600}
+.form-inp{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:10px 12px;font-size:14px;background:var(--bg);color:var(--text);transition:border-color .2s;font-family:'Inter',sans-serif}
+.form-inp:focus{outline:none;border-color:var(--gold)}
+/* EDIT MODAL */
+.edit-form{padding:4px 0}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.form-section{font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin:16px 0 10px;padding-bottom:4px;border-bottom:1px solid var(--border)}
+.sex-row{display:flex;gap:8px}
+.sex-btn{flex:1;padding:8px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);cursor:pointer;font-size:13px;transition:all .2s;text-align:center}
+.sex-btn.active{border-color:var(--green);background:var(--green);color:white}
+/* BTNS */
+.btn{padding:9px 18px;border-radius:8px;border:none;cursor:pointer;font-size:13px;font-weight:500;transition:all .2s;font-family:'Inter',sans-serif}
+.btn-green{background:var(--green);color:white}
+.btn-green:hover{background:var(--green2)}
+.btn-gold{background:var(--gold);color:var(--green);font-weight:600}
+.btn-gold:hover{background:var(--gold2)}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text2)}
+.btn-outline:hover{border-color:var(--text3)}
+.btn-danger{background:#dc2626;color:white}
+.btn-danger:hover{background:#b91c1c}
+.btn-row{display:flex;gap:8px;justify-content:flex-end;margin-top:20px;flex-wrap:wrap}
+.err{color:#dc2626;font-size:12px;margin-top:4px}
+/* LIGHTBOX */
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:2000;display:flex;align-items:center;justify-content:center}
+.lightbox img{max-width:90vw;max-height:90vh;border-radius:8px;object-fit:contain}
+.lb-close{position:absolute;top:16px;right:16px;background:rgba(255,255,255,.2);border:none;color:white;width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:20px}
+/* ORNAMENT */
+.ornament{color:var(--gold);opacity:.3;margin:0 8px}
+/* SCROLLBAR */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+/* MOBILE */
+@media(max-width:640px){
+  .hdr-sub,.hdr-search,.stats{display:none}
+  .hdr-title{font-size:18px}
+  .cards-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+  .cards-wrap{padding:14px}
+  .info-grid{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .modal{border-radius:12px 12px 0 0;position:fixed;bottom:0;top:auto;max-height:88vh}
+  .overlay{align-items:flex-end;padding:0}
+  .photos-grid{grid-template-columns:repeat(3,1fr)}
+}
+/* SEARCH RESULTS */
+.search-results{position:absolute;top:100%;right:0;width:280px;background:white;border-radius:10px;border:1px solid var(--border);box-shadow:0 12px 40px var(--shadow);z-index:100;max-height:300px;overflow-y:auto;margin-top:4px}
+.search-result-item{display:flex;align-items:center;gap:10px;padding:8px 12px;cursor:pointer;transition:background .15s;border-bottom:1px solid var(--border)}
+.search-result-item:last-child{border-bottom:none}
+.search-result-item:hover{background:var(--bg)}
+.sri-name{font-size:13px;font-weight:500}
+.sri-sub{font-size:11px;color:var(--text3)}
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState, useEffect, useRef, useCallback, useMemo } = React;
+
+// ─── FAMILY DATA ───────────────────────────────────────────────────────────────
+const INDIVIDUALS = {
+I51:{id:'I51',given:'Герман',patronymic:'Анатольевич',surname:'Андросов',maiden:null,sex:'M',birth:'27.08.1987',death:null,birthPlace:null,resi:'Сочи / Краснодар',note:'Составитель этого древа',fams:['F1'],famc:'F2'},
+I52:{id:'I52',given:'Анатолий',patronymic:'Валерьевич',surname:'Андросов',maiden:null,sex:'M',birth:'24.04.1958',death:null,birthPlace:null,resi:null,note:null,fams:['F2','F3'],famc:'F4'},
+I53:{id:'I53',given:'Ольга',patronymic:'Евгеньевна',surname:'Андросова',maiden:'Хвостова',sex:'F',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F5'],famc:'F5'},
+I54:{id:'I54',given:'Ангелина',patronymic:'Анатольевна',surname:'Андросова',maiden:null,sex:'F',birth:'03.06.1985',death:null,birthPlace:'Краснодарский край, Сочи',resi:'Краснодар',note:null,fams:[],famc:'F2'},
+I55:{id:'I55',given:'Ванда',patronymic:'Николаевна',surname:'Андросова',maiden:'Коротеева',sex:'F',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F4'],famc:'F17'},
+I56:{id:'I56',given:'Таисия',patronymic:'Алексеевна',surname:'Хвостова',maiden:'Щербакова',sex:'F',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F5'],famc:'F11'},
+I57:{id:'I57',given:'Евгений',patronymic:'Антонович',surname:'Хвостов',maiden:null,sex:'M',birth:'21.06.1935',death:null,birthPlace:null,resi:null,note:null,fams:['F5'],famc:'F12'},
+I58:{id:'I58',given:'Валерий',patronymic:'Леонидович',surname:'Андросов',maiden:null,sex:'M',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F4','F6'],famc:'F18'},
+I59:{id:'I59',given:'Зоя',patronymic:null,surname:'Андросова',maiden:null,sex:'F',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F6'],famc:null},
+I510:{id:'I510',given:'Татьяна',patronymic:'Валерьевна',surname:'Блинникова',maiden:'Андросова',sex:'F',birth:'04.03.1967',death:null,birthPlace:null,resi:null,note:null,fams:['F7'],famc:'F6'},
+I511:{id:'I511',given:'Дeнис',patronymic:'Евгеньевич',surname:'Блинников',maiden:null,sex:'M',birth:'28.11.1996',death:null,birthPlace:null,resi:null,note:null,fams:['F8'],famc:'F7'},
+I512:{id:'I512',given:'Евгений',patronymic:'Олегович',surname:'Блинников',maiden:null,sex:'M',birth:'24.08.1967',death:'26.06.2001',birthPlace:null,resi:'Сочи',note:null,fams:['F7'],famc:'F22'},
+I513:{id:'I513',given:'Ксенья',patronymic:'Евгеньевна',surname:'Чальцева',maiden:'Блинникова',sex:'F',birth:'17.01.1990',death:null,birthPlace:null,resi:null,note:null,fams:['F9'],famc:'F7'},
+I514:{id:'I514',given:'Наташа',patronymic:'Петровна',surname:'Андросова',maiden:'Афонина',sex:'F',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F3'],famc:null},
+I515:{id:'I515',given:'Юля',patronymic:'Анатольевна',surname:'Андросова',maiden:null,sex:'F',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F10'],famc:'F3'},
+I516:{id:'I516',given:'Злата',patronymic:'Ильинишна',surname:'Андросова',maiden:null,sex:'F',birth:'25.03.2012',death:null,birthPlace:null,resi:null,note:null,fams:[],famc:'F10'},
+I517:{id:'I517',given:'Ольга',patronymic:'Михайловна',surname:'Щербакова',maiden:'Соломина',sex:'F',birth:'02.06.1912',death:'01.03.1988',birthPlace:'Зюзино, Москва',resi:'Москва → Краснодар',note:'Похоронена в пос. Яблоновский, Адыгея. Причина смерти — атеросклероз.',fams:['F11'],famc:'F24',photo:'assets/photo_I517_olga_solomina.jpg'},
+I518:{id:'I518',given:'Алексей',patronymic:'Михайлович',surname:'Щербаков',maiden:null,sex:'M',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F11'],famc:'F33'},
+I519:{id:'I519',given:'Антон',patronymic:null,surname:'Хвостов',maiden:null,sex:'M',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F12'],famc:null},
+I520:{id:'I520',given:'Клавдия',patronymic:'Леонтиевна',surname:'Хвостова',maiden:null,sex:'F',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F12'],famc:null},
+I521:{id:'I521',given:'Михаил',patronymic:'Алексеевич',surname:'Щербаков',maiden:null,sex:'M',birth:'20.06.1941',death:null,birthPlace:null,resi:null,note:null,fams:['F13'],famc:'F11'},
+I522:{id:'I522',given:'Дмитрий',patronymic:'Михайлович',surname:'Щербаков',maiden:null,sex:'M',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:[],famc:'F13'},
+I523:{id:'I523',given:'Ирина',patronymic:'Михайловна',surname:'Королева',maiden:'Щербакова',sex:'F',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F14'],famc:'F13'},
+I524:{id:'I524',given:'Никита',patronymic:null,surname:'Королев',maiden:null,sex:'M',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F15'],famc:'F14'},
+I525:{id:'I525',given:'Роман',patronymic:null,surname:'Королев',maiden:null,sex:'M',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F16'],famc:'F14'},
+I526:{id:'I526',given:'Егор',patronymic:null,surname:'Королев',maiden:null,sex:'M',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:[],famc:'F16'},
+I527:{id:'I527',given:'Антонина',patronymic:null,surname:'Щербакова',maiden:null,sex:'F',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F13'],famc:null},
+I528:{id:'I528',given:'Николай',patronymic:'Иванович',surname:'Коротеев',maiden:null,sex:'M',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F17'],famc:'F34'},
+I529:{id:'I529',given:'Александра',patronymic:'Михайловна',surname:'Коротеева',maiden:'Ромашкина',sex:'F',birth:null,death:null,birthPlace:null,resi:null,note:'Они были крепостные. Жили в очень маленькой деревне в Тамбовской губернии. Село Никольское.',fams:['F17'],famc:'F27'},
+I530:{id:'I530',given:'Александра',patronymic:null,surname:'Андросова',maiden:'Украинская',sex:'F',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F18'],famc:null},
+I531:{id:'I531',given:'Леонид',patronymic:'Семёнович',surname:'Андросов',maiden:null,sex:'M',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F18'],famc:'F20'},
+I532:{id:'I532',given:'Ольга',patronymic:null,surname:'Андросова',maiden:null,sex:'F',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F19','F20'],famc:null},
+I533:{id:'I533',given:'Леонид',patronymic:'Валерьевич',surname:'Андросов',maiden:null,sex:'M',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F21'],famc:'F6'},
+I534:{id:'I534',given:'Катя',patronymic:'Леонидовна',surname:'Андросова',maiden:null,sex:'F',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:[],famc:'F21'},
+I535:{id:'I535',given:'Валерий',patronymic:'Леонидович',surname:'Андросов',maiden:null,sex:'M',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:[],famc:'F21'},
+I536:{id:'I536',given:'Семён',patronymic:null,surname:'Андросов',maiden:null,sex:'M',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F19'],famc:null},
+I537:{id:'I537',given:'Олег',patronymic:'Константинович',surname:'Блинников',maiden:null,sex:'M',birth:'04.12.1943',death:'12.09.2024',birthPlace:'Оренбургская обл., Оренбург',resi:'Сочи',note:null,fams:['F22'],famc:'F23'},
+I538:{id:'I538',given:'Земфира / Ирина',patronymic:'Васильевна',surname:'Блинникова',maiden:'Хатинова',sex:'F',birth:'04.05.1939',death:null,birthPlace:null,resi:null,note:null,fams:['F22'],famc:null},
+I539:{id:'I539',given:'Анна',patronymic:'Васильевна',surname:'Блинникова',maiden:'Кудюркина',sex:'F',birth:'13.02.1921',death:'02.06.1993',birthPlace:null,resi:null,note:null,fams:['F23'],famc:null},
+I540:{id:'I540',given:'Константин',patronymic:'Тимофеевич',surname:'Блинников',maiden:null,sex:'M',birth:'11.06.1916',death:'02.04.1998',birthPlace:'Оренбург',resi:'Оренбург',note:'Воевал в ВОВ, внутренние войска, охранял вагоны. Однажды обстреляли вагон — контузия.',fams:['F23'],famc:null},
+I541:{id:'I541',given:'Лилия',patronymic:'Сергеевна',surname:'Андросова',maiden:'Шевякова',sex:'F',birth:'06.02.1997',death:null,birthPlace:null,resi:null,note:null,fams:['F1'],famc:null},
+I542:{id:'I542',given:'Оливия',patronymic:'Германовна',surname:'Андросова',maiden:null,sex:'F',birth:'05.04.2026',death:null,birthPlace:null,resi:null,note:'Самый юный член нашей семьи 🌸',fams:[],famc:'F1'},
+I543:{id:'I543',given:'Михаил',patronymic:'Федотович',surname:'Саломин',maiden:null,sex:'M',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F24'],famc:'F25'},
+I544:{id:'I544',given:'Анастасия',patronymic:'Сергеевна',surname:'Саломина',maiden:null,sex:'F',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F24'],famc:null},
+I545:{id:'I545',given:'Иоанн (младенец)',patronymic:'Михайлович',surname:'Саломин',maiden:null,sex:'M',birth:null,death:'1912',birthPlace:null,resi:null,note:'Умер во младенчестве.',fams:[],famc:'F24'},
+I546:{id:'I546',given:'Александр',patronymic:'Михайлович',surname:'Саломин',maiden:null,sex:'M',birth:'1901',death:null,birthPlace:null,resi:null,note:null,fams:[],famc:'F24'},
+I547:{id:'I547',given:'Наталья',patronymic:'Михайловна',surname:'Саломина',maiden:null,sex:'F',birth:'1903',death:null,birthPlace:null,resi:null,note:null,fams:[],famc:'F24'},
+I548:{id:'I548',given:'Виктор',patronymic:'Михайлович',surname:'Саломин',maiden:null,sex:'M',birth:'1906',death:null,birthPlace:null,resi:null,note:null,fams:[],famc:'F24'},
+I549:{id:'I549',given:'Дмитрий',patronymic:'Михайлович',surname:'Саломин',maiden:null,sex:'M',birth:'1907',death:null,birthPlace:null,resi:null,note:null,fams:[],famc:'F24'},
+I550:{id:'I550',given:'Федот',patronymic:'Герасимович',surname:'Саломин',maiden:null,sex:'M',birth:null,death:'27.03.1913',birthPlace:null,resi:null,note:'Умер от воспаления лёгких 27.03.1913.',fams:['F25'],famc:'F26'},
+I551:{id:'I551',given:'Анна',patronymic:'Тимофеевна',surname:'Саломина',maiden:null,sex:'F',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F25'],famc:null},
+I552:{id:'I552',given:'Георгий',patronymic:'Федотович',surname:'Саломин',maiden:null,sex:'M',birth:null,death:null,birthPlace:null,resi:null,note:'Был репрессирован 13.12.1958, впоследствии реабилитирован. Служил на Кубани.',fams:[],famc:'F25'},
+I553:{id:'I553',given:'Федот',patronymic:'Федотович',surname:'Саломин',maiden:null,sex:'M',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:[],famc:'F25'},
+I554:{id:'I554',given:'Иван',patronymic:'Федотович',surname:'Саломин',maiden:null,sex:'M',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:[],famc:'F25'},
+I555:{id:'I555',given:'Параскева (Пелагея)',patronymic:'Ивановна',surname:'Саломина',maiden:null,sex:'F',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F26'],famc:null},
+I556:{id:'I556',given:'Федот',patronymic:null,surname:'Саломин',maiden:null,sex:'M',birth:'1812',death:null,birthPlace:null,resi:null,note:'Самый ранний известный предок в роду Саломиных.',fams:['F26'],famc:null},
+I557:{id:'I557',given:'Михаил',patronymic:null,surname:'Ромашкин',maiden:null,sex:'M',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F27'],famc:null},
+I558:{id:'I558',given:'Евдокия',patronymic:null,surname:'Ромашкина',maiden:null,sex:'F',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F27'],famc:null},
+I559:{id:'I559',given:'Фёдор',patronymic:null,surname:'Ромашкин',maiden:null,sex:'M',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F28'],famc:'F27'},
+I560:{id:'I560',given:'Константин',patronymic:null,surname:'Ромашкин',maiden:null,sex:'M',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F29'],famc:'F27'},
+I561:{id:'I561',given:'Анатолий',patronymic:'Николаевич',surname:'Коротеев',maiden:null,sex:'M',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:[],famc:'F17'},
+I562:{id:'I562',given:'Александр',patronymic:'Николаевич',surname:'Коротеев',maiden:null,sex:'M',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:[],famc:'F17'},
+I563:{id:'I563',given:'Светлана',patronymic:'Николаевна',surname:'Коротеева',maiden:null,sex:'F',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:[],famc:'F17'},
+I564:{id:'I564',given:'Юрий',patronymic:'Николаевич',surname:'Коротеев',maiden:null,sex:'M',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:[],famc:'F17'},
+I565:{id:'I565',given:'Клара',patronymic:'Николаевна',surname:'Грис',maiden:'Коротеева',sex:'F',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F30'],famc:'F17'},
+I566:{id:'I566',given:'Эдуард',patronymic:null,surname:'Грис',maiden:null,sex:'M',birth:null,death:null,birthPlace:null,resi:'Караганда',note:null,fams:['F30'],famc:null},
+I567:{id:'I567',given:'Юрий',patronymic:'Эдуардович',surname:'Грис',maiden:null,sex:'M',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F31'],famc:'F30'},
+I568:{id:'I568',given:'Андрей',patronymic:'Юрьевич',surname:'Грис',maiden:null,sex:'M',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F32'],famc:'F31'},
+I569:{id:'I569',given:'Светлана',patronymic:null,surname:'Грис',maiden:null,sex:'F',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F32'],famc:null},
+I570:{id:'I570',given:'Лев',patronymic:'Андреевич',surname:'Грис',maiden:null,sex:'M',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:[],famc:'F32'},
+I571:{id:'I571',given:'Роман',patronymic:null,surname:'Чальцев',maiden:null,sex:'M',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F9'],famc:null},
+I572:{id:'I572',given:'Ксения',patronymic:'Романовна',surname:'Чальцева',maiden:null,sex:'F',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:[],famc:'F9'},
+I573:{id:'I573',given:'Егор',patronymic:'Романович',surname:'Чальцев',maiden:null,sex:'M',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:[],famc:'F9'},
+I574:{id:'I574',given:'Мария',patronymic:null,surname:'Блинникова',maiden:null,sex:'F',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F8'],famc:null},
+I575:{id:'I575',given:'Илья',patronymic:null,surname:'Казаченко',maiden:null,sex:'M',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F10'],famc:null},
+I576:{id:'I576',given:'Юрий',patronymic:'Антонович',surname:'Хвостов',maiden:null,sex:'M',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:[],famc:'F12'},
+I577:{id:'I577',given:'Эвелина',patronymic:'Никитична',surname:'Королева',maiden:null,sex:'F',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:[],famc:'F15'},
+I578:{id:'I578',given:'Ульяна',patronymic:'Романовна',surname:'Королева',maiden:null,sex:'F',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:[],famc:'F16'},
+I579:{id:'I579',given:'Екатерина',patronymic:null,surname:'Королева',maiden:null,sex:'F',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F16'],famc:null},
+I580:{id:'I580',given:'Ирина',patronymic:null,surname:'Королева',maiden:null,sex:'F',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F15'],famc:null},
+I581:{id:'I581',given:'Анатолий',patronymic:'Алексеевич',surname:'Щербаков',maiden:null,sex:'M',birth:null,death:null,birthPlace:null,resi:null,note:'Погиб в шахте в 20 лет, находясь на армейской службе.',fams:[],famc:'F11'},
+I582:{id:'I582',given:'Михаил',patronymic:null,surname:'Щербаков',maiden:null,sex:'M',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F33'],famc:null},
+I583:{id:'I583',given:'Анна',patronymic:null,surname:'Щербакова',maiden:null,sex:'F',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F33'],famc:null},
+I584:{id:'I584',given:'Иван',patronymic:null,surname:'Коротеев',maiden:null,sex:'M',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F34'],famc:null},
+I585:{id:'I585',given:'?',patronymic:null,surname:'Коротеева',maiden:null,sex:'F',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F34'],famc:null},
+I586:{id:'I586',given:'Валерий',patronymic:'Константинович',surname:'Ромашкин',maiden:null,sex:'M',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F35'],famc:'F29'},
+I587:{id:'I587',given:'Елена',patronymic:'Валерьевна',surname:'Италия',maiden:'Ромашкина',sex:'F',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F36'],famc:'F35'},
+I588:{id:'I588',given:'Сергей',patronymic:'Валерьевич',surname:'Ромашкин',maiden:null,sex:'M',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:[],famc:'F35'},
+I589:{id:'I589',given:'?',patronymic:null,surname:'Италия',maiden:null,sex:'F',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:[],famc:'F36'},
+I590:{id:'I590',given:'Владимир',patronymic:'Фёдорович',surname:'Ромашкин',maiden:null,sex:'M',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F37'],famc:'F28'},
+I591:{id:'I591',given:'Елена',patronymic:null,surname:'Ромашкина',maiden:null,sex:'F',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F37'],famc:null},
+I592:{id:'I592',given:'Александр',patronymic:'Владимирович',surname:'Ромашкин',maiden:null,sex:'M',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F38'],famc:'F37'},
+I593:{id:'I593',given:'Света',patronymic:null,surname:'Ромашкина',maiden:null,sex:'F',birth:null,death:null,birthPlace:null,resi:'Одесса',note:null,fams:[],famc:'F37'},
+I594:{id:'I594',given:'Елена',patronymic:'Александровна',surname:'Ромашкина',maiden:null,sex:'F',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F39'],famc:'F38'},
+I595:{id:'I595',given:'?',patronymic:null,surname:'Кочубей',maiden:null,sex:'M',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:['F39'],famc:null},
+I596:{id:'I596',given:'?',patronymic:null,surname:'Ромашкина',maiden:null,sex:'F',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:[],famc:'F39'},
+I597:{id:'I597',given:'?',patronymic:null,surname:'Ромашкина',maiden:null,sex:'F',birth:null,death:null,birthPlace:null,resi:null,note:null,fams:[],famc:'F39'},
+};
+
+const FAMILIES = {
+F1:{id:'F1',husb:'I51',wife:'I541',chil:['I542'],marr:null},
+F2:{id:'F2',husb:'I52',wife:'I53',chil:['I54','I51'],marr:null},
+F3:{id:'F3',husb:'I52',wife:'I514',chil:['I515'],marr:null},
+F4:{id:'F4',husb:'I58',wife:'I55',chil:['I52'],marr:null},
+F5:{id:'F5',husb:'I57',wife:'I56',chil:['I53'],marr:null},
+F6:{id:'F6',husb:'I58',wife:'I59',chil:['I510','I533'],marr:null},
+F7:{id:'F7',husb:'I512',wife:'I510',chil:['I513','I511'],marr:null},
+F8:{id:'F8',husb:'I511',wife:'I574',chil:[],marr:null},
+F9:{id:'F9',husb:'I571',wife:'I513',chil:['I572','I573'],marr:null},
+F10:{id:'F10',husb:'I575',wife:'I515',chil:['I516'],marr:null},
+F11:{id:'F11',husb:'I518',wife:'I517',chil:['I521','I56','I581'],marr:null},
+F12:{id:'F12',husb:'I519',wife:'I520',chil:['I57','I576'],marr:null},
+F13:{id:'F13',husb:'I521',wife:'I527',chil:['I522','I523'],marr:null},
+F14:{id:'F14',husb:null,wife:'I523',chil:['I524','I525'],marr:null},
+F15:{id:'F15',husb:'I524',wife:'I580',chil:['I577'],marr:null},
+F16:{id:'F16',husb:'I525',wife:'I579',chil:['I526','I578'],marr:null},
+F17:{id:'F17',husb:'I528',wife:'I529',chil:['I55','I561','I562','I563','I564','I565'],marr:null},
+F18:{id:'F18',husb:'I531',wife:'I530',chil:['I58'],marr:null},
+F19:{id:'F19',husb:'I536',wife:'I532',chil:[],marr:null},
+F20:{id:'F20',husb:null,wife:'I532',chil:['I531'],marr:null},
+F21:{id:'F21',husb:'I533',wife:null,chil:['I534','I535'],marr:null},
+F22:{id:'F22',husb:'I537',wife:'I538',chil:['I512'],marr:'20.05.1962'},
+F23:{id:'F23',husb:'I540',wife:'I539',chil:['I537'],marr:null},
+F24:{id:'F24',husb:'I543',wife:'I544',chil:['I546','I547','I548','I549','I517','I545'],marr:null},
+F25:{id:'F25',husb:'I550',wife:'I551',chil:['I543','I552','I553','I554'],marr:null},
+F26:{id:'F26',husb:'I556',wife:'I555',chil:['I550'],marr:null},
+F27:{id:'F27',husb:'I557',wife:'I558',chil:['I529','I559','I560'],marr:null},
+F28:{id:'F28',husb:'I559',wife:null,chil:['I590'],marr:null},
+F29:{id:'F29',husb:'I560',wife:null,chil:['I586'],marr:null},
+F30:{id:'F30',husb:'I566',wife:'I565',chil:['I567'],marr:null},
+F31:{id:'F31',husb:'I567',wife:null,chil:['I568'],marr:null},
+F32:{id:'F32',husb:'I568',wife:'I569',chil:['I570'],marr:null},
+F33:{id:'F33',husb:'I582',wife:'I583',chil:['I518'],marr:null},
+F34:{id:'F34',husb:'I584',wife:'I585',chil:['I528'],marr:null},
+F35:{id:'F35',husb:'I586',wife:null,chil:['I587','I588'],marr:null},
+F36:{id:'F36',husb:null,wife:'I587',chil:['I589'],marr:null},
+F37:{id:'F37',husb:'I590',wife:'I591',chil:['I592','I593'],marr:null},
+F38:{id:'F38',husb:'I592',wife:null,chil:['I594'],marr:null},
+F39:{id:'F39',husb:'I595',wife:'I594',chil:['I596','I597'],marr:null},
+};
+
+const MAIN_PERSON = 'I51';
+
+// ─── UTILS ─────────────────────────────────────────────────────────────────────
+function fullName(p){if(!p)return '?'; return [p.given,p.patronymic,p.surname].filter(Boolean).join(' ')}
+function shortName(p){if(!p)return '?'; return [p.given,p.surname].filter(Boolean).join(' ')}
+function initials(p){if(!p)return '?'; const g=p.given||''; const s=p.surname||''; return (g[0]||'')+(s[0]||'')}
+function birthYear(p){if(!p||!p.birth)return null; const m=p.birth.match(/(\d{4})/); return m?parseInt(m[1]):null}
+function deathYear(p){if(!p||!p.death)return null; const m=p.death.match(/(\d{4})/); return m?parseInt(m[1]):null}
+function isDeceased(p){return p&&p.death!=null}
+function getGeneration(id,visited=new Set()){
+  if(visited.has(id))return 0; visited.add(id);
+  const p=INDIVIDUALS[id]; if(!p||!p.famc)return 0;
+  const fam=FAMILIES[p.famc]; if(!fam)return 0;
+  const parent=fam.husb||fam.wife; if(!parent)return 0;
+  return 1+getGeneration(parent,visited);
+}
+function getDirectAncestors(id,visited=new Set()){
+  if(visited.has(id))return visited; visited.add(id);
+  const p=INDIVIDUALS[id]; if(!p)return visited;
+  if(p.famc){
+    const fam=FAMILIES[p.famc]; if(fam){
+      if(fam.husb)getDirectAncestors(fam.husb,visited);
+      if(fam.wife)getDirectAncestors(fam.wife,visited);
+    }
+  }
+  // include spouses and children of main person too
+  if(id===MAIN_PERSON){
+    (p.fams||[]).forEach(fid=>{
+      const f=FAMILIES[fid]; if(!f)return;
+      const spouse=f.husb===id?f.wife:f.husb;
+      if(spouse)visited.add(spouse);
+      (f.chil||[]).forEach(c=>visited.add(c));
+    });
+  }
+  return visited;
+}
+
+function getRelationship(id){
+  const rels={
+    I51:'Вы',I541:'Жена',I542:'Дочь',
+    I52:'Отец',I53:'Мать',
+    I54:'Сестра',
+    I58:'Дедушка',I55:'Бабушка',
+    I57:'Дедушка',I56:'Бабушка Тая',
+    I517:'Прабабушка Оля',I518:'Прадедушка',
+    I519:'Прадедушка',I520:'Прабабушка',
+    I531:'Прадедушка',I530:'Прабабушка',
+    I528:'Прадедушка',I529:'Прабабушка',
+    I543:'Прапрадедушка',I544:'Прапрабабушка',
+    I550:'Прапрадедушка',I551:'Прапрабабушка',
+    I556:'Прапрапрадедушка (1812)',
+    I537:'Прадедушка',I538:'Прабабушка',
+    I539:'Прапрабабушка',I540:'Прапрадедушка (ВОВ)',
+    I557:'Прапрадедушка',I558:'Прапрабабушка',
+    I510:'Двоюродная тётя',I533:'Двоюродный дядя',
+    I511:'Второй кузен',I513:'Двоюродная кузина',
+    I512:'Двоюродный дядя †',I515:'Сводная сестра',I516:'Сводная племянница',
+    I521:'Двоюродный дедушка',I581:'Двоюродный прадедушка †',
+  };
+  return rels[id]||null;
+}
+
+function getRelatives(id){
+  const p=INDIVIDUALS[id]; if(!p)return{};
+  const rels={parents:[],spouses:[],siblings:[],children:[]};
+  if(p.famc){
+    const fam=FAMILIES[p.famc];
+    if(fam){
+      if(fam.husb)rels.parents.push({id:fam.husb,label:'Отец'});
+      if(fam.wife)rels.parents.push({id:fam.wife,label:'Мать'});
+      (fam.chil||[]).filter(c=>c!==id).forEach(c=>rels.siblings.push({id:c,label:'Брат/Сестра'}));
+    }
+  }
+  (p.fams||[]).forEach(fid=>{
+    const fam=FAMILIES[fid]; if(!fam)return;
+    const spouse=fam.husb===id?fam.wife:fam.husb;
+    if(spouse)rels.spouses.push({id:spouse,label:'Супруг/а'});
+    (fam.chil||[]).forEach(c=>rels.children.push({id:c,label:'Сын/Дочь'}));
+  });
+  return rels;
+}
+
+// ─── AVATAR ────────────────────────────────────────────────────────────────────
+function Avatar({person, size=72, photos={}, className=''}){
+  const photo=photos[person?.id]||person?.photo;
+  const isM=person?.sex==='M';
+  const by=birthYear(person)||1950;
+  const isOld=by<1940;
+  const initStr=initials(person);
+  const isMe=person?.id===MAIN_PERSON;
+  const borderColor=isMe?'#C9A84C':isM?'#4a7eb5':'#c97fa0';
+  const bgColor=isM?'#e8f0f8':'#fceef5';
+  if(photo){
+    return <div className={`avatar ${className}`} style={{width:size,height:size,border:`${size>80?3:2.5}px solid ${borderColor}`,background:bgColor}}>
+      <img src={photo} alt={shortName(person)} style={{width:'100%',height:'100%',objectFit:'cover'}} />
+    </div>
+  }
+  // SVG avatar with initials
+  const hue=isM?210:330;
+  const sat=isOld?20:40;
+  return <div className={`avatar ${className}`} style={{width:size,height:size,border:`${size>80?3:2.5}px solid ${borderColor}`,background:bgColor}}>
+    <svg width={size} height={size} viewBox="0 0 72 72">
+      <defs>
+        <radialGradient id={`ag${person?.id||'x'}`} cx="50%" cy="35%" r="60%">
+          <stop offset="0%" stopColor={`hsl(${hue},${sat}%,${isOld?60:75}%)`}/>
+          <stop offset="100%" stopColor={`hsl(${hue},${sat-5}%,${isOld?45:60}%)`}/>
+        </radialGradient>
+      </defs>
+      <circle cx="36" cy="36" r="36" fill={`url(#ag${person?.id||'x'})`} opacity={isOld?.7:.9}/>
+      {/* Head */}
+      <circle cx="36" cy="26" r="12" fill="rgba(255,255,255,0.5)"/>
+      {/* Body */}
+      <path d="M14,62 Q14,46 36,46 Q58,46 58,62 Z" fill="rgba(255,255,255,0.4)"/>
+      <text x="36" y="31" textAnchor="middle" dominantBaseline="middle" 
+        fontSize={size>60?"11":"9"} fontFamily="Playfair Display,serif" 
+        fill="rgba(255,255,255,0.9)" fontWeight="700">{initStr}</text>
+    </svg>
+  </div>
+}
+
+// ─── PERSON CARD ───────────────────────────────────────────────────────────────
+function PersonCard({id, photos, onClick}){
+  const p=INDIVIDUALS[id];
+  if(!p)return null;
+  const rel=getRelationship(id);
+  const isMe=id===MAIN_PERSON;
+  return <div className={`pcard ${isMe?'me':''} ${isDeceased(p)?'deceased':''}`} onClick={()=>onClick(id)}>
+    <Avatar person={p} size={72} photos={photos}/>
+    <div className="card-name">{shortName(p)}</div>
+    {(p.birth||p.death)&&<div className="card-dates">
+      {p.birth?p.birth.split('.').pop():''}{p.death?` — ${p.death.split('.').pop()}`:''}
+    </div>}
+    {rel&&<div className="card-rel">{rel}</div>}
+    {p.death&&<div className="card-died">†</div>}
+  </div>
+}
+
+// ─── TREE VIEW ─────────────────────────────────────────────────────────────────
+function TreeView({persons, photos, onSelect, filter}){
+  const svgRef=useRef();
+  const gRef=useRef();
+
+  function buildAncTree(id,maxDepth=7,depth=0,visited=new Set()){
+    if(visited.has(id)||depth>maxDepth)return null;
+    visited.add(id);
+    const p=persons[id]; if(!p)return null;
+    const node={id,data:p,children:[]};
+    if(p.famc){
+      const fam=FAMILIES[p.famc];
+      if(fam){
+        const father=fam.husb?buildAncTree(fam.husb,maxDepth,depth+1,new Set(visited)):null;
+        const mother=fam.wife?buildAncTree(fam.wife,maxDepth,depth+1,new Set(visited)):null;
+        if(father)node.children.push(father);
+        if(mother)node.children.push(mother);
+      }
+    }
+    // spouse & children for main person
+    if(id===MAIN_PERSON){
+      (p.fams||[]).forEach(fid=>{
+        const f=FAMILIES[fid]; if(!f)return;
+        const spouse=f.husb===id?f.wife:f.husb;
+        if(spouse){
+          const sp=persons[spouse];
+          if(sp)node.children.unshift({id:spouse,data:sp,children:[],isSpouse:true});
+        }
+        (f.chil||[]).forEach(c=>{
+          const cp=persons[c]; if(!cp)return;
+          node.children.push({id:c,data:cp,children:[],isChild:true});
+        });
+      });
+    }
+    return node;
+  }
+
+  useEffect(()=>{
+    if(!svgRef.current)return;
+    const svg=d3.select(svgRef.current);
+    svg.selectAll('*').remove();
+    const W=svgRef.current.clientWidth||800;
+    const H=svgRef.current.clientHeight||600;
+    const g=svg.append('g');
+    gRef.current=g;
+
+    const root=buildAncTree(MAIN_PERSON,filter==='direct'?4:6);
+    if(!root)return;
+
+    const treeLayout=d3.tree().nodeSize([120,220]).separation((a,b)=>a.parent===b.parent?1.2:1.8);
+    const hierarchy=d3.hierarchy(root,d=>d.children&&d.children.length?d.children:null);
+    treeLayout(hierarchy);
+
+    // Draw links
+    g.selectAll('.tlink').data(hierarchy.links()).enter().append('path')
+      .attr('class','tlink').attr('fill','none').attr('stroke','#C9A84C').attr('stroke-width',1.5).attr('opacity',.5)
+      .attr('d',d=>{
+        const sx=d.source.x,sy=d.source.y,tx=d.target.x,ty=d.target.y;
+        return `M${sx},${sy} C${sx},${(sy+ty)/2} ${tx},${(sy+ty)/2} ${tx},${ty}`;
+      });
+
+    // Draw nodes
+    const nodes=g.selectAll('.tnode').data(hierarchy.descendants()).enter().append('g')
+      .attr('class','tnode').attr('transform',d=>`translate(${d.data.x},${d.data.y})`)
+      .style('cursor','pointer').on('click',(_,d)=>onSelect(d.data.id));
+
+    // Card background
+    nodes.append('rect').attr('x',-52).attr('y',-36).attr('width',104).attr('height',72)
+      .attr('rx',10).attr('fill',d=>d.data.id===MAIN_PERSON?'#1C3829':d.data.isSpouse?'#fdf8ef':'white')
+      .attr('stroke',d=>d.data.id===MAIN_PERSON?'#C9A84C':d.data.isSpouse?'#C9A84C':'#E0D5C5')
+      .attr('stroke-width',d=>d.data.id===MAIN_PERSON?2:1)
+      .attr('filter','drop-shadow(0 2px 6px rgba(44,26,14,0.10))');
+
+    // Avatar circle
+    nodes.append('circle').attr('cx',0).attr('cy',-10).attr('r',18)
+      .attr('fill',d=>d.data.data?.sex==='M'?'#dbeeff':'#fce4f0')
+      .attr('stroke',d=>d.data.id===MAIN_PERSON?'#C9A84C':d.data.data?.sex==='M'?'#4a7eb5':'#c97fa0')
+      .attr('stroke-width',1.5);
+
+    // Initials in circle
+    nodes.append('text').attr('x',0).attr('y',-6).attr('text-anchor','middle')
+      .attr('font-size',10).attr('font-family','Playfair Display,serif')
+      .attr('fill',d=>d.data.id===MAIN_PERSON?'#C9A84C':'#2C1A0E')
+      .attr('font-weight','700').text(d=>initials(d.data.data));
+
+    // Name
+    nodes.append('text').attr('x',0).attr('y',18).attr('text-anchor','middle')
+      .attr('font-size',9.5).attr('font-family','Inter,sans-serif').attr('font-weight','500')
+      .attr('fill',d=>d.data.id===MAIN_PERSON?'white':'#2C1A0E')
+      .text(d=>{const nm=d.data.data?.given||'?'; return nm.length>14?nm.slice(0,13)+'…':nm;});
+
+    // Surname
+    nodes.append('text').attr('x',0).attr('y',30).attr('text-anchor','middle')
+      .attr('font-size',8.5).attr('font-family','Inter,sans-serif')
+      .attr('fill',d=>d.data.id===MAIN_PERSON?'rgba(255,255,255,0.7)':'#9C7E6A')
+      .text(d=>{const s=d.data.data?.surname||''; return s.length>14?s.slice(0,13)+'…':s;});
+
+    // Birth year
+    nodes.append('text').attr('x',0).attr('y',42).attr('text-anchor','middle')
+      .attr('font-size',8).attr('font-family','Inter,sans-serif')
+      .attr('fill',d=>d.data.id===MAIN_PERSON?'#C9A84C':'#b0896e')
+      .text(d=>{const p=d.data.data; if(!p)return''; const by=birthYear(p); const dy=deathYear(p); if(by&&dy)return`${by}–${dy}`; if(by)return`${by}`; return'';});
+
+    // Center view
+    const allX=hierarchy.descendants().map(d=>d.data.x);
+    const allY=hierarchy.descendants().map(d=>d.data.y);
+    const minX=Math.min(...allX)-80, maxX=Math.max(...allX)+80;
+    const minY=Math.min(...allY)-80, maxY=Math.max(...allY)+80;
+    const scale=Math.min(W/(maxX-minX),H/(maxY-minY),.9);
+    const tx=W/2-(minX+maxX)/2*scale;
+    const ty=H/2-(minY+maxY)/2*scale;
+    g.attr('transform',`translate(${tx},${ty}) scale(${scale})`);
+
+    // Zoom
+    const zoom=d3.zoom().scaleExtent([.1,3]).on('zoom',e=>g.attr('transform',e.transform));
+    svg.call(zoom).call(zoom.transform,d3.zoomIdentity.translate(tx,ty).scale(scale));
+
+    // Store zoom for controls
+    svgRef.current.__zoom=zoom;
+  },[filter,photos]);
+
+  return <div className="tree-wrap">
+    <svg ref={svgRef} style={{width:'100%',height:'100%'}}/>
+    <div className="tree-controls">
+      <button className="tc-btn" title="Приблизить" onClick={()=>d3.select(svgRef.current).transition().call(svgRef.current.__zoom?.scaleBy,1.3)}>+</button>
+      <button className="tc-btn" title="Отдалить" onClick={()=>d3.select(svgRef.current).transition().call(svgRef.current.__zoom?.scaleBy,.77)}>−</button>
+      <button className="tc-btn" title="Сбросить" onClick={()=>d3.select(svgRef.current).transition().call(svgRef.current.__zoom?.scaleTo,1)}>⌂</button>
+    </div>
+    <div className="tree-legend">
+      <div className="legend-item"><div className="legend-dot" style={{background:'#1C3829'}}/> Вы</div>
+      <div className="legend-item"><div className="legend-dot" style={{background:'#dbeeff'}}/> Мужчина</div>
+      <div className="legend-item"><div className="legend-dot" style={{background:'#fce4f0'}}/> Женщина</div>
+      <div className="legend-item"><div className="legend-dot" style={{background:'#fdf8ef',border:'1px solid #C9A84C'}}/> Супруг/а</div>
+    </div>
+  </div>
+}
+
+// ─── PERSON MODAL ──────────────────────────────────────────────────────────────
+function PersonModal({id, photos, setPhotos, onClose, onSelect, adminMode, onEdit, persons}){
+  const [tab,setTab]=useState('facts');
+  const [lb,setLb]=useState(null);
+  const photoInpRef=useRef();
+  const addPhotoInpRef=useRef();
+
+  const p=persons[id];
+  if(!p)return null;
+  const rel=getRelationship(id);
+  const rels=getRelatives(id);
+  const mainPhoto=photos[id]||p.photo;
+  const extraPhotos=photos[`${id}_extra`]||[];
+
+  function handleMainPhoto(e){
+    const file=e.target.files[0]; if(!file)return;
+    const reader=new FileReader();
+    reader.onload=ev=>{
+      const newPhotos={...photos,[id]:ev.target.result};
+      setPhotos(newPhotos);
+      localStorage.setItem('family_photos',JSON.stringify(newPhotos));
+    };
+    reader.readAsDataURL(file);
+  }
+  function handleAddPhoto(e){
+    const file=e.target.files[0]; if(!file)return;
+    const reader=new FileReader();
+    reader.onload=ev=>{
+      const key=`${id}_extra`;
+      const arr=[...(photos[key]||[]),ev.target.result];
+      const newPhotos={...photos,[key]:arr};
+      setPhotos(newPhotos);
+      localStorage.setItem('family_photos',JSON.stringify(newPhotos));
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function RelChip({relId,label}){
+    const rp=persons[relId]; if(!rp)return null;
+    const rph=photos[relId]||rp.photo;
+    return <div className="rel-chip" onClick={()=>onSelect(relId)}>
+      <div className="rel-chip-av">{rph?<img src={rph} alt=""/>:<svg width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill={rp.sex==='M'?'#dbeeff':'#fce4f0'}/><circle cx="12" cy="9" r="4" fill="rgba(255,255,255,.6)"/><path d="M4,22 Q4,16 12,16 Q20,16 20,22 Z" fill="rgba(255,255,255,.5)"/></svg>}
+      </div>
+      <div><span style={{fontSize:12}}>{shortName(rp)}</span><span className="rel-chip-lbl">{label}</span></div>
+    </div>
+  }
+
+  return <div className="overlay" onClick={e=>e.target===e.currentTarget&&onClose()}>
+    <div className="modal">
+      <div className="modal-hdr">
+        <div className="modal-hdr-row">
+          <div>
+            <div className="modal-name">{fullName(p)}</div>
+            {rel&&<div className="modal-rel">{rel}</div>}
+          </div>
+          <button className="modal-close" onClick={onClose}>×</button>
+        </div>
+      </div>
+      <div className="modal-body">
+        {/* Photo */}
+        <div className="modal-photo-area">
+          <input type="file" accept="image/*" ref={photoInpRef} className="photo-inp" onChange={handleMainPhoto}/>
+          <div className="modal-avatar" onClick={()=>mainPhoto?setLb(mainPhoto):photoInpRef.current?.click()}>
+            {mainPhoto?<img src={mainPhoto} alt={shortName(p)}/>:
+              <svg width="110" height="110" viewBox="0 0 110 110">
+                <circle cx="55" cy="55" r="55" fill={p.sex==='M'?'#dbeeff':'#fce4f0'}/>
+                <circle cx="55" cy="38" r="18" fill="rgba(255,255,255,.5)"/>
+                <path d="M18,95 Q18,68 55,68 Q92,68 92,95 Z" fill="rgba(255,255,255,.4)"/>
+                <text x="55" y="44" textAnchor="middle" dominantBaseline="middle" fontSize="15" fontFamily="Playfair Display,serif" fill="rgba(255,255,255,0.9)" fontWeight="700">{initials(p)}</text>
+              </svg>
+            }
+            <div className="modal-avatar-overlay">
+              <span>📷</span><span>Загрузить фото</span>
+            </div>
+          </div>
+          {adminMode&&<button className="btn btn-outline" style={{marginTop:8,fontSize:12}} onClick={()=>photoInpRef.current?.click()}>
+            📷 Изменить фото
+          </button>}
+        </div>
+
+        {/* Tabs */}
+        <div className="tabs">
+          <div className={`tab ${tab==='facts'?'active':''}`} onClick={()=>setTab('facts')}>Факты</div>
+          <div className={`tab ${tab==='photos'?'active':''}`} onClick={()=>setTab('photos')}>Фотографии</div>
+          <div className={`tab ${tab==='rels'?'active':''}`} onClick={()=>setTab('rels')}>Родственники</div>
+        </div>
+
+        {tab==='facts'&&<div>
+          <div className="info-grid">
+            {p.birth&&<div className="info-item"><div className="info-label">Дата рождения</div><div className="info-val">{p.birth}</div></div>}
+            {p.death&&<div className="info-item"><div className="info-label">Дата смерти</div><div className="info-val">{p.death}</div></div>}
+            {p.birthPlace&&<div className="info-item"><div className="info-label">Место рождения</div><div className="info-val">{p.birthPlace}</div></div>}
+            {p.maiden&&<div className="info-item"><div className="info-label">Девичья фамилия</div><div className="info-val">{p.maiden}</div></div>}
+            {p.resi&&<div className="info-item"><div className="info-label">Проживание</div><div className="info-val">{p.resi}</div></div>}
+          </div>
+          {p.note&&<div className="note-box">«{p.note}»</div>}
+          {adminMode&&<button className="btn btn-gold" onClick={()=>onEdit(id)}>✏️ Редактировать</button>}
+        </div>}
+
+        {tab==='photos'&&<div>
+          <input type="file" accept="image/*" ref={addPhotoInpRef} className="photo-inp" onChange={handleAddPhoto}/>
+          <div className="photos-grid">
+            {mainPhoto&&<div className="photo-thumb" onClick={()=>setLb(mainPhoto)}><img src={mainPhoto} alt=""/></div>}
+            {extraPhotos.map((src,i)=><div key={i} className="photo-thumb" onClick={()=>setLb(src)}><img src={src} alt=""/></div>)}
+            <div className="photo-add-btn" onClick={()=>addPhotoInpRef.current?.click()}>
+              <span style={{fontSize:24}}>+</span><span>Добавить фото</span>
+            </div>
+          </div>
+          {!mainPhoto&&extraPhotos.length===0&&<p style={{color:'var(--text3)',fontSize:13,textAlign:'center',margin:'20px 0'}}>
+            Пока нет фотографий. Нажмите «+» чтобы добавить.
+          </p>}
+        </div>}
+
+        {tab==='rels'&&<div>
+          {rels.parents.length>0&&<div className="rel-section">
+            <div className="rel-section-title">Родители</div>
+            <div className="rel-list">{rels.parents.map(r=><RelChip key={r.id} relId={r.id} label={r.label}/>)}</div>
+          </div>}
+          {rels.spouses.length>0&&<div className="rel-section">
+            <div className="rel-section-title">Супруг / Супруга</div>
+            <div className="rel-list">{rels.spouses.map(r=><RelChip key={r.id} relId={r.id} label={r.label}/>)}</div>
+          </div>}
+          {rels.children.length>0&&<div className="rel-section">
+            <div className="rel-section-title">Дети</div>
+            <div className="rel-list">{rels.children.map(r=><RelChip key={r.id} relId={r.id} label={r.label}/>)}</div>
+          </div>}
+          {rels.siblings.length>0&&<div className="rel-section">
+            <div className="rel-section-title">Братья и сёстры</div>
+            <div className="rel-list">{rels.siblings.map(r=><RelChip key={r.id} relId={r.id} label={r.label}/>)}</div>
+          </div>}
+        </div>}
+      </div>
+    </div>
+    {lb&&<div className="lightbox" onClick={()=>setLb(null)}>
+      <img src={lb} alt=""/>
+      <button className="lb-close" onClick={()=>setLb(null)}>×</button>
+    </div>}
+  </div>
+}
+
+// ─── EDIT MODAL ────────────────────────────────────────────────────────────────
+function EditModal({id, persons, setPersons, onClose}){
+  const p=persons[id]||INDIVIDUALS[id];
+  const [form,setForm]=useState({...p});
+  function set(k,v){setForm(f=>({...f,[k]:v}))}
+  function save(){
+    const updated={...persons,[id]:{...form}};
+    setPersons(updated);
+    localStorage.setItem('family_persons',JSON.stringify(updated));
+    onClose();
+  }
+  function del(){
+    if(!confirm(`Удалить ${fullName(p)}?`))return;
+    const updated={...persons};
+    delete updated[id];
+    setPersons(updated);
+    localStorage.setItem('family_persons',JSON.stringify(updated));
+    onClose();
+  }
+  return <div className="overlay" onClick={e=>e.target===e.currentTarget&&onClose()}>
+    <div className="modal">
+      <div className="modal-hdr">
+        <div className="modal-hdr-row">
+          <div className="modal-name">Редактирование</div>
+          <button className="modal-close" onClick={onClose}>×</button>
+        </div>
+      </div>
+      <div className="modal-body">
+        <div className="edit-form">
+          <div className="form-section">Пол</div>
+          <div className="sex-row">
+            <div className={`sex-btn ${form.sex==='M'?'active':''}`} onClick={()=>set('sex','M')}>Мужчина</div>
+            <div className={`sex-btn ${form.sex==='F'?'active':''}`} onClick={()=>set('sex','F')}>Женщина</div>
+          </div>
+          <div className="form-section">Имя</div>
+          <div className="form-row">
+            <div className="form-field"><label>Имя</label><input className="form-inp" value={form.given||''} onChange={e=>set('given',e.target.value)}/></div>
+            <div className="form-field"><label>Отчество</label><input className="form-inp" value={form.patronymic||''} onChange={e=>set('patronymic',e.target.value)}/></div>
+          </div>
+          <div className="form-row">
+            <div className="form-field"><label>Фамилия</label><input className="form-inp" value={form.surname||''} onChange={e=>set('surname',e.target.value)}/></div>
+            <div className="form-field"><label>Девичья фамилия</label><input className="form-inp" value={form.maiden||''} onChange={e=>set('maiden',e.target.value)}/></div>
+          </div>
+          <div className="form-section">Даты и места</div>
+          <div className="form-row">
+            <div className="form-field"><label>Дата рождения</label><input className="form-inp" value={form.birth||''} placeholder="дд.мм.гггг" onChange={e=>set('birth',e.target.value)}/></div>
+            <div className="form-field"><label>Место рождения</label><input className="form-inp" value={form.birthPlace||''} onChange={e=>set('birthPlace',e.target.value)}/></div>
+          </div>
+          <div className="form-row">
+            <div className="form-field"><label>Дата смерти</label><input className="form-inp" value={form.death||''} placeholder="дд.мм.гггг" onChange={e=>set('death',e.target.value)}/></div>
+            <div className="form-field"><label>Место проживания</label><input className="form-inp" value={form.resi||''} onChange={e=>set('resi',e.target.value)}/></div>
+          </div>
+          <div className="form-section">Заметки</div>
+          <div className="form-field"><textarea className="form-inp" rows={3} value={form.note||''} onChange={e=>set('note',e.target.value)} placeholder="Интересные факты, воспоминания..."/></div>
+          <div className="btn-row">
+            <button className="btn btn-danger" onClick={del}>Удалить</button>
+            <button className="btn btn-outline" onClick={onClose}>Отмена</button>
+            <button className="btn btn-gold" onClick={save}>Сохранить</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+
+// ─── ADMIN LOGIN ────────────────────────────────────────────────────────────────
+function LoginModal({onLogin,onClose}){
+  const [u,setU]=useState('');
+  const [pw,setPw]=useState('');
+  const [err,setErr]=useState('');
+  function attempt(){
+    if(u==='admin'&&pw==='admin1234'){onLogin();onClose();}
+    else setErr('Неверный логин или пароль');
+  }
+  return <div className="overlay" onClick={e=>e.target===e.currentTarget&&onClose()}>
+    <div className="login-box">
+      <div style={{fontSize:32,marginBottom:8}}>🔑</div>
+      <div className="login-title">Панель управления</div>
+      <div className="login-sub">Войдите для редактирования</div>
+      <div className="form-field"><label>Логин</label><input className="form-inp" value={u} onChange={e=>setU(e.target.value)} autoComplete="off"/></div>
+      <div className="form-field"><label>Пароль</label><input className="form-inp" type="password" value={pw} onChange={e=>setPw(e.target.value)} onKeyDown={e=>e.key==='Enter'&&attempt()}/></div>
+      {err&&<div className="err">{err}</div>}
+      <div className="btn-row" style={{justifyContent:'center',marginTop:16}}>
+        <button className="btn btn-outline" onClick={onClose}>Отмена</button>
+        <button className="btn btn-gold" onClick={attempt}>Войти</button>
+      </div>
+    </div>
+  </div>
+}
+
+// ─── MAIN APP ──────────────────────────────────────────────────────────────────
+function App(){
+  const [view,setView]=useState('cards'); // 'cards' | 'tree'
+  const [filter,setFilter]=useState('all'); // 'all' | 'direct'
+  const [selectedId,setSelectedId]=useState(null);
+  const [editId,setEditId]=useState(null);
+  const [adminMode,setAdminMode]=useState(false);
+  const [showLogin,setShowLogin]=useState(false);
+  const [photos,setPhotos]=useState({});
+  const [persons,setPersons]=useState({...INDIVIDUALS});
+  const [search,setSearch]=useState('');
+  const [showSearch,setShowSearch]=useState(false);
+  const adminClickRef=useRef(0);
+
+  // Load from localStorage
+  useEffect(()=>{
+    try{
+      const sp=localStorage.getItem('family_persons');
+      if(sp)setPersons(p=>({...INDIVIDUALS,...JSON.parse(sp)}));
+      const ph=localStorage.getItem('family_photos');
+      if(ph)setPhotos(JSON.parse(ph));
+      const vw=localStorage.getItem('family_view');
+      if(vw)setView(vw);
+    }catch(e){}
+    // Assign real photos
+    setPhotos(prev=>({
+      'I517':'assets/photo_I517_olga_solomina.jpg',
+      ...prev
+    }));
+  },[]);
+
+  function handleAdminDot(){
+    adminClickRef.current++;
+    if(adminClickRef.current>=3){adminClickRef.current=0;setShowLogin(true);}
+  }
+
+  function switchView(v){setView(v);localStorage.setItem('family_view',v);}
+
+  // Group people by generation
+  const directSet=useMemo(()=>getDirectAncestors(MAIN_PERSON),[]);
+  const displayIds=useMemo(()=>{
+    const ids=Object.keys(persons);
+    if(filter==='direct')return ids.filter(id=>directSet.has(id));
+    return ids;
+  },[persons,filter,directSet]);
+
+  const searchResults=useMemo(()=>{
+    if(!search.trim())return[];
+    const q=search.toLowerCase();
+    return Object.keys(persons).filter(id=>{
+      const p=persons[id];
+      return fullName(p).toLowerCase().includes(q)||
+        (p.maiden&&p.maiden.toLowerCase().includes(q));
+    }).slice(0,8);
+  },[search,persons]);
+
+  // Group by generation for cards view
+  const grouped=useMemo(()=>{
+    const genLabels=['Вы и ваша семья','Родители','Бабушки и дедушки','Прабабушки и прадедушки',
+      'Прапрадеды','Прапрапрадеды','Прапрапрапрадеды и старше'];
+    const groups={};
+    displayIds.forEach(id=>{
+      const gen=getGeneration(id);
+      if(!groups[gen])groups[gen]={label:genLabels[Math.min(gen,6)]||`Поколение ${gen+1}`,ids:[]};
+      groups[id==='I51']?null:groups[gen].ids.push(id); // push all
+      if(id==='I51'){if(!groups[-1])groups[-1]={label:'Вы и ваша семья',ids:[]}; groups[-1].ids.unshift(id);}
+    });
+    // Move spouse & children to gen 0 group
+    const F1=FAMILIES['F1'];
+    if(F1){
+      [F1.wife,...(F1.chil||[])].filter(Boolean).forEach(id=>{
+        if(groups[0])groups[0].ids=groups[0].ids.filter(x=>x!==id);
+        if(groups[-1])groups[-1].ids.push(id);
+      });
+    }
+    return Object.entries(groups).sort((a,b)=>Number(a[0])-Number(b[0]));
+  },[displayIds]);
+
+  const totalCount=Object.keys(persons).length;
+  const earliestYear=Object.values(persons).reduce((mn,p)=>{const y=birthYear(p);return y&&y<mn?y:mn;},9999);
+
+  return <>
+    {/* HEADER */}
+    <div className="hdr">
+      <svg className="hdr-crest" viewBox="0 0 36 36" onClick={handleAdminDot}>
+        <circle cx="18" cy="18" r="17" fill="none" stroke="#C9A84C" strokeWidth="1.5"/>
+        <text x="18" y="23" textAnchor="middle" fontSize="16" fontFamily="serif" fill="#C9A84C">А</text>
+        <path d="M5,28 Q18,34 31,28" fill="none" stroke="#C9A84C" strokeWidth="1" opacity=".5"/>
+        <path d="M5,8 Q18,2 31,8" fill="none" stroke="#C9A84C" strokeWidth="1" opacity=".5"/>
+      </svg>
+      <div>
+        <div className="hdr-title">Семья Андросовых</div>
+        <div className="hdr-sub">Родословное древо · с 1812 года</div>
+      </div>
+      <div className="hdr-nav">
+        <button className={`nav-btn ${view==='cards'?'active':''}`} onClick={()=>switchView('cards')}>🃏 Карточки</button>
+        <button className={`nav-btn ${view==='tree'?'active':''}`} onClick={()=>switchView('tree')}>🌳 Древо</button>
+        {adminMode&&<button className="nav-btn" style={{borderColor:'#e8c96a',color:'#e8c96a'}} onClick={()=>setAdminMode(false)}>Выйти из админки</button>}
+      </div>
+      <div className="hdr-search" style={{position:'relative'}}>
+        <span className="search-icon">🔍</span>
+        <input className="search-inp" placeholder="Поиск..." value={search} 
+          onChange={e=>{setSearch(e.target.value);setShowSearch(true)}}
+          onFocus={()=>setShowSearch(true)}
+          onBlur={()=>setTimeout(()=>setShowSearch(false),200)}/>
+        {showSearch&&searchResults.length>0&&<div className="search-results">
+          {searchResults.map(id=>{const p=persons[id];return<div key={id} className="search-result-item" onClick={()=>{setSelectedId(id);setSearch('');setShowSearch(false);}}>
+            <Avatar person={p} size={32} photos={photos}/>
+            <div><div className="sri-name">{shortName(p)}</div><div className="sri-sub">{getRelationship(id)||p.birth||''}</div></div>
+          </div>})}
+        </div>}
+      </div>
+    </div>
+
+    {/* FILTER BAR */}
+    <div className="filter-bar">
+      <span className="filter-label">Показать:</span>
+      <div className={`filter-chip ${filter==='all'?'active':''}`} onClick={()=>setFilter('all')}>Все родственники</div>
+      <div className={`filter-chip ${filter==='direct'?'active':''}`} onClick={()=>setFilter('direct')}>Только прямые предки</div>
+      <div className="stats">
+        <div className="stat"><b>{totalCount}</b> человек</div>
+        <div className="stat">с <b>{earliestYear}</b> года</div>
+        <div className="stat">{adminMode&&<span style={{color:'#e8c96a'}}>⚙️ Режим редактирования</span>}</div>
+      </div>
+    </div>
+
+    {/* MAIN */}
+    <div className="main">
+      {view==='cards'&&<div className="cards-wrap">
+        {grouped.map(([gen,group])=><div key={gen} className="gen-section">
+          <div className="gen-title">
+            <span className="ornament">✦</span>
+            {group.label}
+            <div className="gen-line"/>
+            <span style={{color:'var(--text3)',fontSize:12,marginLeft:8}}>{group.ids.length}</span>
+          </div>
+          <div className="cards-grid">
+            {group.ids.filter(id=>persons[id]).map(id=><PersonCard key={id} id={id} photos={photos} onClick={setSelectedId}/>)}
+          </div>
+        </div>)}
+      </div>}
+      {view==='tree'&&<TreeView persons={persons} photos={photos} onSelect={setSelectedId} filter={filter}/>}
+    </div>
+
+    {/* MODALS */}
+    {selectedId&&!editId&&<PersonModal id={selectedId} photos={photos} setPhotos={setPhotos}
+      onClose={()=>setSelectedId(null)} onSelect={id=>{setSelectedId(id)}}
+      adminMode={adminMode} onEdit={setEditId} persons={persons}/>}
+    {editId&&<EditModal id={editId} persons={persons} setPersons={setPersons} onClose={()=>setEditId(null)}/>}
+    {showLogin&&<LoginModal onLogin={()=>setAdminMode(true)} onClose={()=>setShowLogin(false)}/>}
+
+    {/* Hidden admin button */}
+    <button className="admin-dot" onClick={handleAdminDot} title="">·</button>
+  </>
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
