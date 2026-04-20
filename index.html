@@ -231,7 +231,7 @@ html,body{height:100%;overflow:hidden;font-family:'CaslonBecker','Inter',serif;b
 <body>
 <div id="root"></div>
 
-<script type="text/babel">
+<script id="jsx-app" type="text/jsx-source">
 const {useState,useEffect,useRef,useMemo,useCallback}=React;
 
 // ─── DATA ──────────────────────────────────────────────────────────────────────
@@ -467,8 +467,15 @@ function buildTree(rootId,maxD,persons,filter){
       }
       const chil=(f.chil||[]).filter(c=>persons[c]);
       if(chil.length>0){
+        let spCx=null;
+        if(sid&&persons[sid]&&!visited.has(sid)){
+          visited.add(sid);
+          spCx=NW+HGAP*2;
+          nodes.push({id:sid,cx:spCx,cy:0,w:NW,h:NH,depth:0,isSpouse:true});
+          links.push({spouseLink:true,x1:NW/2,y1:0,x2:spCx-NW/2,y2:0});
+        }
         const totalW=chil.length*(NW+HGAP)-HGAP;
-        const spX=sid?spCx:0;
+        const spX=spCx!=null?spCx:0;
         const childBaseX=Math.min(0,spX)+(Math.abs(spX-0)/2)-(totalW/2)+NW/2;
         chil.forEach((cid,i)=>{
           if(!visited.has(cid)){
@@ -478,6 +485,11 @@ function buildTree(rootId,maxD,persons,filter){
             links.push({childLink:true,px:0,py:0,cx:ccx,cy:GH});
           }
         });
+      } else if(sid&&persons[sid]&&!visited.has(sid)){
+        visited.add(sid);
+        const spCx=NW+HGAP*2;
+        nodes.push({id:sid,cx:spCx,cy:0,w:NW,h:NH,depth:0,isSpouse:true});
+        links.push({spouseLink:true,x1:NW/2,y1:0,x2:spCx-NW/2,y2:0});
       }
     });
   }
@@ -896,6 +908,24 @@ function App(){
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+<script>
+(function(){
+  function run(){
+    if(typeof Babel==='undefined'||typeof React==='undefined'){setTimeout(run,30);return;}
+    var s=document.getElementById('jsx-app');
+    if(!s)return;
+    try{
+      var code=Babel.transform(s.textContent,{presets:['react'],filename:'app.jsx'}).code;
+      (0,eval)(code);
+    }catch(e){
+      console.error('JSX error:',e);
+      document.getElementById('root').innerHTML='<div style="color:red;padding:24px;font-family:sans-serif"><b>Ошибка:</b> '+e.message+'</div>';
+    }
+  }
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',run);}
+  else{run();}
+})();
 </script>
 </body>
 </html>
