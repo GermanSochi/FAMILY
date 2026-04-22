@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#030508">
+<title>Семья Андросовых · 1812—2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{background:#030508;color:#f5ede0;font-family:"Geist",system-ui,sans-serif;font-weight:300;min-height:100vh}
+body{overflow-x:hidden}
+::selection{background:rgba(212,168,67,.3)}
+#bgVid,#bgc{position:fixed;inset:0;width:100%;height:100%;z-index:0;object-fit:cover}
+#bgVid{filter:saturate(1.1) brightness(.55)}
+#bgOverlay{position:fixed;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(3,5,8,.35) 0%,rgba(3,5,8,.55) 50%,rgba(3,5,8,.8) 100%)}
+#vignette{position:fixed;inset:0;z-index:2;pointer-events:none;background:radial-gradient(ellipse at center,transparent 40%,rgba(0,0,0,.6) 100%)}
+main{position:relative;z-index:10}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 20px;background:rgba(5,8,16,.55);backdrop-filter:blur(28px) saturate(1.6);-webkit-backdrop-filter:blur(28px) saturate(1.6);border-bottom:1px solid rgba(255,255,255,.05)}
+nav::before{content:"";position:absolute;bottom:-1px;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(212,168,67,.25),transparent)}
+.nv{max-width:1280px;margin:0 auto;height:60px;display:flex;align-items:center;justify-content:space-between;gap:14px}
+.brand{font-family:"Instrument Serif",serif;font-size:23px;font-style:italic;background:linear-gradient(180deg,#fff9e6,#f0c874 50%,#d4a843);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;white-space:nowrap;cursor:pointer;user-select:none;-webkit-user-select:none}
+.tabs{display:flex;gap:2px;padding:3px;background:rgba(8,12,22,.55);border:1px solid rgba(255,255,255,.06);border-radius:999px}
+.tab{padding:6px 16px;border:none;background:none;color:rgba(245,237,224,.6);font-family:"Geist",sans-serif;font-size:12px;letter-spacing:.02em;border-radius:999px;cursor:pointer;transition:all .25s;white-space:nowrap;touch-action:manipulation}
+.tab.on{color:#050810;background:linear-gradient(180deg,#fff9e6,#f0c874)}
+.nm{display:flex;gap:20px;font-size:10.5px;color:rgba(245,237,224,.5);letter-spacing:.08em;text-transform:uppercase}
+.nmv{font-family:"Instrument Serif",serif;font-style:italic;font-size:15px;color:#f0c874;margin-right:4px;text-transform:none}
+@media(max-width:720px){.nm{display:none}}
+@media(max-width:420px){.brand{font-size:19px}.tabs .tab:nth-child(n+4){display:none}}
+.sec{display:none;padding:80px 20px 60px;min-height:100vh}
+.sec.on{display:block}
+</style>
+</head>
+<body>
+<video id="bgVid" autoplay muted loop playsinline preload="auto"><source src="bg.mp4" type="video/mp4"></video>
+<canvas id="bgc"></canvas>
+<div id="bgOverlay"></div>
+<div id="vignette"></div>
+<main>
+<nav><div class="nv">
+<div class="brand" onclick="brandTap()" ondblclick="openLogin()">Androssoff</div>
+<div class="tabs">
+<button class="tab on" onclick="sh('h',this)">Главная</button>
+<button class="tab" onclick="sh('t',this)">Древо</button>
+<button class="tab" onclick="sh('n',this)">Фамилии</button>
+<button class="tab" onclick="sh('s',this)">Поиск</button>
+</div>
+<div class="nm"><span><span class="nmv">30</span>персон</span><span><span class="nmv">1812</span>начало</span></div>
+</div></nav>
+<style>
+#vh{display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 20px 40px;min-height:100vh}
+#vh.on{display:flex}
+.eb{font-size:10.5px;letter-spacing:.4em;text-transform:uppercase;color:#d4a843;padding:6px 16px;border:1px solid rgba(212,168,67,.22);border-radius:999px;background:rgba(212,168,67,.04);margin-bottom:24px}
+.htt{font-family:"Instrument Serif",serif;font-size:clamp(56px,10vw,120px);line-height:.88;letter-spacing:-.025em;margin-bottom:18px}
+.htt em{font-style:italic;background:linear-gradient(180deg,#fff,#f5ede0 35%,#f0c874 70%,#d4a843);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.htt small{display:block;font-family:"Geist",sans-serif;font-size:.12em;font-weight:300;letter-spacing:.45em;text-transform:uppercase;color:rgba(245,237,224,.42);margin-top:18px}
+.hs{font-family:"Instrument Serif",serif;font-style:italic;font-size:17px;color:rgba(245,237,224,.75);margin-bottom:40px;max-width:480px;line-height:1.5}
+.ct{display:flex;gap:10px;margin-bottom:40px;flex-wrap:wrap;justify-content:center}
+.cb{padding:12px 32px;font-family:"Geist",sans-serif;font-size:13px;letter-spacing:.06em;border-radius:999px;cursor:pointer;transition:all .3s;touch-action:manipulation;border:none}
+.cbp{background:linear-gradient(180deg,#f0c874,#d4a843 60%,#a67d2c);color:#050810;border:1px solid rgba(255,249,230,.4);box-shadow:0 6px 28px rgba(212,168,67,.35)}
+.cbs{background:rgba(255,255,255,.06);color:rgba(245,237,224,.9);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(12px)}
+.hc{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;max-width:760px}
+.hh{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(20px);border-radius:18px;padding:16px 22px;min-width:110px;text-align:center}
+.hhn{font-family:"Instrument Serif",serif;font-size:34px;background:linear-gradient(180deg,#fff8e8,#f0c874 50%,#d4a843);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+.hhl{font-size:10px;color:rgba(245,237,224,.6);letter-spacing:.2em;text-transform:uppercase;margin-top:5px}
+.tfilter{display:inline-flex;padding:3px;background:rgba(8,12,22,.85);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(16px);border-radius:999px;margin-bottom:24px}
+.tfb{padding:7px 14px;border:none;background:none;color:rgba(245,237,224,.6);font-family:"Geist",sans-serif;font-size:11.5px;letter-spacing:.02em;border-radius:999px;cursor:pointer;transition:all .25s;touch-action:manipulation}
+.tfb.on{color:#050810;background:linear-gradient(180deg,#fff9e6,#f0c874)}
+.treeWrap{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:10px 4px 40px}
+.genBlock{margin-bottom:50px;position:relative}
+.genLabel{font-family:"Instrument Serif",serif;font-style:italic;font-size:14px;color:rgba(212,168,67,.65);letter-spacing:.12em;margin-bottom:14px;padding-left:8px;border-left:2px solid rgba(212,168,67,.35);padding-left:12px}
+.genRow{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;min-width:max-content}
+.card{width:145px;background:rgba(10,16,30,.65);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-radius:16px;padding:14px 10px 12px;text-align:center;cursor:pointer;transition:all .3s cubic-bezier(.19,1,.22,1);box-shadow:0 4px 20px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.06);position:relative;flex-shrink:0}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent);border-radius:16px 16px 0 0}
+.card:hover,.card:active{transform:translateY(-4px);border-color:rgba(212,168,67,.4);box-shadow:0 14px 36px rgba(0,0,0,.55),0 0 28px rgba(212,168,67,.2)}
+.card.male{background:linear-gradient(180deg,rgba(47,91,168,.45),rgba(18,38,72,.7));border-color:rgba(107,155,229,.32)}
+.card.female{background:linear-gradient(180deg,rgba(196,90,138,.42),rgba(90,26,56,.7));border-color:rgba(232,160,192,.32)}
+.card.me{background:linear-gradient(180deg,rgba(240,200,116,.35),rgba(166,125,44,.55));border-color:rgba(240,200,116,.55);box-shadow:0 4px 20px rgba(0,0,0,.4),0 0 28px rgba(240,200,116,.3),inset 0 1px 0 rgba(255,255,255,.2)}
+.card.side{opacity:.72}
+.cardPhoto{width:70px;height:70px;border-radius:50%;margin:0 auto 10px;background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.04));border:1.5px solid rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;font-size:30px;overflow:hidden;box-shadow:inset 0 2px 6px rgba(0,0,0,.35),0 2px 8px rgba(0,0,0,.2)}
+.card.me .cardPhoto{border-color:rgba(240,200,116,.65);box-shadow:inset 0 2px 6px rgba(0,0,0,.3),0 0 16px rgba(240,200,116,.35)}
+.cardPhoto img{width:100%;height:100%;object-fit:cover}
+.cardName{font-family:"Instrument Serif",serif;font-size:14px;line-height:1.2;color:#f5ede0;margin-bottom:3px;min-height:32px;display:flex;align-items:center;justify-content:center}
+.card.me .cardName{color:#fff8e8;font-weight:500}
+.cardRole{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(240,200,116,.8);margin-bottom:5px;min-height:11px}
+.cardDates{font-size:10px;color:rgba(245,237,224,.55);font-family:"Geist",sans-serif;min-height:12px}
+.card.me .cardDates{color:rgba(255,248,232,.8)}
+.cardStar{position:absolute;top:7px;right:9px;font-size:15px;color:#fff;filter:drop-shadow(0 0 4px rgba(255,255,255,.5))}
+.ph{max-width:1200px;margin:0 auto 30px;text-align:center}
+.pe{font-size:10.5px;letter-spacing:.4em;text-transform:uppercase;color:rgba(212,168,67,.75);margin-bottom:14px}
+.pt{font-family:"Instrument Serif",serif;font-size:46px;letter-spacing:-.02em;background:linear-gradient(180deg,#fff,#d4c9a8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+.pt em{font-style:italic;color:#f0c874;-webkit-text-fill-color:#f0c874}
+.ps{font-family:"Instrument Serif",serif;font-style:italic;font-size:15px;color:rgba(245,237,224,.65);max-width:480px;margin:0 auto}
+</style>
+<style>
+.sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px;max-width:1200px;margin:0 auto}
+.sc{background:rgba(10,16,30,.55);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-radius:20px;padding:22px;transition:all .4s}
+.sc:hover{background:rgba(25,35,60,.65);transform:translateY(-3px)}
+.si{font-size:24px;margin-bottom:12px}
+.sn{font-family:"Instrument Serif",serif;font-size:21px;color:#f5ede0}
+.sn em{font-style:italic;color:#f0c874}
+.sm{font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:rgba(212,168,67,.75);margin:4px 0 12px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sd{font-family:"Instrument Serif",serif;font-size:14.5px;color:rgba(245,237,224,.75);line-height:1.6}
+.sd em{font-style:italic;color:#f0c874}
+.sw{max-width:720px;margin:0 auto}
+.sin{width:100%;padding:16px 20px;background:rgba(10,16,30,.6);border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(16px);border-radius:14px;color:#f5ede0;font-family:"Geist",sans-serif;font-size:15px;outline:none;margin-bottom:20px}
+.sin::placeholder{color:rgba(245,237,224,.35);font-style:italic;font-family:"Instrument Serif",serif}
+.sri{display:flex;align-items:center;gap:12px;padding:12px 16px;background:rgba(10,16,30,.55);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(12px);border-radius:12px;margin-bottom:8px;cursor:pointer;transition:all .25s;touch-action:manipulation}
+.sri:hover{background:rgba(25,40,75,.6);border-color:rgba(212,168,67,.3);transform:translateX(4px)}
+.sav{width:44px;height:44px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:17px;border:1px solid rgba(255,255,255,.1);overflow:hidden}
+.sav img{width:100%;height:100%;object-fit:cover}
+.snm{font-family:"Instrument Serif",serif;font-size:16px;color:#f5ede0}
+.smt{font-size:11px;color:rgba(245,237,224,.5);margin-top:2px}
+.stg{margin-left:auto;font-size:9px;letter-spacing:.2em;text-transform:uppercase;padding:4px 10px;border-radius:999px;white-space:nowrap;background:rgba(212,168,67,.1);border:1px solid rgba(212,168,67,.22);color:#f0c874}
+.mov{position:fixed;inset:0;z-index:9999;background:rgba(2,4,9,.8);backdrop-filter:blur(16px);display:none;align-items:center;justify-content:center;padding:16px}
+.mov.on{display:flex;animation:fb .3s}
+@keyframes fb{from{opacity:0}to{opacity:1}}
+.mod{background:rgba(10,14,24,.96);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(40px);border-radius:24px;width:100%;max-width:480px;max-height:88vh;overflow-y:auto;box-shadow:0 30px 80px rgba(0,0,0,.7);animation:mp .4s cubic-bezier(.19,1,.22,1);position:relative;z-index:10000}
+@keyframes mp{from{transform:scale(.94) translateY(16px);opacity:0}to{transform:none;opacity:1}}
+.mh{padding:24px 26px 18px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+.mav{width:64px;height:64px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:26px;border:2px solid rgba(255,255,255,.15);overflow:hidden}
+.mav img{width:100%;height:100%;object-fit:cover}
+.mi{flex:1;min-width:0}
+.mn{font-family:"Instrument Serif",serif;font-size:24px;line-height:1.1;margin-bottom:5px;color:#f5ede0}
+.mn em{font-style:italic}
+.mr{font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:#f0c874}
+.mcl{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:50%;width:32px;height:32px;cursor:pointer;color:rgba(245,237,224,.6);font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;touch-action:manipulation}
+.mb{padding:18px 26px 26px;display:flex;flex-direction:column;gap:10px}
+.mf{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06);border-radius:12px}
+.mfi{font-size:15px;color:#f0c874;flex-shrink:0}
+.mfl{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,237,224,.48);margin-bottom:3px}
+.mfv{font-family:"Instrument Serif",serif;font-size:16px;color:#f5ede0}
+.mst{padding:16px 20px;background:linear-gradient(135deg,rgba(212,168,67,.08),rgba(212,168,67,.03));border:1px solid rgba(212,168,67,.18);border-radius:14px;font-family:"Instrument Serif",serif;font-style:italic;font-size:15px;line-height:1.65;color:rgba(245,237,224,.85)}
+.edField{margin-bottom:10px}
+.edField label{display:block;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,237,224,.48);margin-bottom:5px}
+.edField input,.edField textarea,.edField select{width:100%;padding:11px 13px;background:rgba(8,12,22,.7);border:1px solid rgba(255,255,255,.1);border-radius:9px;color:#f5ede0;font-family:"Geist",sans-serif;font-size:13.5px;outline:none}
+.edField textarea{font-family:"Instrument Serif",serif;font-style:italic;font-size:14.5px;min-height:70px;resize:vertical}
+.edField input:focus,.edField textarea:focus,.edField select:focus{border-color:rgba(212,168,67,.45)}
+.edField select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23f0c874' d='M6 9L1 4h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+</style>
+<div id="vh" class="sec on">
+<p class="eb">Familial archive · Anno 1812</p>
+<h1 class="htt"><em>Андросовы</em><small>семейное древо</small></h1>
+<p class="hs">Двести четырнадцать лет тишины и памяти — собранные здесь ради одной маленькой девочки</p>
+<div class="ct">
+<button class="cb cbp" onclick="sh('t',document.querySelectorAll('.tab')[1])">Открыть древо →</button>
+<button class="cb cbs" onclick="sh('n',document.querySelectorAll('.tab')[2])">Фамилии рода</button>
+</div>
+<div class="hc">
+<div class="hh"><div class="hhn">30</div><div class="hhl">Персон</div></div>
+<div class="hh"><div class="hhn">8</div><div class="hhl">Поколений</div></div>
+<div class="hh"><div class="hhn">12</div><div class="hhl">Фамилий</div></div>
+<div class="hh"><div class="hhn">214</div><div class="hhl">Лет</div></div>
+</div>
+</div>
+
+<div id="vt" class="sec">
+<div style="max-width:1200px;margin:0 auto">
+<div class="ph"><div class="pe">Family tree</div><h2 class="pt">Семейное <em>древо</em></h2></div>
+<div style="text-align:center"><div class="tfilter">
+<button class="tfb on" id="fltAll" onclick="setFilter('all')">Все</button>
+<button class="tfb" id="fltDir" onclick="setFilter('direct')">Прямые</button>
+</div></div>
+<div class="treeWrap" id="treeWrap"></div>
+</div>
+</div>
+
+<div id="vn" class="sec">
+<div class="ph"><div class="pe">Branches of the bloodline</div><h2 class="pt">Фамилии <em>рода</em></h2><p class="ps">Двенадцать фамилий, сплетённых в одну историю за два столетия</p></div>
+<div class="sg">
+<div class="sc"><div class="si">🌳</div><div class="sn"><em>Андросовы</em></div><div class="sm">Главная ветвь · 8 поколений</div><div class="sd">Центральная линия. <em>Семён → Леонид → Валерий → Анатолий → Герман → Оливия.</em></div></div>
+<div class="sc"><div class="si">⚜️</div><div class="sn"><em>Саломины</em></div><div class="sm">Древнейшая ветвь · с 1812</div><div class="sd">Федот (1812) — самый ранний предок. Георгий Федотович репрессирован 13.12.1958, реабилитирован.</div></div>
+<div class="sc"><div class="si">🌿</div><div class="sn"><em>Хвостовы</em></div><div class="sm">По материнской линии</div><div class="sd">Дед Евгений Антонович (р. 1935). Прадед Алексей Михайлович. Бабушка Таисия Алексеевна.</div></div>
+<div class="sc"><div class="si">🏡</div><div class="sn"><em>Коротеевы</em></div><div class="sm">Крепостные · Тамбовская губерния</div><div class="sd">Предки — крепостные в селе Никольское. Прабабушка Александра (Ромашкина).</div></div>
+<div class="sc"><div class="si">🗡️</div><div class="sn"><em>Щербаковы</em></div><div class="sm">Через Хвостовых</div><div class="sd">Ольга Михайловна (Саломина) — прабабушка, Зюзино. Анатолий погиб в шахте в 20 лет.</div></div>
+<div class="sc"><div class="si">🌾</div><div class="sn"><em>Ромашкины</em></div><div class="sm">Через Коротеевых</div><div class="sd">Михаил и Евдокия — прапрадеды. Ветвь уходит в Одессу и Европу.</div></div>
+<div class="sc"><div class="si">🎖️</div><div class="sn"><em>Блинниковы</em></div><div class="sm">Ветеран ВОВ</div><div class="sd">Константин Тимофеевич (1916–1998) — ветеран ВОВ, контужен. Оренбург.</div></div>
+<div class="sc"><div class="si">💍</div><div class="sn"><em>Шевяковы</em></div><div class="sm">Жена · современная ветвь</div><div class="sd">Лилия Сергеевна (р. 06.02.1997) — жена Германа. Мать Оливии (05.04.2026).</div></div>
+<div class="sc"><div class="si">🇰🇿</div><div class="sn"><em>Грис</em></div><div class="sm">Через Коротеевых · Казахстан</div><div class="sd">Клара Николаевна (Коротеева) + Эдуард Грис из Караганды.</div></div>
+<div class="sc"><div class="si">👑</div><div class="sn"><em>Королевы</em></div><div class="sm">Через Щербаковых</div><div class="sd">Ирина Михайловна (Щербакова). Внуки: Эвелина, Егор, Ульяна.</div></div>
+<div class="sc"><div class="si">🌻</div><div class="sn"><em>Чальцевы</em></div><div class="sm">Через Блинниковых</div><div class="sd">Ксения Евгеньевна + Роман. Дети: Ксения и Егор.</div></div>
+<div class="sc"><div class="si">🌍</div><div class="sn"><em>Украинские</em></div><div class="sm">Прабабушка</div><div class="sd">Александра (Украинская) — жена Леонида Семёновича.</div></div>
+</div>
+</div>
+
+<div id="vs" class="sec">
+<div class="ph"><div class="pe">Archive index</div><h2 class="pt">Поиск <em>по роду</em></h2></div>
+<div class="sw"><input class="sin" id="si" type="text" placeholder="Имя, фамилия, год, место..." oninput="ds(this.value)"><div id="sr"></div></div>
+</div>
+</main>
+<div class="mov" id="mov" onclick="if(event.target.id==='mov')event.target.classList.remove('on')">
+<div class="mod" onclick="event.stopPropagation()">
+<div class="mh"><div class="mav" id="mav">♂</div><div class="mi"><div class="mn" id="mn"></div><div class="mr" id="mr"></div></div><button class="mcl" onclick="document.getElementById('mov').classList.remove('on')">✕</button></div>
+<div class="mb" id="mb"></div>
+</div></div>
+<div class="mov" id="loginMov" onclick="if(event.target.id==='loginMov')event.target.classList.remove('on')">
+<div class="mod" style="max-width:370px" onclick="event.stopPropagation()">
+<div class="mh"><div class="mi"><div class="mn"><em>Админка</em></div><div class="mr">Вход</div></div><button class="mcl" onclick="document.getElementById('loginMov').classList.remove('on')">✕</button></div>
+<div class="mb">
+<div class="edField"><label>Логин</label><input id="loginU" autocomplete="off"></div>
+<div class="edField"><label>Пароль</label><input id="loginP" type="password" autocomplete="off" onkeydown="if(event.key==='Enter')doLogin()"></div>
+<div id="loginErr" style="color:#f47070;font-size:12px;margin-bottom:10px;display:none">Неверный логин или пароль</div>
+<button class="cb cbp" style="width:100%" onclick="doLogin()">Войти</button>
+</div></div></div>
+<div class="mov" id="adminMov" onclick="if(event.target.id==='adminMov')event.target.classList.remove('on')">
+<div class="mod" style="max-width:540px" onclick="event.stopPropagation()">
+<div class="mh"><div class="mi"><div class="mn"><em>Список</em> персон</div><div class="mr">Нажми для редактирования</div></div><button class="mcl" onclick="document.getElementById('adminMov').classList.remove('on')">✕</button></div>
+<div class="mb" id="adminList" style="max-height:70vh;overflow-y:auto"></div>
+</div></div>
+<div class="mov" id="editMov" onclick="if(event.target.id==='editMov')event.target.classList.remove('on')">
+<div class="mod" onclick="event.stopPropagation()">
+<div class="mh"><div class="mi"><div class="mn" id="editTitle"><em>Редактирование</em></div><div class="mr">Админ-режим</div></div><button class="mcl" onclick="document.getElementById('editMov').classList.remove('on')">✕</button></div>
+<div class="mb" id="editBody"></div>
+</div></div>
+<script>
+(function(){
+  var v=document.getElementById("bgVid");
+  var c=document.getElementById("bgc");
+  v.addEventListener("error",function(){v.style.display="none";c.style.display="block";startFallback()});
+  v.addEventListener("loadeddata",function(){c.style.display="none"});
+  function startFallback(){
+    var bc=c.getContext("2d");var W=0,H=0,T=0;
+    var orbs=[
+      {x:.2,y:.25,r:.45,c:"28,56,120",s:.00022,px:.15,py:.1,ph:0},
+      {x:.82,y:.2,r:.38,c:"14,30,72",s:.00034,px:.11,py:.14,ph:1.8},
+      {x:.5,y:.82,r:.52,c:"22,40,90",s:.0002,px:.18,py:.08,ph:3.5},
+      {x:.08,y:.7,r:.32,c:"18,32,80",s:.00042,px:.08,py:.18,ph:1},
+      {x:.92,y:.58,r:.36,c:"10,22,58",s:.00028,px:.12,py:.12,ph:4.5}
+    ];
+    function rs(){W=window.innerWidth;H=window.innerHeight;c.width=W;c.height=H}
+    rs();window.addEventListener("resize",rs);
+    function frame(){
+      T++;bc.fillStyle="#030508";bc.fillRect(0,0,W,H);bc.globalCompositeOperation="lighter";
+      for(var i=0;i<orbs.length;i++){
+        var o=orbs[i];
+        var ox=Math.sin(T*o.s+o.ph)*o.px;var oy=Math.cos(T*o.s*.82+o.ph)*o.py;
+        var gx=(o.x+ox)*W,gy=(o.y+oy)*H,gr=o.r*Math.max(W,H);
+        var g=bc.createRadialGradient(gx,gy,0,gx,gy,gr);
+        g.addColorStop(0,"rgba("+o.c+",.55)");g.addColorStop(.45,"rgba("+o.c+",.22)");g.addColorStop(1,"rgba(0,0,0,0)");
+        bc.fillStyle=g;bc.fillRect(0,0,W,H);
+      }
+      bc.globalCompositeOperation="source-over";requestAnimationFrame(frame);
+    }
+    frame();
+  }
+  c.style.display="none";
+  setTimeout(function(){if(v.readyState<2){v.style.display="none";c.style.display="block";startFallback()}},3000);
+})();
+
+var PP=[
+{id:"i556",n:"Саломин Федот",r:"Пра(4)дед",s:"M",b:"1812",st:"Самый ранний известный предок.",gn:-6,dr:1},
+{id:"i555",n:"Саломина Параскева Ивановна",r:"Пра(4)бабушка",s:"F",gn:-6,dr:1},
+{id:"i550",n:"Саломин Федот Герасимович",r:"Прапрадед",s:"M",st:"Умер 27.03.1913 от воспаления лёгких.",gn:-5,dr:1},
+{id:"i551",n:"Саломина Анна Тимофеевна",r:"Прапрабабушка",s:"F",gn:-5,dr:1},
+{id:"i557",n:"Ромашкин Михаил",r:"Прапрадед",s:"M",gn:-5,dr:1},
+{id:"i558",n:"Ромашкина Евдокия",r:"Прапрабабушка",s:"F",gn:-5,dr:1},
+{id:"i518",n:"Щербаков Алексей Михайлович",r:"Прадед",s:"M",b:"02.06.1912",gn:-4,dr:1},
+{id:"i517",n:"Щербакова Ольга Михайловна",r:"Прабабушка",s:"F",b:"02.06.1912",d:"01.03.1988",pl:"Зюзино, Москва",st:"Урождённая Саломина — прямая связь с Федотом 1812.",gn:-4,dr:1},
+{id:"i528",n:"Коротеев Николай Иванович",r:"Прадед",s:"M",gn:-4,dr:1},
+{id:"i529",n:"Коротеева Александра Михайловна",r:"Прабабушка",s:"F",st:"Урождённая Ромашкина. Предки — крепостные.",gn:-4,dr:1},
+{id:"i531",n:"Андросов Леонид Семёнович",r:"Прадед",s:"M",gn:-4,dr:1},
+{id:"i530",n:"Андросова Александра",r:"Прабабушка",s:"F",gn:-4,dr:1},
+{id:"i540",n:"Блинников Константин Тимофеевич",r:"Прапрадед",s:"M",b:"11.06.1916",d:"02.04.1998",pl:"Оренбург",st:"Ветеран ВОВ. Контужен.",gn:-4,dr:0},
+{id:"i57",n:"Хвостов Евгений Антонович",r:"Дедушка",s:"M",b:"21.06.1935",gn:-3,dr:1},
+{id:"i56",n:"Хвостова Таисия Алексеевна",r:"Бабушка",s:"F",gn:-3,dr:1},
+{id:"i58",n:"Андросов Валерий Леонидович",r:"Дедушка",s:"M",gn:-3,dr:1},
+{id:"i55",n:"Андросова Ванда Николаевна",r:"Бабушка",s:"F",gn:-3,dr:1},
+{id:"i537",n:"Блинников Олег Константинович",r:"Двоюр. дед",s:"M",b:"04.12.1943",d:"12.09.2024",st:"Жил в Сочи.",gn:-3,dr:0},
+{id:"i52",n:"Андросов Анатолий Валерьевич",r:"Отец",s:"M",b:"24.04.1958",gn:-2,dr:1},
+{id:"i53",n:"Андросова Ольга Евгеньевна",r:"Мать",s:"F",gn:-2,dr:1},
+{id:"i510",n:"Блинникова Татьяна Валерьевна",r:"Тётя",s:"F",b:"04.03.1967",gn:-2,dr:0},
+{id:"i533",n:"Андросов Леонид Валерьевич",r:"Дядя",s:"M",gn:-2,dr:0},
+{id:"i51",n:"Андросов Герман Анатольевич",r:"Я ★",s:"M",b:"27.08.1987",st:"Составитель архива. Муж Лилии, папа Оливии.",gn:-1,dr:1,me:1},
+{id:"i541",n:"Андросова Лилия Сергеевна",r:"Жена",s:"F",b:"06.02.1997",gn:-1,dr:1},
+{id:"i54",n:"Андросова Ангелина Анатольевна",r:"Сестра",s:"F",b:"03.06.1985",pl:"Сочи",gn:-1,dr:0},
+{id:"i515",n:"Андросова Юля Анатольевна",r:"Сестра",s:"F",gn:-1,dr:0},
+{id:"i511",n:"Блинников Денис Евгеньевич",r:"Двоюр. брат",s:"M",b:"28.11.1996",gn:-1,dr:0},
+{id:"i513",n:"Чальцева Ксенья Евгеньевна",r:"Двоюр. сестра",s:"F",b:"17.01.1990",gn:-1,dr:0},
+{id:"i542",n:"Андросова Оливия Германовна",r:"Дочь 💛",s:"F",b:"05.04.2026",st:"Наша любимая дочь. Для неё создаётся этот архив.",gn:0,dr:1},
+{id:"i516",n:"Андросова Злата Ильинишна",r:"Племянница",s:"F",b:"25.03.2012",gn:0,dr:0}
+];
+
+var overrides={},photos={};
+try{overrides=JSON.parse(localStorage.getItem("adrOv")||"{}")}catch(e){}
+try{photos=JSON.parse(localStorage.getItem("adrPh")||"{}")}catch(e){}
+
+function getPerson(id){
+  for(var i=0;i<PP.length;i++) if(PP[i].id===id){
+    var b=PP[i];
+    if(overrides[id]){var m={};for(var k in b)m[k]=b[k];for(var k in overrides[id])m[k]=overrides[id][k];return m}
+    return b;
+  }
+  return null;
+}
+function esc(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
+
+var currentFilter="all";
+
+function renderTree(){
+  var wrap=document.getElementById("treeWrap");
+  if(!wrap) return;
+  var people=[];
+  for(var i=0;i<PP.length;i++){
+    var p=getPerson(PP[i].id);
+    if(currentFilter==="direct"&&!p.dr) continue;
+    people.push(p);
+  }
+  var byGen={};
+  for(var i=0;i<people.length;i++){
+    var g=people[i].gn==null?0:people[i].gn;
+    if(!byGen[g]) byGen[g]=[];
+    byGen[g].push(people[i]);
+  }
+  var gks=[];
+  for(var k in byGen) gks.push(parseInt(k,10));
+  gks.sort(function(a,b){return a-b});
+  var genNames={"-6":"VIII поколение · 1812","-5":"VII поколение","-4":"VI поколение","-3":"V поколение","-2":"IV поколение","-1":"III поколение · сейчас","0":"II поколение · дети"};
+  var html="";
+  for(var gi=0;gi<gks.length;gi++){
+    var g=gks[gi];
+    var row=byGen[g];
+    html+='<div class="genBlock">';
+    html+='<div class="genLabel">'+(genNames[g]||("Поколение "+g))+'</div>';
+    html+='<div class="genRow">';
+    for(var j=0;j<row.length;j++){
+      var p=row[j];
+      var cls="card";
+      if(p.me) cls+=" me";
+      else if(p.s==="F") cls+=" female";
+      else cls+=" male";
+      if(!p.dr) cls+=" side";
+      var ph=photos[p.id];
+      var phContent=ph?'<img src="'+ph+'" alt="">':(p.s==="F"?"♀":"♂");
+      var dates="";
+      if(p.b) dates+=p.b.slice(-4);
+      if(p.d) dates+=(dates?" — ":"")+p.d.slice(-4);
+      if(!dates) dates="&nbsp;";
+      html+='<div class="'+cls+'" data-id="'+p.id+'" onclick="omById(this.getAttribute(\'data-id\'))">';
+      if(p.me) html+='<div class="cardStar">★</div>';
+      html+='<div class="cardPhoto">'+phContent+'</div>';
+      html+='<div class="cardName">'+esc(p.n.split(" ").slice(0,2).join(" "))+'</div>';
+      html+='<div class="cardRole">'+esc(p.r||"")+'</div>';
+      html+='<div class="cardDates">'+dates+'</div>';
+      html+='</div>';
+    }
+    html+='</div></div>';
+  }
+  wrap.innerHTML=html;
+}
+
+function setFilter(f){
+  currentFilter=f;
+  document.getElementById("fltAll").classList.toggle("on",f==="all");
+  document.getElementById("fltDir").classList.toggle("on",f==="direct");
+  renderTree();
+}
+
+function om(p){
+  var mnEl=document.getElementById("mn");
+  var parts=p.n.split(" ");
+  mnEl.innerHTML="<em>"+esc(parts[0])+"</em>"+(parts.length>1?" "+esc(parts.slice(1).join(" ")):"");
+  document.getElementById("mr").textContent=p.r||"";
+  var av=document.getElementById("mav");
+  var ph=photos[p.id];
+  if(ph){av.innerHTML='<img src="'+ph+'" alt="">'}
+  else{av.innerHTML=p.s==="F"?"♀":"♂"}
+  av.style.background=p.me?"linear-gradient(180deg,#fff2c8,#d4a843)":p.s==="F"?"linear-gradient(180deg,#ebb5d0,#c45a8a)":"linear-gradient(180deg,#6b9be5,#2f5ba8)";
+  av.style.borderColor=p.me?"rgba(240,200,116,.5)":p.s==="F"?"rgba(216,123,160,.5)":"rgba(100,155,230,.5)";
+  var b="";
+  if(p.b) b+='<div class="mf"><span class="mfi">★</span><div><div class="mfl">Дата рождения</div><div class="mfv">'+esc(p.b)+'</div></div></div>';
+  if(p.d) b+='<div class="mf"><span class="mfi">†</span><div><div class="mfl">Дата смерти</div><div class="mfv">'+esc(p.d)+'</div></div></div>';
+  if(p.pl) b+='<div class="mf"><span class="mfi">◈</span><div><div class="mfl">Место</div><div class="mfv">'+esc(p.pl)+'</div></div></div>';
+  if(p.st) b+='<div class="mst">'+esc(p.st)+'</div>';
+  if(!b) b='<div class="mf"><span class="mfi">◈</span><div><div class="mfl">Данные</div><div class="mfv" style="font-style:italic;opacity:.65">Нет дополнительной информации</div></div></div>';
+  document.getElementById("mb").innerHTML=b;
+  document.getElementById("mov").classList.add("on");
+}
+function omById(id){var p=getPerson(id);if(p) om(p)}
+
+document.addEventListener("keydown",function(e){
+  if(e.key==="Escape"){var mm=["mov","loginMov","adminMov","editMov"];for(var i=0;i<mm.length;i++) document.getElementById(mm[i]).classList.remove("on")}
+});
+
+function ds(q){
+  var el=document.getElementById("sr");
+  if(!q.trim()){el.innerHTML="";return}
+  var lo=q.toLowerCase();
+  var f=[];
+  for(var i=0;i<PP.length;i++){
+    var p=getPerson(PP[i].id);
+    if(p.n.toLowerCase().indexOf(lo)>-1||(p.r&&p.r.toLowerCase().indexOf(lo)>-1)||(p.b&&p.b.indexOf(q)>-1)||(p.pl&&p.pl.toLowerCase().indexOf(lo)>-1)||(p.st&&p.st.toLowerCase().indexOf(lo)>-1)) f.push(p);
+  }
+  if(!f.length){el.innerHTML='<p style="text-align:center;color:rgba(245,237,224,.4);padding:40px 20px;font-family:\'Instrument Serif\',serif;font-style:italic;font-size:16px">Никого не найдено</p>';return}
+  var out="";
+  for(var i=0;i<f.length;i++){
+    var p=f[i];
+    var bg=p.me?"linear-gradient(180deg,#fff2c8,#d4a843)":p.s==="F"?"linear-gradient(180deg,#ebb5d0,#c45a8a)":"linear-gradient(180deg,#6b9be5,#2f5ba8)";
+    var ph=photos[p.id];
+    var avC=ph?'<img src="'+ph+'" alt="">':(p.s==="F"?"♀":"♂");
+    out+='<div class="sri" data-id="'+p.id+'" onclick="omById(this.getAttribute(\'data-id\'))"><div class="sav" style="background:'+bg+'">'+avC+'</div><div><div class="snm">'+esc(p.n)+'</div><div class="smt">'+esc(p.r||"")+(p.b?" · ★ "+p.b:"")+(p.pl?" · "+esc(p.pl):"")+'</div></div><div class="stg">'+(p.dr?"Прямой":"Боковой")+'</div></div>';
+  }
+  el.innerHTML=out;
+}
+
+function sh(id,btn){
+  var secs=document.querySelectorAll(".sec");
+  for(var i=0;i<secs.length;i++) secs[i].classList.remove("on");
+  var ts=document.querySelectorAll(".tab");
+  for(var i=0;i<ts.length;i++) ts[i].classList.remove("on");
+  var v=document.getElementById("v"+id);
+  if(v) v.classList.add("on");
+  if(btn) btn.classList.add("on");
+  window.scrollTo(0,0);
+  if(id==="t") renderTree();
+}
+
+var brandClicks=0,brandTimer=null;
+function brandTap(){
+  brandClicks++;
+  if(brandTimer) clearTimeout(brandTimer);
+  brandTimer=setTimeout(function(){brandClicks=0},500);
+  if(brandClicks>=2){brandClicks=0;openLogin()}
+}
+function openLogin(){
+  if(sessionStorage.getItem("adrAdmin")==="1"){openAdmin();return}
+  document.getElementById("loginU").value="";
+  document.getElementById("loginP").value="";
+  document.getElementById("loginErr").style.display="none";
+  document.getElementById("loginMov").classList.add("on");
+}
+function doLogin(){
+  var u=document.getElementById("loginU").value.trim();
+  var p=document.getElementById("loginP").value;
+  if(u==="admin"&&p==="admin1234"){
+    sessionStorage.setItem("adrAdmin","1");
+    document.getElementById("loginMov").classList.remove("on");
+    openAdmin();
+  } else {
+    document.getElementById("loginErr").style.display="block";
+  }
+}
+function openAdmin(){
+  var list=document.getElementById("adminList");
+  var out="";
+  for(var i=0;i<PP.length;i++){
+    var p=getPerson(PP[i].id);
+    var bg=p.me?"linear-gradient(180deg,#fff2c8,#d4a843)":p.s==="F"?"linear-gradient(180deg,#ebb5d0,#c45a8a)":"linear-gradient(180deg,#6b9be5,#2f5ba8)";
+    var ph=photos[p.id];
+    var avC=ph?'<img src="'+ph+'" alt="">':(p.s==="F"?"♀":"♂");
+    out+='<div class="sri" data-id="'+p.id+'" onclick="editPerson(this.getAttribute(\'data-id\'))"><div class="sav" style="background:'+bg+'">'+avC+'</div><div><div class="snm">'+esc(p.n)+'</div><div class="smt">'+esc(p.r||"")+(p.b?" · ★ "+p.b:"")+'</div></div><div class="stg">'+(p.dr?"Прямой":"Боковой")+'</div></div>';
+  }
+  list.innerHTML=out;
+  document.getElementById("adminMov").classList.add("on");
+}
+var editingId=null;
+function editPerson(id){
+  editingId=id;
+  var p=getPerson(id);
+  document.getElementById("adminMov").classList.remove("on");
+  document.getElementById("editTitle").innerHTML="<em>"+esc(p.n.split(" ")[0])+"</em> "+esc(p.n.split(" ").slice(1).join(" "));
+  var ph=photos[id]||"";
+  var body='<div style="display:flex;gap:12px;align-items:center;margin-bottom:16px">';
+  body+='<div id="phPrev" style="width:70px;height:70px;border-radius:50%;border:2px solid rgba(240,200,116,.45);overflow:hidden;flex-shrink:0;background:'+(p.me?"linear-gradient(180deg,#fff2c8,#d4a843)":p.s==="F"?"linear-gradient(180deg,#ebb5d0,#c45a8a)":"linear-gradient(180deg,#6b9be5,#2f5ba8)")+';display:flex;align-items:center;justify-content:center;font-size:28px">';
+  body+=ph?'<img src="'+ph+'" style="width:100%;height:100%;object-fit:cover">':(p.s==="F"?"♀":"♂");
+  body+='</div><div style="flex:1"><label class="cb cbs" style="padding:9px 16px;font-size:12px;display:inline-block;cursor:pointer">Загрузить фото<input type="file" accept="image/*" onchange="loadPhoto(event)" style="display:none"></label>';
+  if(ph) body+=' <button class="cb" style="padding:9px 12px;font-size:12px;background:rgba(200,60,60,.15);border:1px solid rgba(200,60,60,.3);color:#f47070" onclick="removePhoto()">Удалить</button>';
+  body+='</div></div>';
+  body+='<div class="edField"><label>Имя (фамилия имя отчество)</label><input id="edN" value="'+esc(p.n)+'"></div>';
+  body+='<div class="edField"><label>Роль в семье</label><input id="edR" value="'+esc(p.r||"")+'"></div>';
+  body+='<div style="display:flex;gap:10px"><div class="edField" style="flex:1"><label>Пол</label><select id="edS"><option value="M"'+(p.s==="M"?" selected":"")+'>Мужской</option><option value="F"'+(p.s==="F"?" selected":"")+'>Женский</option></select></div><div class="edField" style="flex:1"><label>Линия</label><select id="edDR"><option value="1"'+(p.dr?" selected":"")+'>Прямая</option><option value="0"'+(!p.dr?" selected":"")+'>Боковая</option></select></div></div>';
+  body+='<div style="display:flex;gap:10px"><div class="edField" style="flex:1"><label>Родился</label><input id="edB" value="'+esc(p.b||"")+'" placeholder="дд.мм.гггг"></div><div class="edField" style="flex:1"><label>Умер</label><input id="edD" value="'+esc(p.d||"")+'" placeholder="дд.мм.гггг"></div></div>';
+  body+='<div class="edField"><label>Место</label><input id="edPL" value="'+esc(p.pl||"")+'"></div>';
+  body+='<div class="edField"><label>История / воспоминания</label><textarea id="edST">'+esc(p.st||"")+'</textarea></div>';
+  body+='<div style="display:flex;gap:8px;margin-top:12px"><button class="cb cbp" style="flex:1" onclick="savePerson()">Сохранить</button><button class="cb cbs" onclick="resetPerson()">Сброс</button><button class="cb cbs" onclick="document.getElementById(\'editMov\').classList.remove(\'on\');openAdmin()">Назад</button></div>';
+  document.getElementById("editBody").innerHTML=body;
+  document.getElementById("editMov").classList.add("on");
+}
+function loadPhoto(e){
+  var f=e.target.files[0];if(!f) return;
+  var rd=new FileReader();
+  rd.onload=function(ev){
+    var img=new Image();
+    img.onload=function(){
+      var MAX=400;var w=img.width,h=img.height;
+      if(w>MAX){h=Math.round(h*MAX/w);w=MAX}
+      var cv=document.createElement("canvas");cv.width=w;cv.height=h;
+      cv.getContext("2d").drawImage(img,0,0,w,h);
+      var src=cv.toDataURL("image/jpeg",.8);
+      photos[editingId]=src;
+      try{localStorage.setItem("adrPh",JSON.stringify(photos))}catch(_){alert("Недостаточно места")}
+      document.getElementById("phPrev").innerHTML='<img src="'+src+'" style="width:100%;height:100%;object-fit:cover">';
+    };
+    img.src=ev.target.result;
+  };
+  rd.readAsDataURL(f);
+}
+function removePhoto(){
+  delete photos[editingId];
+  try{localStorage.setItem("adrPh",JSON.stringify(photos))}catch(_){}
+  editPerson(editingId);
+}
+function savePerson(){
+  var o=overrides[editingId]||{};
+  o.n=document.getElementById("edN").value.trim();
+  o.r=document.getElementById("edR").value.trim();
+  o.s=document.getElementById("edS").value;
+  o.dr=document.getElementById("edDR").value==="1"?1:0;
+  o.b=document.getElementById("edB").value.trim();
+  o.d=document.getElementById("edD").value.trim();
+  o.pl=document.getElementById("edPL").value.trim();
+  o.st=document.getElementById("edST").value.trim();
+  overrides[editingId]=o;
+  try{localStorage.setItem("adrOv",JSON.stringify(overrides))}catch(_){alert("Ошибка сохранения")}
+  document.getElementById("editMov").classList.remove("on");
+  openAdmin();
+  if(document.getElementById("vt").classList.contains("on")) renderTree();
+}
+function resetPerson(){
+  if(!confirm("Сбросить все изменения этой персоны?")) return;
+  delete overrides[editingId];
+  try{localStorage.setItem("adrOv",JSON.stringify(overrides))}catch(_){}
+  document.getElementById("editMov").classList.remove("on");
+  openAdmin();
+  if(document.getElementById("vt").classList.contains("on")) renderTree();
+}
+
+renderTree();
+</script>
+</body>
+</html>

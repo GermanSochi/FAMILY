@@ -1,0 +1,2379 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Семейное древо Андросовых</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════
+   ROOT — тёплая семейная палитра
+═══════════════════════════════════════ */
+:root {
+  --cream: #faf6ef;
+  --cream2: #f3ece0;
+  --cream3: #e8ddc8;
+  --paper: #f7f0e3;
+  --brown: #6b4c2a;
+  --brown2: #8b6340;
+  --brown3: #a07848;
+  --gold: #c8962a;
+  --gold2: #e6b048;
+  --gold3: #f5d080;
+  --text: #2c1f0e;
+  --text2: #5a3e22;
+  --text3: #9a7a52;
+  --text4: #c4a47a;
+  --border: rgba(107,76,42,.15);
+  --border2: rgba(107,76,42,.3);
+  --shadow: rgba(107,76,42,.12);
+  --red: #c04040;
+  --green: #4a8a5a;
+  --blue: #3a6898;
+  --rad: 12px;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--cream);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── texture overlay ── */
+body::before {
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events:none;
+  z-index:0;
+}
+
+/* ═══════════════════════════════════════
+   HERO
+═══════════════════════════════════════ */
+.hero {
+  position:relative;
+  background: linear-gradient(160deg, #3d2810 0%, #6b4c2a 40%, #8b6340 70%, #a07848 100%);
+  overflow: hidden;
+  padding: 64px 20px 52px;
+  text-align: center;
+}
+
+.hero::after {
+  content:'';
+  position:absolute;
+  bottom:0; left:0; right:0;
+  height:48px;
+  background: var(--cream);
+  clip-path: ellipse(55% 100% at 50% 100%);
+}
+
+/* decorative leaves */
+.hero-leaf {
+  position:absolute;
+  font-size:80px;
+  opacity:.06;
+  pointer-events:none;
+  line-height:1;
+}
+.hero-leaf:nth-child(1){top:-10px;left:-20px;transform:rotate(-20deg);font-size:120px}
+.hero-leaf:nth-child(2){top:10px;right:-10px;transform:rotate(15deg);font-size:100px}
+.hero-leaf:nth-child(3){bottom:30px;left:40px;transform:rotate(30deg);font-size:60px}
+.hero-leaf:nth-child(4){bottom:20px;right:60px;transform:rotate(-40deg);font-size:70px}
+
+.hero-badge {
+  display:inline-block;
+  font-size:11px;
+  letter-spacing:4px;
+  text-transform:uppercase;
+  color:rgba(245,208,128,.7);
+  margin-bottom:18px;
+}
+
+.hero h1 {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(36px,7vw,80px);
+  font-weight:700;
+  color:#fdf8f0;
+  letter-spacing:3px;
+  line-height:1.05;
+  margin-bottom:8px;
+  text-shadow:0 2px 20px rgba(0,0,0,.3);
+}
+
+.hero-sub {
+  font-size:14px;
+  color:rgba(245,208,128,.8);
+  letter-spacing:2px;
+  margin-bottom:28px;
+}
+
+/* ── STATS ── */
+.stats {
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  flex-wrap:wrap;
+  position:relative;
+  z-index:1;
+}
+
+.stat {
+  background:rgba(255,255,255,.12);
+  backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:10px;
+  padding:14px 20px;
+  text-align:center;
+  min-width:110px;
+}
+
+.stat-n {
+  font-family:'Playfair Display',serif;
+  font-size:28px;
+  color:#fdf8f0;
+  line-height:1;
+}
+
+.stat-l {
+  font-size:10px;
+  color:rgba(245,208,128,.75);
+  letter-spacing:2px;
+  text-transform:uppercase;
+  margin-top:3px;
+}
+
+/* ═══════════════════════════════════════
+   NAV
+═══════════════════════════════════════ */
+.nav {
+  display:flex;
+  justify-content:center;
+  background:var(--cream);
+  border-bottom:2px solid var(--cream3);
+  position:sticky;
+  top:0;
+  z-index:300;
+  gap:0;
+}
+
+.nb {
+  padding:16px 24px;
+  background:none;
+  border:none;
+  border-bottom:3px solid transparent;
+  color:var(--text3);
+  font-family:'Nunito',sans-serif;
+  font-size:13px;
+  font-weight:600;
+  letter-spacing:1px;
+  cursor:pointer;
+  transition:all .2s;
+  position:relative;
+  top:2px;
+}
+
+.nb:hover { color:var(--brown2); }
+.nb.active { color:var(--brown); border-bottom-color:var(--gold); }
+
+/* ═══════════════════════════════════════
+   SECTIONS
+═══════════════════════════════════════ */
+.sec { display:none; min-height:80vh; }
+.sec.active { display:block; }
+
+/* ═══════════════════════════════════════
+   TREE SECTION
+═══════════════════════════════════════ */
+#tree-sec {
+  padding: 40px 16px 60px;
+  background: linear-gradient(to bottom, var(--cream), var(--paper));
+}
+
+.tree-wrap { max-width:1400px; margin:0 auto; overflow-x:auto; padding-bottom:20px; }
+
+.gen-label {
+  text-align:center;
+  font-size:10px;
+  color:var(--text4);
+  letter-spacing:3px;
+  text-transform:uppercase;
+  padding:20px 0 8px;
+}
+
+.gen-row {
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:12px;
+  padding:4px 0;
+}
+
+/* ── CONNECTOR ── */
+.vline {
+  width:2px;
+  height:28px;
+  background:linear-gradient(to bottom, var(--gold2), var(--cream3));
+  margin:0 auto;
+  border-radius:2px;
+  opacity:.6;
+}
+
+.bridge {
+  width:36px;
+  height:2px;
+  background:var(--cream3);
+  margin-top:52px;
+  flex-shrink:0;
+  position:relative;
+  border-radius:1px;
+}
+
+.bridge::before, .bridge::after {
+  content:'';
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--gold2);
+}
+.bridge::before { left:-3px; }
+.bridge::after { right:-3px; }
+
+/* ═══════════════════════════════════════
+   PERSON CARD — heart of the redesign
+═══════════════════════════════════════ */
+.card {
+  background:#fff;
+  border:1.5px solid var(--cream3);
+  border-radius:var(--rad);
+  width:166px;
+  flex-shrink:0;
+  cursor:pointer;
+  transition:all .25s cubic-bezier(.2,.8,.2,1);
+  overflow:hidden;
+  position:relative;
+  box-shadow:0 2px 12px var(--shadow);
+}
+
+.card:hover {
+  border-color:var(--gold2);
+  box-shadow:0 8px 32px rgba(107,76,42,.18);
+  transform:translateY(-4px);
+}
+
+.card.me {
+  border-color:var(--gold);
+  box-shadow:0 4px 20px rgba(200,150,42,.25);
+}
+
+.card.me .card-photo-wrap::after {
+  content:'★ Я';
+  position:absolute;
+  bottom:6px;
+  right:6px;
+  background:var(--gold);
+  color:#fff;
+  font-size:9px;
+  font-weight:700;
+  padding:2px 7px;
+  border-radius:10px;
+  letter-spacing:1px;
+}
+
+.card.deceased { opacity:.78; }
+.card.deceased .card-photo-wrap::before {
+  content:'†';
+  position:absolute;
+  top:7px;
+  left:8px;
+  color:rgba(255,255,255,.85);
+  font-size:14px;
+  z-index:2;
+  text-shadow:0 1px 3px rgba(0,0,0,.5);
+}
+
+/* ── PHOTO AREA ── */
+.card-photo-wrap {
+  width:100%;
+  height:110px;
+  background:linear-gradient(135deg, var(--cream2), var(--cream3));
+  position:relative;
+  overflow:hidden;
+}
+
+.card-photo-wrap img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:transform .4s ease;
+}
+
+.card:hover .card-photo-wrap img { transform:scale(1.05); }
+
+.card-photo-wrap .card-av {
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.card-photo-wrap .card-av svg { width:72px; height:72px; }
+
+/* ── CARD BODY ── */
+.card-body {
+  padding:10px 12px 12px;
+}
+
+.c-role {
+  font-size:9px;
+  color:var(--text4);
+  letter-spacing:2px;
+  text-transform:uppercase;
+  margin-bottom:4px;
+}
+
+.c-name {
+  font-family:'Playfair Display',serif;
+  font-size:13px;
+  color:var(--text);
+  line-height:1.35;
+  margin-bottom:3px;
+}
+
+.c-maiden {
+  font-size:10px;
+  color:var(--text3);
+  font-style:italic;
+  margin-bottom:3px;
+}
+
+.c-date {
+  font-size:10px;
+  color:var(--gold);
+  font-weight:600;
+}
+
+.c-story-hint {
+  font-size:9px;
+  color:var(--text4);
+  margin-top:4px;
+  font-style:italic;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+
+/* ─── add-photo button on card ─── */
+.card-add-photo {
+  position:absolute;
+  bottom:6px;
+  right:6px;
+  width:26px;
+  height:26px;
+  border-radius:50%;
+  background:rgba(255,255,255,.9);
+  border:1px solid var(--cream3);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:14px;
+  color:var(--brown2);
+  cursor:pointer;
+  transition:all .2s;
+  z-index:3;
+  opacity:0;
+}
+
+.card:hover .card-add-photo { opacity:1; }
+.card-add-photo:hover { background:var(--gold2); color:#fff; border-color:var(--gold2); }
+
+/* ═══════════════════════════════════════
+   PERSON MODAL — FamyTale style
+═══════════════════════════════════════ */
+.overlay {
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(44,31,14,.6);
+  backdrop-filter:blur(4px);
+  z-index:1000;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+.overlay.open { display:flex; }
+
+.modal {
+  background:#fff;
+  border-radius:16px;
+  max-width:520px;
+  width:100%;
+  max-height:90vh;
+  overflow-y:auto;
+  position:relative;
+  box-shadow:0 20px 80px rgba(44,31,14,.3);
+  animation:mfade .3s cubic-bezier(.2,.8,.2,1);
+}
+
+@keyframes mfade {
+  from{opacity:0;transform:translateY(24px) scale(.97)}
+  to{opacity:1;transform:none}
+}
+
+/* ── modal header photo ── */
+.modal-photo {
+  width:100%;
+  height:220px;
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(135deg, var(--cream2) 0%, var(--cream3) 100%);
+  border-radius:16px 16px 0 0;
+}
+
+.modal-photo img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.modal-photo .modal-av {
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.modal-photo .modal-av svg { width:110px; height:110px; }
+
+.modal-photo-overlay {
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to top, rgba(44,31,14,.7) 0%, transparent 50%);
+}
+
+.modal-photo-btns {
+  position:absolute;
+  bottom:12px;
+  right:12px;
+  display:flex;
+  gap:8px;
+}
+
+.modal-photo-btn {
+  background:rgba(255,255,255,.92);
+  border:none;
+  border-radius:8px;
+  padding:7px 12px;
+  font-family:'Nunito',sans-serif;
+  font-size:12px;
+  font-weight:600;
+  color:var(--brown);
+  cursor:pointer;
+  transition:all .2s;
+  display:flex;
+  align-items:center;
+  gap:5px;
+}
+
+.modal-photo-btn:hover { background:var(--gold2); color:#fff; }
+
+.modal-name-block {
+  position:absolute;
+  bottom:14px;
+  left:18px;
+  right:100px;
+}
+
+.modal-name-block .m-role {
+  font-size:10px;
+  color:rgba(245,208,128,.85);
+  letter-spacing:3px;
+  text-transform:uppercase;
+  margin-bottom:4px;
+}
+
+.modal-name-block .m-name {
+  font-family:'Playfair Display',serif;
+  font-size:20px;
+  color:#fff;
+  line-height:1.25;
+  text-shadow:0 1px 8px rgba(0,0,0,.4);
+}
+
+/* ── modal close ── */
+.mcl {
+  position:absolute;
+  top:12px;
+  right:14px;
+  background:rgba(255,255,255,.85);
+  border:none;
+  border-radius:50%;
+  width:32px;
+  height:32px;
+  font-size:16px;
+  color:var(--brown);
+  cursor:pointer;
+  transition:all .2s;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:10;
+}
+
+.mcl:hover { background:#fff; color:var(--red); }
+
+/* ── modal tabs ── */
+.modal-tabs {
+  display:flex;
+  border-bottom:1px solid var(--cream3);
+  padding:0 18px;
+  gap:0;
+}
+
+.modal-tab {
+  padding:14px 16px;
+  background:none;
+  border:none;
+  border-bottom:2px solid transparent;
+  font-family:'Nunito',sans-serif;
+  font-size:13px;
+  font-weight:600;
+  color:var(--text3);
+  cursor:pointer;
+  transition:all .2s;
+  position:relative;
+  top:1px;
+}
+
+.modal-tab.active { color:var(--brown); border-bottom-color:var(--gold); }
+.modal-tab:hover:not(.active) { color:var(--brown2); }
+
+/* ── modal body ── */
+.modal-body { padding:20px 20px 24px; }
+
+.tab-pane { display:none; }
+.tab-pane.active { display:block; }
+
+/* facts */
+.fact-row {
+  display:flex;
+  align-items:flex-start;
+  padding:10px 0;
+  border-bottom:1px solid var(--cream3);
+  gap:12px;
+}
+
+.fact-row:last-child { border-bottom:none; }
+
+.fact-icon {
+  width:32px;
+  height:32px;
+  border-radius:8px;
+  background:var(--cream2);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:14px;
+  flex-shrink:0;
+}
+
+.fact-label {
+  font-size:11px;
+  color:var(--text3);
+  letter-spacing:1px;
+  text-transform:uppercase;
+  margin-bottom:2px;
+}
+
+.fact-val {
+  font-size:14px;
+  color:var(--text);
+  font-weight:500;
+}
+
+.fact-empty {
+  font-size:13px;
+  color:var(--text4);
+  font-style:italic;
+  cursor:pointer;
+  transition:color .2s;
+}
+
+.fact-empty:hover { color:var(--blue); }
+
+/* story block */
+.story-block {
+  background:var(--cream);
+  border-left:3px solid var(--gold2);
+  border-radius:0 8px 8px 0;
+  padding:14px 16px;
+  font-size:13px;
+  color:var(--text2);
+  line-height:1.75;
+  font-style:italic;
+  margin-top:4px;
+}
+
+/* photos grid */
+.photos-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+}
+
+.photo-thumb {
+  aspect-ratio:1;
+  border-radius:8px;
+  overflow:hidden;
+  background:var(--cream2);
+  cursor:pointer;
+  transition:all .2s;
+}
+
+.photo-thumb:hover { transform:scale(1.03); box-shadow:0 4px 16px var(--shadow); }
+
+.photo-thumb img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.photo-add-btn {
+  aspect-ratio:1;
+  border-radius:8px;
+  border:2px dashed var(--cream3);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  cursor:pointer;
+  transition:all .2s;
+  color:var(--text3);
+  font-size:12px;
+  font-weight:600;
+}
+
+.photo-add-btn:hover { border-color:var(--gold2); color:var(--gold); background:var(--cream); }
+.photo-add-btn span { font-size:22px; }
+
+/* relatives */
+.rel-list { display:flex; flex-direction:column; gap:8px; }
+
+.rel-item {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:8px 12px;
+  background:var(--cream);
+  border-radius:10px;
+  cursor:pointer;
+  transition:all .2s;
+}
+
+.rel-item:hover { background:var(--cream2); transform:translateX(4px); }
+
+.rel-av {
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  overflow:hidden;
+  flex-shrink:0;
+  background:var(--cream2);
+  border:2px solid var(--cream3);
+}
+
+.rel-av svg { width:100%; height:100%; }
+.rel-av img { width:100%; height:100%; object-fit:cover; }
+
+.rel-name { font-size:14px; color:var(--text); font-weight:500; }
+.rel-role { font-size:11px; color:var(--text3); }
+
+/* modal actions */
+.modal-actions {
+  display:flex;
+  gap:8px;
+  padding:0 20px 20px;
+  flex-wrap:wrap;
+}
+
+.btn {
+  padding:10px 18px;
+  border-radius:8px;
+  font-family:'Nunito',sans-serif;
+  font-size:13px;
+  font-weight:600;
+  cursor:pointer;
+  transition:all .2s;
+  border:none;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.btn-primary {
+  background:var(--brown);
+  color:#fff;
+}
+
+.btn-primary:hover { background:var(--brown2); }
+
+.btn-secondary {
+  background:var(--cream);
+  color:var(--brown);
+  border:1.5px solid var(--cream3);
+}
+
+.btn-secondary:hover { border-color:var(--brown2); background:var(--cream2); }
+
+.btn-danger {
+  background:none;
+  color:var(--red);
+  border:1.5px solid rgba(192,64,64,.3);
+}
+
+.btn-danger:hover { background:rgba(192,64,64,.08); }
+
+/* ═══════════════════════════════════════
+   EDIT MODAL — full FamyTale form
+═══════════════════════════════════════ */
+.edit-overlay {
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(44,31,14,.65);
+  backdrop-filter:blur(6px);
+  z-index:2000;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  overflow-y:auto;
+}
+.edit-overlay.open { display:flex; }
+
+.edit-modal {
+  background:#fff;
+  border-radius:16px;
+  max-width:560px;
+  width:100%;
+  max-height:92vh;
+  overflow-y:auto;
+  box-shadow:0 24px 80px rgba(44,31,14,.35);
+  animation:mfade .3s ease;
+}
+
+.em-header {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:20px 24px 16px;
+  border-bottom:1px solid var(--cream3);
+  position:sticky;
+  top:0;
+  background:#fff;
+  z-index:5;
+  border-radius:16px 16px 0 0;
+}
+
+.em-title {
+  font-family:'Playfair Display',serif;
+  font-size:20px;
+  color:var(--text);
+}
+
+.em-close {
+  background:var(--cream);
+  border:none;
+  border-radius:50%;
+  width:32px;
+  height:32px;
+  font-size:16px;
+  color:var(--text3);
+  cursor:pointer;
+  transition:all .2s;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.em-close:hover { background:var(--cream2); color:var(--red); }
+
+.em-body { padding:20px 24px; }
+
+/* sex toggle */
+.sex-toggle {
+  display:flex;
+  border:1.5px solid var(--cream3);
+  border-radius:10px;
+  overflow:hidden;
+  margin-bottom:20px;
+}
+
+.sex-btn {
+  flex:1;
+  padding:11px;
+  background:none;
+  border:none;
+  font-family:'Nunito',sans-serif;
+  font-size:14px;
+  font-weight:600;
+  color:var(--text3);
+  cursor:pointer;
+  transition:all .2s;
+}
+
+.sex-btn.active {
+  background:var(--brown);
+  color:#fff;
+}
+
+/* form group */
+.fg {
+  margin-bottom:16px;
+  position:relative;
+}
+
+.fg label {
+  display:block;
+  font-size:11px;
+  font-weight:600;
+  color:var(--text3);
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  margin-bottom:6px;
+}
+
+.fg input, .fg textarea, .fg select {
+  width:100%;
+  border:1.5px solid var(--cream3);
+  border-radius:10px;
+  padding:11px 40px 11px 14px;
+  font-family:'Nunito',sans-serif;
+  font-size:14px;
+  color:var(--text);
+  background:#fff;
+  outline:none;
+  transition:border-color .2s;
+}
+
+.fg input:focus, .fg textarea:focus { border-color:var(--gold2); box-shadow:0 0 0 3px rgba(200,150,42,.1); }
+.fg input::placeholder { color:var(--text4); }
+
+.fg .clear-btn {
+  position:absolute;
+  right:12px;
+  bottom:12px;
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  background:var(--cream3);
+  border:none;
+  color:var(--text3);
+  font-size:11px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:all .2s;
+}
+
+.fg .clear-btn:hover { background:var(--gold2); color:#fff; }
+
+.fg textarea {
+  min-height:90px;
+  resize:vertical;
+  padding:11px 14px;
+  line-height:1.6;
+}
+
+/* avatar style picker */
+.av-picker {
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:8px;
+}
+
+.av-pick-btn {
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  border:2px solid var(--cream3);
+  overflow:hidden;
+  cursor:pointer;
+  transition:all .2s;
+  padding:0;
+  background:var(--cream2);
+}
+
+.av-pick-btn:hover { border-color:var(--gold2); }
+.av-pick-btn.active { border-color:var(--gold); box-shadow:0 0 0 3px rgba(200,150,42,.2); }
+.av-pick-btn svg { width:100%; height:100%; }
+
+.em-preview-wrap {
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.em-preview {
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  border:3px solid var(--gold2);
+  overflow:hidden;
+  margin:0 auto 8px;
+  background:var(--cream2);
+}
+
+.em-preview svg, .em-preview img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.photo-upload-area {
+  border:2px dashed var(--cream3);
+  border-radius:12px;
+  padding:20px;
+  text-align:center;
+  cursor:pointer;
+  transition:all .2s;
+  color:var(--text3);
+}
+
+.photo-upload-area:hover {
+  border-color:var(--gold2);
+  background:var(--cream);
+  color:var(--brown2);
+}
+
+.photo-upload-area .icon { font-size:28px; margin-bottom:6px; }
+.photo-upload-area p { font-size:12px; font-weight:600; }
+
+.em-footer {
+  padding:16px 24px 20px;
+  border-top:1px solid var(--cream3);
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+  position:sticky;
+  bottom:0;
+  background:#fff;
+  border-radius:0 0 16px 16px;
+}
+
+.em-footer .btn-primary { flex:1; justify-content:center; }
+
+/* ═══════════════════════════════════════
+   ADD RELATIVE MODAL
+═══════════════════════════════════════ */
+.add-rel-overlay {
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(44,31,14,.65);
+  backdrop-filter:blur(4px);
+  z-index:3000;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+.add-rel-overlay.open { display:flex; }
+
+.add-rel-modal {
+  background:#fff;
+  border-radius:16px;
+  max-width:420px;
+  width:100%;
+  padding:28px;
+  box-shadow:0 24px 80px rgba(44,31,14,.35);
+  animation:mfade .25s ease;
+}
+
+.add-rel-title {
+  font-family:'Playfair Display',serif;
+  font-size:20px;
+  color:var(--text);
+  margin-bottom:6px;
+}
+
+.add-rel-sub {
+  font-size:13px;
+  color:var(--text3);
+  margin-bottom:20px;
+}
+
+.rel-type-list { display:flex; flex-direction:column; gap:6px; }
+
+.rel-type-btn {
+  width:100%;
+  text-align:left;
+  padding:13px 16px;
+  border:1.5px solid var(--cream3);
+  border-radius:10px;
+  background:#fff;
+  font-family:'Nunito',sans-serif;
+  font-size:14px;
+  cursor:pointer;
+  transition:all .2s;
+  color:var(--text);
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.rel-type-btn:hover { border-color:var(--gold2); background:var(--cream); color:var(--brown); }
+.rel-type-btn .rel-type-icon { font-size:18px; }
+.rel-type-btn .rel-type-name { font-weight:600; }
+.rel-type-btn .rel-type-of { color:var(--text3); font-size:12px; }
+
+.add-rel-footer {
+  margin-top:16px;
+  text-align:right;
+}
+
+/* ═══════════════════════════════════════
+   SURNAMES SECTION
+═══════════════════════════════════════ */
+#sur-sec {
+  padding:60px 20px;
+  max-width:1060px;
+  margin:0 auto;
+}
+
+.sec-h {
+  font-family:'Playfair Display',serif;
+  font-size:32px;
+  color:var(--text);
+  margin-bottom:6px;
+}
+
+.sec-div {
+  width:48px;
+  height:3px;
+  background:linear-gradient(to right, var(--gold), var(--gold3));
+  border-radius:2px;
+  margin-bottom:36px;
+}
+
+.sg { display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:18px; }
+
+.sc {
+  background:#fff;
+  border:1.5px solid var(--cream3);
+  border-radius:var(--rad);
+  padding:24px;
+  transition:all .25s;
+  box-shadow:0 2px 8px var(--shadow);
+}
+
+.sc:hover { border-color:var(--gold2); box-shadow:0 6px 24px rgba(107,76,42,.14); transform:translateY(-2px); }
+.sc-n { font-family:'Playfair Display',serif; font-size:20px; color:var(--text); margin-bottom:4px; }
+.sc-c { font-size:10px; color:var(--text4); letter-spacing:2px; text-transform:uppercase; margin-bottom:12px; }
+.sc-d { font-size:13px; color:var(--text2); line-height:1.75; }
+
+/* ═══════════════════════════════════════
+   SEARCH SECTION
+═══════════════════════════════════════ */
+#src-sec { padding:60px 20px; max-width:820px; margin:0 auto; }
+
+.sbar { display:flex; gap:10px; margin:24px 0 36px; }
+
+.sinp {
+  flex:1;
+  background:#fff;
+  border:1.5px solid var(--cream3);
+  border-radius:10px;
+  padding:13px 18px;
+  font-family:'Nunito',sans-serif;
+  font-size:14px;
+  color:var(--text);
+  outline:none;
+  transition:border-color .2s;
+  box-shadow:0 2px 8px var(--shadow);
+}
+
+.sinp:focus { border-color:var(--gold2); box-shadow:0 2px 8px var(--shadow), 0 0 0 3px rgba(200,150,42,.1); }
+.sinp::placeholder { color:var(--text4); }
+
+.sr-item {
+  background:#fff;
+  border:1.5px solid var(--cream3);
+  border-radius:10px;
+  padding:12px 16px;
+  cursor:pointer;
+  transition:all .2s;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-bottom:10px;
+  box-shadow:0 1px 4px var(--shadow);
+}
+
+.sr-item:hover { border-color:var(--gold2); transform:translateX(4px); }
+
+.sr-av {
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  overflow:hidden;
+  flex-shrink:0;
+  background:var(--cream2);
+  border:2px solid var(--cream3);
+}
+
+.sr-av svg, .sr-av img { width:100%; height:100%; object-fit:cover; }
+.sr-name { font-family:'Playfair Display',serif; font-size:16px; color:var(--text); }
+.sr-meta { font-size:11px; color:var(--text3); margin-top:2px; }
+
+/* ═══════════════════════════════════════
+   IDEAS SECTION
+═══════════════════════════════════════ */
+#ideas-sec { padding:60px 20px; max-width:1060px; margin:0 auto; }
+
+.ig { display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:18px; margin-top:36px; }
+
+.ic {
+  background:#fff;
+  border:1.5px solid var(--cream3);
+  border-radius:var(--rad);
+  padding:24px;
+  transition:all .25s;
+  box-shadow:0 2px 8px var(--shadow);
+}
+
+.ic:hover { border-color:var(--gold2); box-shadow:0 6px 24px rgba(107,76,42,.14); transform:translateY(-2px); }
+.ic-ico { font-size:30px; margin-bottom:14px; }
+.ic-t { font-family:'Playfair Display',serif; font-size:18px; color:var(--text); margin-bottom:8px; }
+.ic-d { font-size:13px; color:var(--text2); line-height:1.75; }
+.ic-tag { display:inline-block; margin-top:12px; font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--brown2); background:var(--cream2); border:1px solid var(--cream3); padding:3px 10px; border-radius:10px; font-weight:600; }
+
+/* ═══════════════════════════════════════
+   ADMIN SECTION
+═══════════════════════════════════════ */
+#admin-sec { padding:60px 20px; max-width:960px; margin:0 auto; }
+
+.admin-login {
+  background:#fff;
+  border:1.5px solid var(--cream3);
+  border-radius:16px;
+  padding:40px;
+  max-width:380px;
+  margin:0 auto;
+  box-shadow:0 4px 24px var(--shadow);
+}
+
+.al-t { font-family:'Playfair Display',serif; font-size:22px; color:var(--text); text-align:center; margin-bottom:24px; }
+
+.ainp {
+  width:100%;
+  background:var(--cream);
+  border:1.5px solid var(--cream3);
+  border-radius:10px;
+  padding:12px 16px;
+  font-family:'Nunito',sans-serif;
+  font-size:14px;
+  color:var(--text);
+  outline:none;
+  margin-bottom:14px;
+  transition:border-color .2s;
+}
+
+.ainp:focus { border-color:var(--gold2); }
+.ainp::placeholder { color:var(--text4); }
+
+.abtn {
+  width:100%;
+  background:var(--brown);
+  color:#fff;
+  border:none;
+  border-radius:10px;
+  padding:13px;
+  font-family:'Nunito',sans-serif;
+  font-size:14px;
+  font-weight:700;
+  cursor:pointer;
+  transition:background .2s;
+}
+
+.abtn:hover { background:var(--brown2); }
+.al-err { color:var(--red); font-size:12px; text-align:center; margin-top:10px; display:none; }
+
+.admin-panel { display:none; }
+.ap-hdr { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; }
+.ap-title { font-family:'Playfair Display',serif; font-size:26px; color:var(--text); }
+
+.ap-logout {
+  background:none;
+  border:1.5px solid var(--cream3);
+  color:var(--text3);
+  padding:8px 16px;
+  border-radius:8px;
+  cursor:pointer;
+  font-family:'Nunito',sans-serif;
+  font-size:12px;
+  font-weight:600;
+  transition:all .2s;
+}
+.ap-logout:hover { border-color:var(--red); color:var(--red); }
+
+.admin-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:12px; }
+
+.admin-card {
+  background:#fff;
+  border:1.5px solid var(--cream3);
+  border-radius:var(--rad);
+  padding:16px;
+  cursor:pointer;
+  transition:all .2s;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  box-shadow:0 1px 4px var(--shadow);
+}
+
+.admin-card:hover { border-color:var(--gold2); transform:translateY(-2px); box-shadow:0 4px 16px var(--shadow); }
+.admin-card .ac-av { width:44px; height:44px; border-radius:50%; overflow:hidden; flex-shrink:0; background:var(--cream2); border:2px solid var(--cream3); }
+.admin-card .ac-av svg, .admin-card .ac-av img { width:100%; height:100%; object-fit:cover; }
+.ac-name { font-family:'Playfair Display',serif; font-size:14px; color:var(--text); }
+.ac-role { font-size:10px; color:var(--text3); margin-top:2px; }
+.ac-edit { font-size:10px; color:var(--gold); margin-top:3px; font-weight:600; }
+
+/* ─── hidden admin dot ─── */
+.admin-dot {
+  position:fixed;
+  bottom:18px;
+  right:18px;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:var(--cream3);
+  cursor:pointer;
+  z-index:500;
+  opacity:.35;
+  transition:all .3s;
+}
+.admin-dot:hover { opacity:1; background:var(--gold2); box-shadow:0 0 10px rgba(200,150,42,.4); }
+
+/* ═══════════════════════════════════════
+   PHOTO LIGHTBOX
+═══════════════════════════════════════ */
+.lightbox {
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.9);
+  z-index:5000;
+  align-items:center;
+  justify-content:center;
+}
+
+.lightbox.open { display:flex; }
+
+.lightbox img {
+  max-width:90vw;
+  max-height:90vh;
+  border-radius:8px;
+  box-shadow:0 8px 40px rgba(0,0,0,.6);
+}
+
+.lightbox-close {
+  position:absolute;
+  top:20px;
+  right:24px;
+  background:rgba(255,255,255,.15);
+  border:none;
+  color:#fff;
+  font-size:24px;
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:background .2s;
+}
+.lightbox-close:hover { background:rgba(255,255,255,.25); }
+
+/* ═══════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════ */
+footer {
+  text-align:center;
+  padding:32px 20px;
+  border-top:1px solid var(--cream3);
+  color:var(--text4);
+  font-size:12px;
+  letter-spacing:1px;
+  background:var(--cream2);
+}
+
+/* ── toast notification ── */
+.toast {
+  position:fixed;
+  bottom:40px;
+  left:50%;
+  transform:translateX(-50%) translateY(20px);
+  background:var(--brown);
+  color:#fff;
+  padding:12px 24px;
+  border-radius:10px;
+  font-size:14px;
+  font-weight:600;
+  box-shadow:0 4px 20px rgba(44,31,14,.3);
+  opacity:0;
+  transition:all .3s;
+  z-index:9999;
+  pointer-events:none;
+}
+.toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-leaf">🌿</div>
+  <div class="hero-leaf">🍃</div>
+  <div class="hero-leaf">🌿</div>
+  <div class="hero-leaf">🍂</div>
+  <div class="hero-badge">Семейный архив</div>
+  <h1>АНДРОСОВЫ</h1>
+  <div class="hero-sub">214 лет истории · с 1812 года</div>
+  <div class="stats">
+    <div class="stat"><div class="stat-n">97</div><div class="stat-l">Человек</div></div>
+    <div class="stat"><div class="stat-n">8+</div><div class="stat-l">Поколений</div></div>
+    <div class="stat"><div class="stat-n">12</div><div class="stat-l">Фамилий</div></div>
+    <div class="stat"><div class="stat-n">1812</div><div class="stat-l">Начало</div></div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <button class="nb active" onclick="showSec('tree',this)">🌳 Древо</button>
+  <button class="nb" onclick="showSec('sur',this)">📚 Фамилии</button>
+  <button class="nb" onclick="showSec('src',this)">🔍 Поиск</button>
+  <button class="nb" onclick="showSec('ideas',this)">💡 Идеи</button>
+</nav>
+
+<!-- ════════════ TREE ════════════ -->
+<div id="tree-sec" class="sec active">
+<div class="tree-wrap">
+
+<div class="gen-label">I · Прапрапредки · 1812</div>
+<div class="gen-row">
+  <div class="card" onclick="openM('i556')" id="c-i556">
+    <div class="card-photo-wrap"><div class="card-av" id="cav-i556"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i556')" title="Добавить фото">📷</div></div>
+    <div class="card-body"><div class="c-role">Прапрапрадед</div><div class="c-name">Саломин Федот</div><div class="c-date">1812</div></div>
+  </div>
+  <div class="bridge" style="margin-top:56px"></div>
+  <div class="card" onclick="openM('i555')" id="c-i555">
+    <div class="card-photo-wrap"><div class="card-av" id="cav-i555"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i555')" title="Добавить фото">📷</div></div>
+    <div class="card-body"><div class="c-role">Прапрапрабабушка</div><div class="c-name">Саломина Параскева Ивановна</div></div>
+  </div>
+</div>
+<div class="vline"></div>
+
+<div class="gen-label">II · Прапрадеды</div>
+<div class="gen-row">
+  <div class="card" onclick="openM('i550')" id="c-i550"><div class="card-photo-wrap"><div class="card-av" id="cav-i550"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i550')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Прапрадед</div><div class="c-name">Саломин Федот Герасимович</div><div class="c-story-hint">† ум. 27.03.1913 от воспаления лёгких</div></div></div>
+  <div class="bridge" style="margin-top:56px"></div>
+  <div class="card" onclick="openM('i551')" id="c-i551"><div class="card-photo-wrap"><div class="card-av" id="cav-i551"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i551')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Прапрабабушка</div><div class="c-name">Саломина Анна Тимофеевна</div></div></div>
+  <div style="width:20px"></div>
+  <div class="card" onclick="openM('i557')" id="c-i557"><div class="card-photo-wrap"><div class="card-av" id="cav-i557"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i557')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Прапрадед (Ромашкины)</div><div class="c-name">Ромашкин Михаил</div></div></div>
+  <div class="bridge" style="margin-top:56px"></div>
+  <div class="card" onclick="openM('i558')" id="c-i558"><div class="card-photo-wrap"><div class="card-av" id="cav-i558"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i558')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Прапрабабушка</div><div class="c-name">Ромашкина Евдокия</div></div></div>
+  <div style="width:20px"></div>
+  <div class="card" onclick="openM('i518')" id="c-i518"><div class="card-photo-wrap"><div class="card-av" id="cav-i518"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i518')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Прадед (Щербаковы)</div><div class="c-name">Щербаков Алексей Михайлович</div><div class="c-date">02.06.1912</div></div></div>
+  <div class="bridge" style="margin-top:56px"></div>
+  <div class="card" onclick="openM('i517')" id="c-i517"><div class="card-photo-wrap"><div class="card-av" id="cav-i517"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i517')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Прабабушка</div><div class="c-name">Щербакова Ольга Михайловна</div><div class="c-maiden">(Саломина)</div><div class="c-date">1912 – 1988</div></div></div>
+  <div style="width:20px"></div>
+  <div class="card" onclick="openM('i528')" id="c-i528"><div class="card-photo-wrap"><div class="card-av" id="cav-i528"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i528')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Прадед (Коротеевы)</div><div class="c-name">Коротеев Николай Иванович</div></div></div>
+  <div class="bridge" style="margin-top:56px"></div>
+  <div class="card" onclick="openM('i529')" id="c-i529"><div class="card-photo-wrap"><div class="card-av" id="cav-i529"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i529')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Прабабушка</div><div class="c-name">Коротеева Александра Михайловна</div><div class="c-maiden">(Ромашкина)</div><div class="c-story-hint">Крепостные в Тамбовской губернии</div></div></div>
+  <div style="width:20px"></div>
+  <div class="card" onclick="openM('i531')" id="c-i531"><div class="card-photo-wrap"><div class="card-av" id="cav-i531"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i531')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Прадед (Андросовы)</div><div class="c-name">Андросов Леонид Семёнович</div></div></div>
+  <div class="bridge" style="margin-top:56px"></div>
+  <div class="card" onclick="openM('i530')" id="c-i530"><div class="card-photo-wrap"><div class="card-av" id="cav-i530"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i530')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Прабабушка</div><div class="c-name">Андросова Александра</div><div class="c-maiden">(Украинская)</div></div></div>
+</div>
+<div class="vline"></div>
+
+<div class="gen-label">III · Дедушки и бабушки</div>
+<div class="gen-row">
+  <div class="card" onclick="openM('i57')" id="c-i57"><div class="card-photo-wrap"><div class="card-av" id="cav-i57"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i57')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Дедушка</div><div class="c-name">Хвостов Евгений Антонович</div><div class="c-date">21.06.1935</div></div></div>
+  <div class="bridge" style="margin-top:56px"></div>
+  <div class="card" onclick="openM('i56')" id="c-i56"><div class="card-photo-wrap"><div class="card-av" id="cav-i56"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i56')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Бабушка</div><div class="c-name">Хвостова Таисия Алексеевна</div><div class="c-maiden">(Щербакова)</div></div></div>
+  <div style="width:28px"></div>
+  <div class="card" onclick="openM('i58')" id="c-i58"><div class="card-photo-wrap"><div class="card-av" id="cav-i58"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i58')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Дедушка</div><div class="c-name">Андросов Валерий Леонидович</div></div></div>
+  <div class="bridge" style="margin-top:56px"></div>
+  <div class="card" onclick="openM('i55')" id="c-i55"><div class="card-photo-wrap"><div class="card-av" id="cav-i55"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i55')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Бабушка</div><div class="c-name">Андросова Ванда Николаевна</div><div class="c-maiden">(Коротеева)</div></div></div>
+  <div style="width:28px"></div>
+  <div class="card" onclick="openM('i540')" id="c-i540"><div class="card-photo-wrap"><div class="card-av" id="cav-i540"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i540')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Прадед (Блинниковы)</div><div class="c-name">Блинников Константин Тимофеевич</div><div class="c-date">1916–1998 · Ветеран ВОВ</div></div></div>
+  <div class="bridge" style="margin-top:56px"></div>
+  <div class="card" onclick="openM('i539')" id="c-i539"><div class="card-photo-wrap"><div class="card-av" id="cav-i539"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i539')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Прабабушка</div><div class="c-name">Блинникова Анна Васильевна</div><div class="c-maiden">(Кудюркина)</div></div></div>
+</div>
+<div class="vline"></div>
+
+<div class="gen-label">IV · Родители и их братья / сёстры</div>
+<div class="gen-row">
+  <div class="card" onclick="openM('i510')" id="c-i510"><div class="card-photo-wrap"><div class="card-av" id="cav-i510"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i510')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Тётя</div><div class="c-name">Блинникова Татьяна Валерьевна</div><div class="c-maiden">(Андросова)</div><div class="c-date">04.03.1967</div></div></div>
+  <div style="width:10px"></div>
+  <div class="card" onclick="openM('i533')" id="c-i533"><div class="card-photo-wrap"><div class="card-av" id="cav-i533"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i533')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Дядя</div><div class="c-name">Андросов Леонид Валерьевич</div></div></div>
+  <div style="width:10px"></div>
+  <div class="card" onclick="openM('i52')" id="c-i52"><div class="card-photo-wrap"><div class="card-av" id="cav-i52"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i52')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Отец</div><div class="c-name">Андросов Анатолий Валерьевич</div><div class="c-date">24.04.1958</div></div></div>
+  <div class="bridge" style="margin-top:56px"></div>
+  <div class="card" onclick="openM('i53')" id="c-i53"><div class="card-photo-wrap"><div class="card-av" id="cav-i53"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i53')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Мать</div><div class="c-name">Андросова Ольга Евгеньевна</div><div class="c-maiden">(Хвостова)</div></div></div>
+  <div style="width:10px"></div>
+  <div class="card" onclick="openM('i537')" id="c-i537"><div class="card-photo-wrap"><div class="card-av" id="cav-i537"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i537')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Двоюродный дед</div><div class="c-name">Блинников Олег Константинович</div><div class="c-date">1943 – 2024</div></div></div>
+</div>
+<div class="vline"></div>
+
+<div class="gen-label">V · Моё поколение</div>
+<div class="gen-row">
+  <div class="card" onclick="openM('i515')" id="c-i515"><div class="card-photo-wrap"><div class="card-av" id="cav-i515"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i515')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Сестра</div><div class="c-name">Андросова Юля Анатольевна</div></div></div>
+  <div style="width:10px"></div>
+  <div class="card" onclick="openM('i54')" id="c-i54"><div class="card-photo-wrap"><div class="card-av" id="cav-i54"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i54')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Сестра</div><div class="c-name">Андросова Ангелина Анатольевна</div><div class="c-date">03.06.1985 · Сочи</div></div></div>
+  <div style="width:10px"></div>
+  <div class="card me" onclick="openM('i51')" id="c-i51"><div class="card-photo-wrap"><div class="card-av" id="cav-i51"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i51')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Я</div><div class="c-name">Андросов Герман Анатольевич</div><div class="c-date">27.08.1987</div></div></div>
+  <div class="bridge" style="margin-top:56px"></div>
+  <div class="card" onclick="openM('i541')" id="c-i541"><div class="card-photo-wrap"><div class="card-av" id="cav-i541"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i541')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Жена</div><div class="c-name">Андросова Лилия Сергеевна</div><div class="c-maiden">(Шевякова)</div><div class="c-date">06.02.1997</div></div></div>
+  <div style="width:10px"></div>
+  <div class="card" onclick="openM('i513')" id="c-i513"><div class="card-photo-wrap"><div class="card-av" id="cav-i513"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i513')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Двоюродная сестра</div><div class="c-name">Чальцева Ксенья Евгеньевна</div><div class="c-date">17.01.1990</div></div></div>
+  <div style="width:10px"></div>
+  <div class="card" onclick="openM('i511')" id="c-i511"><div class="card-photo-wrap"><div class="card-av" id="cav-i511"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i511')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Двоюродный брат</div><div class="c-name">Блинников Денис Евгеньевич</div><div class="c-date">28.11.1996</div></div></div>
+</div>
+<div class="vline"></div>
+
+<div class="gen-label">VI · Дети и племянники</div>
+<div class="gen-row">
+  <div class="card" onclick="openM('i516')" id="c-i516"><div class="card-photo-wrap"><div class="card-av" id="cav-i516"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i516')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Племянница</div><div class="c-name">Андросова Злата Ильинишна</div><div class="c-date">25.03.2012</div></div></div>
+  <div style="width:14px"></div>
+  <div class="card" onclick="openM('i542')" id="c-i542"><div class="card-photo-wrap"><div class="card-av" id="cav-i542"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i542')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Дочь 💛</div><div class="c-name">Андросова Оливия Германовна</div><div class="c-date">05.04.2026</div></div></div>
+  <div style="width:14px"></div>
+  <div class="card" onclick="openM('i572')" id="c-i572"><div class="card-photo-wrap"><div class="card-av" id="cav-i572"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i572')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Двоюродная племянница</div><div class="c-name">Чальцева Ксения Романовна</div></div></div>
+  <div style="width:10px"></div>
+  <div class="card" onclick="openM('i573')" id="c-i573"><div class="card-photo-wrap"><div class="card-av" id="cav-i573"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i573')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Двоюродный племянник</div><div class="c-name">Чальцев Егор Романович</div></div></div>
+</div>
+
+</div><!-- /tree-wrap -->
+</div><!-- /tree-sec -->
+
+<!-- ════════════ SURNAMES ════════════ -->
+<div id="sur-sec" class="sec">
+<div style="max-width:1060px;margin:0 auto;padding:60px 20px">
+  <div class="sec-h">Фамилии в роду</div>
+  <div class="sec-div"></div>
+  <div class="sg">
+    <div class="sc"><div class="sc-n">🌳 Андросовы</div><div class="sc-c">Главная линия · 8 поколений</div><div class="sc-d">Центральная ветвь от Ольги и Семёна → Леонид Семёнович → Валерий → Анатолий → Герман → Оливия.</div></div>
+    <div class="sc"><div class="sc-n">⚜️ Саломины</div><div class="sc-c">Древнейшая ветвь · с 1812</div><div class="sc-d">Федот (1812) — самый ранний предок. Георгий Федотович был репрессирован в 1958 и реабилитирован. Ведёт к Щербаковым.</div></div>
+    <div class="sc"><div class="sc-n">🌿 Хвостовы</div><div class="sc-c">По материнской линии</div><div class="sc-d">Дед Евгений Антонович (р. 1935). Прадед Алексей Михайлович. Антон Хвостов — прапрадед.</div></div>
+    <div class="sc"><div class="sc-n">🏡 Коротеевы</div><div class="sc-c">По линии бабушки Ванды</div><div class="sc-d">Предки — крепостные в Тамбовской губернии, село Никольское. Прабабушка Александра (Ромашкина по рождению).</div></div>
+    <div class="sc"><div class="sc-n">🗡️ Щербаковы</div><div class="sc-c">Через Хвостовых и Саломиных</div><div class="sc-d">Ольга Михайловна (Саломина) — прабабушка. Анатолий Алексеевич погиб в шахте в 20 лет.</div></div>
+    <div class="sc"><div class="sc-n">🌾 Ромашкины</div><div class="sc-c">Через Коротеевых</div><div class="sc-d">Михаил и Евдокия — прапрадеды. Их дети: Александра (Коротеева), Фёдор, Константин. Ветвь к Одессе.</div></div>
+    <div class="sc"><div class="sc-n">🎖️ Блинниковы</div><div class="sc-c">По линии тёти Татьяны</div><div class="sc-d">Константин Тимофеевич — ветеран ВОВ (р. 1916, Оренбург), контужен в бою. Евгений (1967–2001) — муж тёти.</div></div>
+    <div class="sc"><div class="sc-n">💍 Шевяковы</div><div class="sc-c">Жена · современная ветвь</div><div class="sc-d">Лилия Сергеевна (р. 06.02.1997) — жена Германа. Мать Оливии Германовны (р. 05.04.2026).</div></div>
+    <div class="sc"><div class="sc-n">👑 Королевы</div><div class="sc-c">Через Щербаковых</div><div class="sc-d">Ирина Михайловна (Щербакова). Дети: Никита, Роман. Внуки: Эвелина, Егор, Ульяна.</div></div>
+    <div class="sc"><div class="sc-n">🇩🇪 Грис</div><div class="sc-c">Через Коротеевых · Казахстан</div><div class="sc-d">Клара Николаевна (Коротеева) вышла за Эдуарда Гриса (Karaganda). Три поколения: Юрий → Андрей → Лев.</div></div>
+    <div class="sc"><div class="sc-n">🌻 Чальцевы</div><div class="sc-c">Через Блинниковых</div><div class="sc-d">Ксенья Евгеньевна (Блинникова) вышла за Романа. Дети: Ксения и Егор.</div></div>
+    <div class="sc"><div class="sc-n">🌍 Украинские</div><div class="sc-c">Прабабушкина ветвь</div><div class="sc-d">Прабабушка Александра (Украинская) — жена Леонида Семёновича. Дала начало главной ветви.</div></div>
+  </div>
+</div>
+</div>
+
+<!-- ════════════ SEARCH ════════════ -->
+<div id="src-sec" class="sec">
+<div style="max-width:820px;margin:0 auto;padding:60px 20px">
+  <div class="sec-h">Поиск по дереву</div>
+  <div class="sec-div"></div>
+  <div class="sbar">
+    <input class="sinp" id="si" type="text" placeholder="Имя, фамилия, год рождения..." oninput="doSearch(this.value)">
+  </div>
+  <div id="sr"></div>
+  <div style="margin-top:56px">
+    <div class="sec-h" style="font-size:22px">Где искать новых родственников</div>
+    <div class="sec-div"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px">
+      <div class="ic"><div class="ic-t">ВКонтакте</div><div class="ic-d">Ищи: Андросов, Хвостов, Коротеев, Саломин, Щербаков, Ромашкин. Фильтруй по городу.</div><a href="https://vk.com/search?c%5Bsection%5D=people&q=Андросов" target="_blank" class="ic-tag">Открыть →</a></div>
+      <div class="ic"><div class="ic-t">FamilySearch</div><div class="ic-d">Бесплатная база архивов. Метрические книги XIX–XX вв. Тамбовская губерния — ключ к Коротеевым.</div><a href="https://www.familysearch.org" target="_blank" class="ic-tag">Искать →</a></div>
+      <div class="ic"><div class="ic-t">Госархив России</div><div class="ic-d">Ревизские сказки 1811–1858 — Саломин Федот как раз попадает! Тамбовский архив даст Ромашкиных.</div><a href="https://archives.ru" target="_blank" class="ic-tag">Архивы →</a></div>
+      <div class="ic"><div class="ic-t">MyHeritage + GEDCOM</div><div class="ic-d">У тебя уже есть .ged файл! Загрузи — система найдёт совпадения автоматически среди миллионов деревьев.</div><a href="https://www.myheritage.com" target="_blank" class="ic-tag">Загрузить →</a></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ════════════ IDEAS ════════════ -->
+<div id="ideas-sec" class="sec">
+<div style="max-width:1060px;margin:0 auto;padding:60px 20px">
+  <div class="sec-h">Идеи для семейного проекта</div>
+  <div class="sec-div"></div>
+  <div class="ig">
+    <div class="ic"><div class="ic-ico">🧬</div><div class="ic-t">ДНК-тест</div><div class="ic-d">MyHeritage DNA или 23andMe. С корнями с 1812 — особенно интересно. Найдёшь дальних родственников автоматически.</div><div class="ic-tag">~5 000 руб.</div></div>
+    <div class="ic"><div class="ic-ico">📖</div><div class="ic-t">Семейная книга</div><div class="ic-d">Hardcover с деревом, историями, фотографиями. 97 человек + история с 1812. Сервисы Ridero, Blurb. Оливии — когда вырастет.</div><div class="ic-tag">Печатная память</div></div>
+    <div class="ic"><div class="ic-ico">🖼️</div><div class="ic-t">Постер A0</div><div class="ic-d">Формат A0 на стену дома. Саломин Федот 1812 → Оливия 2026 — 214 лет на одном листе.</div><div class="ic-tag">На стену</div></div>
+    <div class="ic"><div class="ic-ico">🎙️</div><div class="ic-t">Интервью со старшими</div><div class="ic-d">Запиши дедушку Евгения Антоновича (р. 1935). Вопросы о детстве, войне. Это бесценно для Оливии.</div><div class="ic-tag">Приоритет №1</div></div>
+    <div class="ic"><div class="ic-ico">☦️</div><div class="ic-t">Георгий Федотович</div><div class="ic-d">Репрессирован 13.12.1958, реабилитирован. Запрос в ФСБ даст его дело — история о выживании семьи.</div><div class="ic-tag">Особая история</div></div>
+    <div class="ic"><div class="ic-ico">🏛️</div><div class="ic-t">Архивный запрос</div><div class="ic-d">Тамбовский архив → крепостные Ромашкины-Коротеевы в с. Никольское. Прямая зацепка на XIX век!</div><div class="ic-tag">Бесплатно</div></div>
+    <div class="ic"><div class="ic-ico">📷</div><div class="ic-t">Фото для дерева</div><div class="ic-d">Добавь фото прямо сейчас — нажми 📷 на любой карточке. Старые семейные фотографии дают дереву жизнь.</div><div class="ic-tag">Уже работает!</div></div>
+    <div class="ic"><div class="ic-ico">🌐</div><div class="ic-t">GitHub Pages</div><div class="ic-d">Этот сайт — один файл. Создай репозиторий, загрузи index.html, включи Pages. Постоянный URL навсегда.</div><div class="ic-tag">Следующий шаг</div></div>
+    <div class="ic"><div class="ic-ico">📍</div><div class="ic-t">Карта предков</div><div class="ic-d">Тамбовская губерния, Зюзино Москва, Оренбург, Сочи, Краснодар, Казахстан — история семьи по карте.</div><div class="ic-tag">Можем добавить</div></div>
+  </div>
+</div>
+</div>
+
+<!-- ════════════ ADMIN ════════════ -->
+<div id="admin-sec" class="sec">
+<div style="max-width:960px;margin:0 auto;padding:60px 20px">
+  <div class="admin-login" id="admin-login">
+    <div class="al-t">⚙ Администрация</div>
+    <input class="ainp" id="al-u" type="text" placeholder="Логин">
+    <input class="ainp" id="al-p" type="password" placeholder="Пароль">
+    <button class="abtn" onclick="doLogin()">Войти</button>
+    <div class="al-err" id="al-err">Неверный логин или пароль</div>
+  </div>
+  <div class="admin-panel" id="admin-panel">
+    <div class="ap-hdr">
+      <div class="ap-title">Редактор карточек</div>
+      <button class="ap-logout" onclick="doLogout()">Выйти</button>
+    </div>
+    <p style="color:var(--text3);font-size:13px;margin-bottom:20px">Нажмите карточку для редактирования. Изменения сохраняются в браузере.</p>
+    <div class="admin-grid" id="admin-grid"></div>
+  </div>
+</div>
+</div>
+
+<!-- ════════════ MODAL: VIEW PERSON ════════════ -->
+<div class="overlay" id="overlay" onclick="closeMOnBg(event)">
+  <div class="modal" id="modal">
+    <button class="mcl" onclick="closeM()">✕</button>
+
+    <div class="modal-photo" id="m-photo">
+      <div class="modal-av" id="m-av-wrap"></div>
+      <div class="modal-photo-overlay"></div>
+      <div class="modal-photo-btns">
+        <button class="modal-photo-btn" id="m-edit-btn" onclick="openEditFromModal()">✏️ Редактировать</button>
+        <button class="modal-photo-btn" id="m-rel-btn" onclick="openAddRel()">+ Добавить родственника</button>
+      </div>
+      <div class="modal-name-block">
+        <div class="m-role" id="m-role"></div>
+        <div class="m-name" id="m-name"></div>
+      </div>
+    </div>
+
+    <div class="modal-tabs">
+      <button class="modal-tab active" onclick="switchTab('facts',this)">Факты</button>
+      <button class="modal-tab" onclick="switchTab('photos',this)">Фотографии</button>
+      <button class="modal-tab" onclick="switchTab('relatives',this)">Родственники</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="tab-pane active" id="tab-facts">
+        <div id="facts-content"></div>
+      </div>
+      <div class="tab-pane" id="tab-photos">
+        <div class="photos-grid" id="photos-grid"></div>
+      </div>
+      <div class="tab-pane" id="tab-relatives">
+        <div class="rel-list" id="rel-list"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════ MODAL: EDIT ════════════ -->
+<div class="edit-overlay" id="edit-overlay" onclick="closeEditOnBg(event)">
+  <div class="edit-modal">
+    <div class="em-header">
+      <div class="em-title" id="em-title">Редактировать</div>
+      <button class="em-close" onclick="closeEdit()">✕</button>
+    </div>
+    <div class="em-body">
+
+      <div class="sex-toggle">
+        <button class="sex-btn active" id="sex-m" onclick="setSex('M')">👨 Мужчина</button>
+        <button class="sex-btn" id="sex-f" onclick="setSex('F')">👩 Женщина</button>
+      </div>
+
+      <div class="em-preview-wrap">
+        <div class="em-preview" id="em-preview"></div>
+        <div style="font-size:11px;color:var(--text4);letter-spacing:1px;text-transform:uppercase;font-weight:600">Стиль аватара</div>
+        <div class="av-picker" id="av-picker" style="justify-content:center;margin-top:8px"></div>
+      </div>
+
+      <div style="margin-bottom:16px">
+        <label style="display:block;font-size:11px;font-weight:600;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px">Фотография профиля</label>
+        <div id="photo-drop-zone" class="photo-upload-area" 
+             onclick="document.getElementById('photo-file-input').click()"
+             ondragover="event.preventDefault();this.style.borderColor='var(--gold2)'"
+             ondragleave="this.style.borderColor=''"
+             ondrop="handlePhotoDrop(event)">
+          <div class="icon">📷</div>
+          <p>Нажмите или перетащите фото</p>
+          <p style="font-size:11px;color:var(--text4);margin-top:4px;font-weight:400">JPG, PNG, WEBP · до 8 МБ</p>
+        </div>
+        <input type="file" id="photo-file-input" accept="image/*" style="display:none" onchange="handlePhotoUpload(event)">
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div class="fg">
+          <label>Фамилия</label>
+          <input id="em-surname" type="text" placeholder="Иванов">
+          <button class="clear-btn" onclick="document.getElementById('em-surname').value=''">✕</button>
+        </div>
+        <div class="fg">
+          <label>Имя</label>
+          <input id="em-firstname" type="text" placeholder="Иван">
+          <button class="clear-btn" onclick="document.getElementById('em-firstname').value=''">✕</button>
+        </div>
+      </div>
+      <div class="fg">
+        <label>Отчество</label>
+        <input id="em-patronymic" type="text" placeholder="Иванович">
+        <button class="clear-btn" onclick="document.getElementById('em-patronymic').value=''">✕</button>
+      </div>
+      <div class="fg">
+        <label>Девичья фамилия</label>
+        <input id="em-maiden" type="text" placeholder="Петрова">
+        <button class="clear-btn" onclick="document.getElementById('em-maiden').value=''">✕</button>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div class="fg">
+          <label>Дата рождения</label>
+          <input id="em-bdate" type="text" placeholder="28.08.1987">
+        </div>
+        <div class="fg">
+          <label>Дата смерти</label>
+          <input id="em-ddate" type="text" placeholder="если применимо">
+        </div>
+      </div>
+      <div class="fg">
+        <label>Место рождения</label>
+        <input id="em-place" type="text" placeholder="Город, регион">
+        <button class="clear-btn" onclick="document.getElementById('em-place').value=''">✕</button>
+      </div>
+      <div class="fg">
+        <label>Роль в семье</label>
+        <input id="em-role" type="text" placeholder="Дедушка / Бабушка / Отец...">
+      </div>
+      <div class="fg">
+        <label>История и воспоминания</label>
+        <textarea id="em-story" placeholder="Расскажи что-нибудь об этом человеке..."></textarea>
+      </div>
+    </div>
+    <div class="em-footer">
+      <button class="btn btn-primary" onclick="saveEdit()">💾 Сохранить изменения</button>
+      <button class="btn btn-secondary" onclick="resetPerson()">↩ Сброс</button>
+      <button class="btn btn-danger" onclick="closeEdit()">Отмена</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ MODAL: ADD RELATIVE ════════════ -->
+<div class="add-rel-overlay" id="add-rel-overlay" onclick="closeAddRelOnBg(event)">
+  <div class="add-rel-modal">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+      <div class="add-rel-title" id="add-rel-title">Добавить родственника</div>
+      <button class="em-close" onclick="closeAddRel()">✕</button>
+    </div>
+    <div class="add-rel-sub">Выберите тип родственника:</div>
+    <div class="rel-type-list">
+      <button class="rel-type-btn" onclick="selectRelType('father')"><span class="rel-type-icon">👨</span><span><span class="rel-type-name">Отец</span> <span class="rel-type-of" id="rel-of-name"></span></span></button>
+      <button class="rel-type-btn" onclick="selectRelType('mother')"><span class="rel-type-icon">👩</span><span><span class="rel-type-name">Мать</span></span></button>
+      <button class="rel-type-btn" onclick="selectRelType('sister')"><span class="rel-type-icon">👧</span><span><span class="rel-type-name">Сестра</span></span></button>
+      <button class="rel-type-btn" onclick="selectRelType('brother')"><span class="rel-type-icon">👦</span><span><span class="rel-type-name">Брат</span></span></button>
+      <button class="rel-type-btn" onclick="selectRelType('son')"><span class="rel-type-icon">👶</span><span><span class="rel-type-name">Сын</span></span></button>
+      <button class="rel-type-btn" onclick="selectRelType('daughter')"><span class="rel-type-icon">👶</span><span><span class="rel-type-name">Дочь</span></span></button>
+      <button class="rel-type-btn" onclick="selectRelType('spouse')"><span class="rel-type-icon">💑</span><span><span class="rel-type-name">Муж / Жена / Партнёр</span></span></button>
+    </div>
+    <div class="add-rel-footer">
+      <button class="btn btn-secondary" onclick="closeAddRel()">Отмена</button>
+    </div>
+  </div>
+</div>
+
+<!-- PHOTO LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lb-img" src="" alt="">
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- ADMIN DOT -->
+<div class="admin-dot" onclick="showAdminSection()"></div>
+
+<footer>🌳 &nbsp; Семейное древо Андросовых &nbsp; · &nbsp; с любовью для Оливии Германовны &nbsp; · &nbsp; 2026</footer>
+
+<script>
+// ══════════════════════════════════════════════════════
+// DATA — 97 человек (полный GEDCOM)
+// ══════════════════════════════════════════════════════
+const BASE = {
+  i51:{id:'i51',role:'Я',name:'Андросов Герман Анатольевич',surname:'Андросов',firstname:'Герман',patronymic:'Анатольевич',bdate:'27.08.1987',sex:'M',story:'Составитель этого семейного архива. Муж Лилии, папа Оливии.',avStyle:0},
+  i52:{id:'i52',role:'Отец',name:'Андросов Анатолий Валерьевич',surname:'Андросов',firstname:'Анатолий',patronymic:'Валерьевич',bdate:'24.04.1958',sex:'M',avStyle:0},
+  i53:{id:'i53',role:'Мать',name:'Андросова Ольга Евгеньевна',surname:'Андросова',firstname:'Ольга',patronymic:'Евгеньевна',maiden:'Хвостова',sex:'F',avStyle:2},
+  i54:{id:'i54',role:'Сестра',name:'Андросова Ангелина Анатольевна',surname:'Андросова',firstname:'Ангелина',patronymic:'Анатольевна',bdate:'03.06.1985',place:'Краснодарский Край, г. Сочи',sex:'F',avStyle:2},
+  i55:{id:'i55',role:'Бабушка',name:'Андросова Ванда Николаевна',surname:'Андросова',firstname:'Ванда',patronymic:'Николаевна',maiden:'Коротеева',sex:'F',avStyle:3},
+  i56:{id:'i56',role:'Бабушка',name:'Хвостова Таисия Алексеевна',surname:'Хвостова',firstname:'Таисия',patronymic:'Алексеевна',maiden:'Щербакова',sex:'F',story:'Таисия Алексеевна (урождённая Щербакова) — бабушка по маминой линии. На семейном фото — вверху по центру, рядом с родителями: мамой Ольгой Михайловной (Саломиной) и папой Алексеем Михайловичем Щербаковым.',avStyle:3},
+  i57:{id:'i57',role:'Дедушка',name:'Хвостов Евгений Антонович',surname:'Хвостов',firstname:'Евгений',patronymic:'Антонович',bdate:'21.06.1935',sex:'M',avStyle:3},
+  i58:{id:'i58',role:'Дедушка',name:'Андросов Валерий Леонидович',surname:'Андросов',firstname:'Валерий',patronymic:'Леонидович',sex:'M',avStyle:3},
+  i59:{id:'i59',role:'',name:'Андросова Зоя',surname:'Андросова',firstname:'Зоя',sex:'F',avStyle:3},
+  i510:{id:'i510',role:'Тётя',name:'Блинникова Татьяна Валерьевна',surname:'Блинникова',firstname:'Татьяна',patronymic:'Валерьевна',maiden:'Андросова',bdate:'04.03.1967',sex:'F',avStyle:2},
+  i511:{id:'i511',role:'Двоюродный брат',name:'Блинников Денис Евгеньевич',surname:'Блинников',firstname:'Денис',patronymic:'Евгеньевич',bdate:'28.11.1996',sex:'M',avStyle:0},
+  i512:{id:'i512',role:'Муж тёти',name:'Блинников Евгений Олегович',surname:'Блинников',firstname:'Евгений',patronymic:'Олегович',bdate:'24.08.1967',ddate:'26.06.2001',sex:'M',story:'Муж тёти Татьяны. Умер 26.06.2001.',avStyle:5},
+  i513:{id:'i513',role:'Двоюродная сестра',name:'Чальцева Ксенья Евгеньевна',surname:'Чальцева',firstname:'Ксенья',patronymic:'Евгеньевна',maiden:'Блинникова',bdate:'17.01.1990',sex:'F',avStyle:2},
+  i514:{id:'i514',role:'',name:'Андросова Наташа Петровна',surname:'Андросова',firstname:'Наташа',patronymic:'Петровна',maiden:'Афонина',sex:'F',avStyle:2},
+  i515:{id:'i515',role:'Сестра',name:'Андросова Юля Анатольевна',surname:'Андросова',firstname:'Юля',patronymic:'Анатольевна',sex:'F',avStyle:2},
+  i516:{id:'i516',role:'Племянница',name:'Андросова Злата Ильинишна',surname:'Андросова',firstname:'Злата',patronymic:'Ильинишна',bdate:'25.03.2012',sex:'F',avStyle:4},
+  i517:{id:'i517',role:'Прабабушка',name:'Щербакова Ольга Михайловна',surname:'Щербакова',firstname:'Ольга',patronymic:'Михайловна',maiden:'Саломина',bdate:'02.06.1912',ddate:'01.03.1988',place:'Зюзино, Москва',sex:'F',story:'Урождённая Саломина — прямая связь с Федотом Саломиным 1812. Умерла от атеросклероза. Похоронена в пос. Яблоновский, Адыгея.',avStyle:3},
+  i518:{id:'i518',role:'Прадед',name:'Щербаков Алексей Михайлович',surname:'Щербаков',firstname:'Алексей',patronymic:'Михайлович',bdate:'02.06.1912',sex:'M',story:'На семейном фото — внизу второй слева, с усами. Муж Ольги Михайловны, отец бабушки Таисии.',avStyle:5},
+  i519:{id:'i519',role:'Прапрадед',name:'Хвостов Антон',surname:'Хвостов',firstname:'Антон',sex:'M',avStyle:3},
+  i520:{id:'i520',role:'Прапрабабушка',name:'Хвостова Клавдия Леонтьевна',surname:'Хвостова',firstname:'Клавдия',patronymic:'Леонтьевна',bdate:'апрель 1911',sex:'F',avStyle:3},
+  i521:{id:'i521',role:'Двоюродный дед',name:'Щербаков Михаил Алексеевич',surname:'Щербаков',firstname:'Михаил',patronymic:'Алексеевич',bdate:'20.06.1941',sex:'M',avStyle:3},
+  i522:{id:'i522',role:'Двоюродный дядя',name:'Щербаков Дмитрий Михайлович',surname:'Щербаков',firstname:'Дмитрий',patronymic:'Михайлович',sex:'M',avStyle:0},
+  i523:{id:'i523',role:'Двоюродная тётя',name:'Королева Ирина Михайловна',surname:'Королева',firstname:'Ирина',patronymic:'Михайловна',maiden:'Щербакова',sex:'F',avStyle:2},
+  i524:{id:'i524',role:'Троюродный брат',name:'Королев Никита',surname:'Королев',firstname:'Никита',sex:'M',avStyle:0},
+  i525:{id:'i525',role:'Троюродный брат',name:'Королев Роман',surname:'Королев',firstname:'Роман',sex:'M',avStyle:0},
+  i526:{id:'i526',role:'Троюродный племянник',name:'Королев Егор',surname:'Королев',firstname:'Егор',sex:'M',avStyle:4},
+  i527:{id:'i527',role:'',name:'Щербакова Антонина',surname:'Щербакова',firstname:'Антонина',sex:'F',avStyle:3},
+  i528:{id:'i528',role:'Прадед',name:'Коротеев Николай Иванович',surname:'Коротеев',firstname:'Николай',patronymic:'Иванович',sex:'M',avStyle:3},
+  i529:{id:'i529',role:'Прабабушка',name:'Коротеева Александра Михайловна',surname:'Коротеева',firstname:'Александра',patronymic:'Михайловна',maiden:'Ромашкина',sex:'F',story:'Урождённая Ромашкина. Предки были крепостными в Тамбовской губернии, село Никольское.',avStyle:3},
+  i530:{id:'i530',role:'Прабабушка',name:'Андросова Александра',surname:'Андросова',firstname:'Александра',maiden:'Украинская',sex:'F',avStyle:3},
+  i531:{id:'i531',role:'Прадед',name:'Андросов Леонид Семёнович',surname:'Андросов',firstname:'Леонид',patronymic:'Семёнович',sex:'M',avStyle:3},
+  i532:{id:'i532',role:'Прапрабабушка',name:'Андросова Ольга',surname:'Андросова',firstname:'Ольга',sex:'F',avStyle:3},
+  i533:{id:'i533',role:'Дядя',name:'Андросов Леонид Валерьевич',surname:'Андросов',firstname:'Леонид',patronymic:'Валерьевич',sex:'M',avStyle:0},
+  i534:{id:'i534',role:'Двоюродная сестра',name:'Катя Леонидовна Андросова',surname:'Андросова',firstname:'Катя',patronymic:'Леонидовна',sex:'F',avStyle:2},
+  i535:{id:'i535',role:'Двоюродный брат',name:'Андросов Валерий Леонидович (мл.)',surname:'Андросов',firstname:'Валерий',patronymic:'Леонидович',sex:'M',avStyle:0},
+  i536:{id:'i536',role:'Прапрадед',name:'Андросов Семён',surname:'Андросов',firstname:'Семён',sex:'M',avStyle:3},
+  i537:{id:'i537',role:'Двоюродный дед',name:'Блинников Олег Константинович',surname:'Блинников',firstname:'Олег',patronymic:'Константинович',bdate:'04.12.1943',ddate:'12.09.2024',place:'Оренбург',sex:'M',story:'Жил в Сочи. Умер 12.09.2024.',avStyle:3},
+  i538:{id:'i538',role:'Двоюродная бабушка',name:'Блинникова Земфира/Ирина Васильевна',surname:'Блинникова',firstname:'Земфира/Ирина',patronymic:'Васильевна',maiden:'Хатинова',bdate:'04.05.1939',sex:'F',avStyle:3},
+  i539:{id:'i539',role:'Прапрабабушка',name:'Блинникова Анна Васильевна',surname:'Блинникова',firstname:'Анна',patronymic:'Васильевна',maiden:'Кудюркина',bdate:'13.02.1921',ddate:'02.06.1993',sex:'F',avStyle:3},
+  i540:{id:'i540',role:'Прапрадед',name:'Блинников Константин Тимофеевич',surname:'Блинников',firstname:'Константин',patronymic:'Тимофеевич',bdate:'11.06.1916',ddate:'02.04.1998',place:'Оренбург',sex:'M',story:'Воевал в ВОВ / внутренние войска / охранял вагоны / один раз обстреляли вагон и контузили. Герой.',avStyle:3},
+  i541:{id:'i541',role:'Жена',name:'Андросова Лилия Сергеевна',surname:'Андросова',firstname:'Лилия',patronymic:'Сергеевна',maiden:'Шевякова',bdate:'06.02.1997',sex:'F',avStyle:2},
+  i542:{id:'i542',role:'Дочь',name:'Андросова Оливия Германовна',surname:'Андросова',firstname:'Оливия',patronymic:'Германовна',bdate:'05.04.2026',sex:'F',story:'Наша любимая дочь. Ради неё создаётся этот архив.',avStyle:4},
+  i543:{id:'i543',role:'Прадед',name:'Саломин Михаил Федотович',surname:'Саломин',firstname:'Михаил',patronymic:'Федотович',sex:'M',avStyle:3},
+  i544:{id:'i544',role:'Прабабушка',name:'Саломина Анастасия Сергеевна',surname:'Саломина',firstname:'Анастасия',patronymic:'Сергеевна',sex:'F',avStyle:3},
+  i545:{id:'i545',role:'Умер в детстве',name:'Саломин Иоанн Михайлович',surname:'Саломин',firstname:'Иоанн',patronymic:'Михайлович',ddate:'1912',sex:'M',avStyle:4},
+  i546:{id:'i546',role:'Двоюродный прадед',name:'Саломин Александр Михайлович',surname:'Саломин',firstname:'Александр',patronymic:'Михайлович',bdate:'1901',sex:'M',avStyle:3},
+  i547:{id:'i547',role:'Двоюродная прабабушка',name:'Саломина Наталья Михайловна',surname:'Саломина',firstname:'Наталья',patronymic:'Михайловна',bdate:'1903',sex:'F',avStyle:3},
+  i548:{id:'i548',role:'Двоюродный прадед',name:'Саломин Виктор Михайлович',surname:'Саломин',firstname:'Виктор',patronymic:'Михайлович',bdate:'1906',sex:'M',avStyle:3},
+  i549:{id:'i549',role:'Двоюродный прадед',name:'Саломин Дмитрий Михайлович',surname:'Саломин',firstname:'Дмитрий',patronymic:'Михайлович',bdate:'1907',sex:'M',avStyle:3},
+  i550:{id:'i550',role:'Прапрадед',name:'Саломин Федот Герасимович',surname:'Саломин',firstname:'Федот',patronymic:'Герасимович',sex:'M',story:'Умер 27.03.1913 от воспаления лёгких.',avStyle:3},
+  i551:{id:'i551',role:'Прапрабабушка',name:'Саломина Анна Тимофеевна',surname:'Саломина',firstname:'Анна',patronymic:'Тимофеевна',sex:'F',avStyle:3},
+  i552:{id:'i552',role:'Двоюродный дед',name:'Саломин Георгий Федотович',surname:'Саломин',firstname:'Георгий',patronymic:'Федотович',sex:'M',story:'Был репрессирован 13.12.1958, реабилитирован. Служил на Кубани.',avStyle:3},
+  i553:{id:'i553',role:'Двоюродный дед',name:'Саломин Федот Федотович',surname:'Саломин',firstname:'Федот',patronymic:'Федотович',sex:'M',avStyle:3},
+  i554:{id:'i554',role:'Двоюродный дед',name:'Саломин Иван Федотович',surname:'Саломин',firstname:'Иван',patronymic:'Федотович',sex:'M',avStyle:3},
+  i555:{id:'i555',role:'Прапрапрабабушка',name:'Саломина Параскева Ивановна',surname:'Саломина',firstname:'Параскева',patronymic:'Ивановна',sex:'F',avStyle:3},
+  i556:{id:'i556',role:'Прапрапрадед',name:'Саломин Федот',surname:'Саломин',firstname:'Федот',bdate:'1812',sex:'M',story:'Самый ранний известный предок семьи. Жил в эпоху наполеоновских войн.',avStyle:3},
+  i557:{id:'i557',role:'Прапрадед',name:'Ромашкин Михаил',surname:'Ромашкин',firstname:'Михаил',sex:'M',avStyle:3},
+  i558:{id:'i558',role:'Прапрабабушка',name:'Ромашкина Евдокия',surname:'Ромашкина',firstname:'Евдокия',sex:'F',avStyle:3},
+  i559:{id:'i559',role:'Двоюродный прадед',name:'Ромашкин Фёдор',surname:'Ромашкин',firstname:'Фёдор',sex:'M',avStyle:3},
+  i560:{id:'i560',role:'Двоюродный прадед',name:'Ромашкин Константин',surname:'Ромашкин',firstname:'Константин',sex:'M',avStyle:3},
+  i561:{id:'i561',role:'Двоюродный дед',name:'Коротеев Анатолий Николаевич',surname:'Коротеев',firstname:'Анатолий',patronymic:'Николаевич',sex:'M',avStyle:3},
+  i562:{id:'i562',role:'Двоюродный дед',name:'Коротеев Александр Николаевич',surname:'Коротеев',firstname:'Александр',patronymic:'Николаевич',sex:'M',avStyle:0},
+  i563:{id:'i563',role:'Двоюродная бабушка',name:'Коротеева Светлана Николаевна',surname:'Коротеева',firstname:'Светлана',patronymic:'Николаевна',sex:'F',avStyle:3},
+  i564:{id:'i564',role:'Двоюродный дед',name:'Коротеев Юрий Николаевич',surname:'Коротеев',firstname:'Юрий',patronymic:'Николаевич',sex:'M',avStyle:3},
+  i565:{id:'i565',role:'Двоюродная бабушка',name:'Грис Клара Николаевна',surname:'Грис',firstname:'Клара',patronymic:'Николаевна',maiden:'Коротеева',sex:'F',avStyle:3},
+  i566:{id:'i566',role:'Муж',name:'Грис Эдуард',surname:'Грис',firstname:'Эдуард',place:'Karaganda',sex:'M',avStyle:0},
+  i567:{id:'i567',role:'Двоюродный дядя',name:'Грис Юрий Эдуардович',surname:'Грис',firstname:'Юрий',patronymic:'Эдуардович',sex:'M',avStyle:0},
+  i568:{id:'i568',role:'Троюродный брат',name:'Грис Андрей Юрьевич',surname:'Грис',firstname:'Андрей',patronymic:'Юрьевич',sex:'M',avStyle:0},
+  i569:{id:'i569',role:'',name:'Грис Светлана',surname:'Грис',firstname:'Светлана',sex:'F',avStyle:2},
+  i570:{id:'i570',role:'Троюродный племянник',name:'Грис Лев Андреевич',surname:'Грис',firstname:'Лев',patronymic:'Андреевич',sex:'M',avStyle:4},
+  i571:{id:'i571',role:'Муж',name:'Чальцев Роман',surname:'Чальцев',firstname:'Роман',sex:'M',avStyle:0},
+  i572:{id:'i572',role:'Двоюродная племянница',name:'Чальцева Ксения Романовна',surname:'Чальцева',firstname:'Ксения',patronymic:'Романовна',sex:'F',avStyle:4},
+  i573:{id:'i573',role:'Двоюродный племянник',name:'Чальцев Егор Романович',surname:'Чальцев',firstname:'Егор',patronymic:'Романович',sex:'M',avStyle:4},
+  i574:{id:'i574',role:'',name:'Блинникова Мария',surname:'Блинникова',firstname:'Мария',sex:'F',avStyle:2},
+  i575:{id:'i575',role:'Муж Юли',name:'Казаченко Илья',surname:'Казаченко',firstname:'Илья',sex:'M',avStyle:0},
+  i576:{id:'i576',role:'Двоюродный дед',name:'Хвостов Юрий Антонович',surname:'Хвостов',firstname:'Юрий',patronymic:'Антонович',sex:'M',avStyle:3},
+  i577:{id:'i577',role:'Троюродная племянница',name:'Королева Эвелина Никитична',surname:'Королева',firstname:'Эвелина',patronymic:'Никитична',sex:'F',avStyle:4},
+  i578:{id:'i578',role:'Троюродная племянница',name:'Королева Ульяна Романовна',surname:'Королева',firstname:'Ульяна',patronymic:'Романовна',sex:'F',avStyle:4},
+  i579:{id:'i579',role:'',name:'Королева Екатерина',surname:'Королева',firstname:'Екатерина',sex:'F',avStyle:2},
+  i580:{id:'i580',role:'',name:'Королева Ирина',surname:'Королева',firstname:'Ирина',sex:'F',avStyle:2},
+  i581:{id:'i581',role:'Двоюродный дед',name:'Щербаков Анатолий Алексеевич',surname:'Щербаков',firstname:'Анатолий',patronymic:'Алексеевич',sex:'M',story:'Погиб в шахте в 20 лет в Армии.',avStyle:0},
+  i582:{id:'i582',role:'Прапрадед',name:'Щербаков Михаил',surname:'Щербаков',firstname:'Михаил',sex:'M',avStyle:3},
+  i583:{id:'i583',role:'Прапрабабушка',name:'Щербакова Анна',surname:'Щербакова',firstname:'Анна',sex:'F',avStyle:3},
+  i584:{id:'i584',role:'Прапрадед',name:'Коротеев Иван',surname:'Коротеев',firstname:'Иван',sex:'M',avStyle:3},
+  i585:{id:'i585',role:'Прапрабабушка',name:'Коротеева ?',surname:'Коротеева',firstname:'?',sex:'F',avStyle:3},
+  i586:{id:'i586',role:'Двоюродный прадед',name:'Ромашкин Валерий Константинович',surname:'Ромашкин',firstname:'Валерий',patronymic:'Константинович',sex:'M',avStyle:3},
+  i587:{id:'i587',role:'Троюродная тётя',name:'Италия Елена Валерьевна',surname:'Италия',firstname:'Елена',patronymic:'Валерьевна',maiden:'Ромашкина',sex:'F',avStyle:2},
+  i588:{id:'i588',role:'Троюродный дядя',name:'Ромашкин Сергей Валериевич',surname:'Ромашкин',firstname:'Сергей',patronymic:'Валериевич',sex:'M',avStyle:0},
+  i589:{id:'i589',role:'',name:'Италия ?',surname:'Италия',firstname:'?',sex:'F',avStyle:2},
+  i590:{id:'i590',role:'Троюродный дед',name:'Ромашкин Владимир Фёдорович',surname:'Ромашкин',firstname:'Владимир',patronymic:'Фёдорович',sex:'M',avStyle:3},
+  i591:{id:'i591',role:'',name:'Ромашкина Елена',surname:'Ромашкина',firstname:'Елена',sex:'F',avStyle:3},
+  i592:{id:'i592',role:'',name:'Ромашкин Саша Владимирович',surname:'Ромашкин',firstname:'Саша',patronymic:'Владимирович',sex:'M',avStyle:0},
+  i593:{id:'i593',role:'',name:'Ромашкина Света ?',surname:'Ромашкина',firstname:'Света',sex:'F',story:'Живёт в Одессе.',avStyle:2},
+  i594:{id:'i594',role:'',name:'Ромашкина Елена Александровна',surname:'Ромашкина',firstname:'Елена',patronymic:'Александровна',sex:'F',avStyle:2},
+  i595:{id:'i595',role:'',name:'Кочубей ?',surname:'Кочубей',firstname:'?',sex:'M',avStyle:0},
+  i596:{id:'i596',role:'',name:'Ромашкина ?',surname:'Ромашкина',firstname:'?',sex:'F',avStyle:2},
+  i597:{id:'i597',role:'',name:'Ромашкина ?',surname:'Ромашкина',firstname:'?',sex:'F',avStyle:2},
+};
+
+// family connections for "relatives" tab
+const FAMILY = {
+  i51:['i52','i53','i541','i542','i54','i515'],
+  i52:['i51','i53','i54','i515','i58','i55'],
+  i53:['i51','i52','i54','i515','i57','i56'],
+  i541:['i51','i542'],
+  i542:['i51','i541'],
+  i57:['i56','i53'],
+  i58:['i55','i52','i533','i510'],
+  i55:['i58','i52'],
+  i56:['i57','i53'],
+  i540:['i539','i537'],
+  i510:['i512','i533','i52'],
+  i511:['i512','i510'],
+  i513:['i571','i572','i573'],
+};
+
+let overrides = JSON.parse(localStorage.getItem('androsov_ov3')||'{}');
+let photos    = JSON.parse(localStorage.getItem('androsov_ph3')||'{}');
+
+function getPerson(id){
+  return Object.assign({}, BASE[id]||{id,name:'Неизвестно',sex:'M',avStyle:0}, overrides[id]||{});
+}
+
+function getPhoto(id){ return photos[id]||null; }
+
+// ══════════════════════════════════════════════
+// AVATAR GENERATOR — warm portrait style
+// ══════════════════════════════════════════════
+function hue(id){ let h=0; for(let c of id) h=(h*31+c.charCodeAt(0))%360; return h; }
+
+const AV = [
+  // 0 classic male
+  id=>{ const h=hue(id),s=35,f=`hsl(${h},${s}%,68%)`,hair=`hsl(${(h+180)%360},40%,28%)`;
+    return `<rect width="100" height="100" fill="hsl(${h},20%,88%)"/>
+    <circle cx="50" cy="36" r="21" fill="${f}"/>
+    <ellipse cx="50" cy="88" rx="30" ry="22" fill="${f}"/>
+    <ellipse cx="50" cy="18" rx="21" ry="13" fill="${hair}"/>
+    <circle cx="43" cy="34" r="3.2" fill="#241408"/><circle cx="57" cy="34" r="3.2" fill="#241408"/>
+    <circle cx="44" cy="33" r="1" fill="rgba(255,255,255,.5)"/><circle cx="58" cy="33" r="1" fill="rgba(255,255,255,.5)"/>
+    <path d="M44 43 q6 4 12 0" stroke="hsl(${h},30%,52%)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <ellipse cx="36" cy="44" rx="4" ry="2.5" fill="${f}" opacity=".6"/><ellipse cx="64" cy="44" rx="4" ry="2.5" fill="${f}" opacity=".6"/>`;
+  },
+  // 1 bearded
+  id=>{ const h=hue(id),f=`hsl(${h},35%,65%)`,hair=`hsl(${(h+190)%360},40%,22%)`;
+    return `<rect width="100" height="100" fill="hsl(${h},18%,85%)"/>
+    <circle cx="50" cy="36" r="21" fill="${f}"/>
+    <ellipse cx="50" cy="88" rx="30" ry="22" fill="${f}"/>
+    <ellipse cx="50" cy="18" rx="21" ry="12" fill="${hair}"/>
+    <ellipse cx="50" cy="50" rx="15" ry="10" fill="${hair}" opacity=".75"/>
+    <circle cx="43" cy="34" r="3" fill="#1a0a05"/><circle cx="57" cy="34" r="3" fill="#1a0a05"/>
+    <circle cx="44" cy="33" r="1" fill="rgba(255,255,255,.4)"/><circle cx="58" cy="33" r="1" fill="rgba(255,255,255,.4)"/>
+    <path d="M43 43 q7 2 14 0" stroke="hsl(${h},28%,48%)" stroke-width="1.2" fill="none"/>`;
+  },
+  // 2 female
+  id=>{ const h=hue(id),f=`hsl(${h},42%,76%)`,hair=`hsl(${(h+140)%360},48%,40%)`;
+    return `<rect width="100" height="100" fill="hsl(${h},28%,92%)"/>
+    <circle cx="50" cy="36" r="21" fill="${f}"/>
+    <ellipse cx="50" cy="88" rx="30" ry="22" fill="${f}"/>
+    <path d="M29 28 q21-20 42 0 q0-24-21-24q-21 0-21 24z" fill="${hair}"/>
+    <path d="M29 28 q-7 24 -3 48" stroke="${hair}" stroke-width="9" fill="none" stroke-linecap="round"/>
+    <path d="M71 28 q7 24 3 48" stroke="${hair}" stroke-width="9" fill="none" stroke-linecap="round"/>
+    <circle cx="43" cy="34" r="3" fill="#2a1020"/><circle cx="57" cy="34" r="3" fill="#2a1020"/>
+    <circle cx="44" cy="33" r="1" fill="rgba(255,255,255,.5)"/><circle cx="58" cy="33" r="1" fill="rgba(255,255,255,.5)"/>
+    <path d="M44 43 q6 5 12 0" stroke="#d06880" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <circle cx="42" cy="39" r="1.5" fill="hsl(${h},60%,78%)" opacity=".7"/><circle cx="58" cy="39" r="1.5" fill="hsl(${h},60%,78%)" opacity=".7"/>`;
+  },
+  // 3 elder
+  id=>{ const h=hue(id),isFem=getPerson(id).sex==='F',f=`hsl(${h},22%,72%)`,hair='hsl(0,0%,80%)';
+    return `<rect width="100" height="100" fill="hsl(${h},14%,90%)"/>
+    <circle cx="50" cy="36" r="21" fill="${f}"/>
+    <ellipse cx="50" cy="88" rx="30" ry="22" fill="${f}"/>
+    ${isFem?`<path d="M29 28 q21-18 42 0 q0-22-21-22q-21 0-21 22z" fill="${hair}"/><path d="M29 28 q-6 22-2 44" stroke="${hair}" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M71 28 q6 22 2 44" stroke="${hair}" stroke-width="8" fill="none" stroke-linecap="round"/>`:
+    `<ellipse cx="50" cy="19" rx="21" ry="11" fill="${hair}"/>`}
+    <circle cx="43" cy="34" r="2.8" fill="#302818"/><circle cx="57" cy="34" r="2.8" fill="#302818"/>
+    <circle cx="44" cy="33" r=".9" fill="rgba(255,255,255,.4)"/><circle cx="58" cy="33" r=".9" fill="rgba(255,255,255,.4)"/>
+    <path d="M43 44 q7 3 14 0" stroke="hsl(${h},20%,54%)" stroke-width="1.2" fill="none"/>
+    <path d="M37 34 q-3-5-5 0M63 34 q3-5 5 0" stroke="${f}" stroke-width=".7" fill="none" opacity=".4"/>`;
+  },
+  // 4 baby
+  id=>{ const h=hue(id),f=`hsl(${h},55%,84%)`;
+    return `<rect width="100" height="100" fill="hsl(${h},35%,94%)"/>
+    <circle cx="50" cy="44" r="28" fill="${f}"/>
+    <ellipse cx="50" cy="92" rx="22" ry="14" fill="${f}"/>
+    <circle cx="42" cy="41" r="4.5" fill="#3a2010"/><circle cx="58" cy="41" r="4.5" fill="#3a2010"/>
+    <circle cx="43" cy="40" r="1.8" fill="rgba(255,255,255,.6)"/><circle cx="59" cy="40" r="1.8" fill="rgba(255,255,255,.6)"/>
+    <ellipse cx="50" cy="56" rx="6" ry="4" fill="#f0a0b0" opacity=".65"/>
+    <path d="M44 51 q6 5 12 0" stroke="#e08090" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+    <ellipse cx="35" cy="48" rx="5" ry="4" fill="${f}" opacity=".7"/><ellipse cx="65" cy="48" rx="5" ry="4" fill="${f}" opacity=".7"/>`;
+  },
+  // 5 mustache
+  id=>{ const h=hue(id),f=`hsl(${h},35%,66%)`,hair=`hsl(${(h+200)%360},42%,24%)`;
+    return `<rect width="100" height="100" fill="hsl(${h},16%,86%)"/>
+    <circle cx="50" cy="36" r="21" fill="${f}"/>
+    <ellipse cx="50" cy="88" rx="30" ry="22" fill="${f}"/>
+    <ellipse cx="50" cy="19" rx="21" ry="13" fill="${hair}"/>
+    <path d="M39 43 q5-6 11 0 q6-6 11 0" fill="${hair}" opacity=".88"/>
+    <circle cx="43" cy="34" r="3" fill="#180808"/><circle cx="57" cy="34" r="3" fill="#180808"/>
+    <circle cx="44" cy="33" r="1" fill="rgba(255,255,255,.4)"/><circle cx="58" cy="33" r="1" fill="rgba(255,255,255,.4)"/>
+    <path d="M43 48 q7 2 14 0" stroke="hsl(${h},28%,46%)" stroke-width="1.2" fill="none"/>`;
+  },
+];
+
+function makeAV(id){ const p=getPerson(id); const fn=AV[p.avStyle||0]||AV[0]; return `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">${fn(id)}</svg>`; }
+
+function avEl(id){
+  const ph=getPhoto(id);
+  if(ph) return `<img src="${ph}" alt="" style="width:100%;height:100%;object-fit:cover">`;
+  return makeAV(id);
+}
+
+function injectAvatars(){
+  Object.keys(BASE).forEach(id=>{
+    const el=document.getElementById('cav-'+id);
+    if(el) el.innerHTML=avEl(id);
+  });
+}
+
+// ══════════════════════════════════════════════
+// MODAL — VIEW
+// ══════════════════════════════════════════════
+let currentId=null;
+
+function openM(id){
+  currentId=id;
+  const p=getPerson(id);
+  const ph=getPhoto(id);
+
+  // photo / avatar header
+  const wrap=document.getElementById('m-av-wrap');
+  if(ph){
+    wrap.innerHTML=`<img src="${ph}" alt="" style="width:100%;height:100%;object-fit:cover">`;
+  } else {
+    wrap.innerHTML=makeAV(id);
+  }
+  wrap.className=ph?'':'modal-av';
+
+  document.getElementById('m-role').textContent=p.role||'';
+  document.getElementById('m-name').textContent=p.name||'';
+
+  // facts
+  const fc=document.getElementById('facts-content');
+  const facts=[];
+  if(p.bdate) facts.push({icon:'🎂',label:'Дата рождения',val:p.bdate});
+  if(p.ddate) facts.push({icon:'✝️',label:'Дата смерти',val:p.ddate});
+  if(p.place) facts.push({icon:'📍',label:'Место рождения',val:p.place});
+  if(p.maiden) facts.push({icon:'💍',label:'Девичья фамилия',val:p.maiden});
+  if(p.patronymic) facts.push({icon:'👤',label:'Отчество',val:p.patronymic});
+
+  let fhtml = facts.map(f=>`
+    <div class="fact-row">
+      <div class="fact-icon">${f.icon}</div>
+      <div><div class="fact-label">${f.label}</div><div class="fact-val">${f.val}</div></div>
+    </div>`).join('');
+
+  // empty prompts
+  if(!p.bdate) fhtml+=`<div class="fact-row"><div class="fact-icon">🎂</div><div><div class="fact-label">Дата рождения</div><div class="fact-empty" onclick="openEditFromModal()">+ Указать дату рождения ${p.firstname||''}</div></div></div>`;
+  if(!p.place) fhtml+=`<div class="fact-row"><div class="fact-icon">📍</div><div><div class="fact-label">Место рождения</div><div class="fact-empty" onclick="openEditFromModal()">+ Где родился(лась) ${p.firstname||''}</div></div></div>`;
+
+  if(p.story) fhtml+=`<div class="story-block">${p.story}</div>`;
+  fc.innerHTML=fhtml||'<p style="color:var(--text4);padding:20px 0;font-size:13px">Нажмите "Редактировать" чтобы добавить информацию.</p>';
+
+  // photos tab
+  const pg=document.getElementById('photos-grid');
+  let phtml='';
+  const allPhotos=JSON.parse(localStorage.getItem('androsov_extra_'+id)||'[]');
+  if(getPhoto(id)) phtml+=`<div class="photo-thumb" onclick="openLightbox('${getPhoto(id)}')"><img src="${getPhoto(id)}" alt=""></div>`;
+  allPhotos.forEach(src=>{ phtml+=`<div class="photo-thumb" onclick="openLightbox('${src}')"><img src="${src}" alt=""></div>`; });
+  phtml+=`<div class="photo-add-btn" onclick="triggerPhotoUploadForModal()"><span>📷</span><span>Добавить фото</span></div>`;
+  pg.innerHTML=phtml;
+
+  // relatives tab
+  const rl=document.getElementById('rel-list');
+  const rels=FAMILY[id]||[];
+  rl.innerHTML=rels.map(rid=>{
+    const rp=getPerson(rid);
+    return `<div class="rel-item" onclick="closeM();setTimeout(()=>openM('${rid}'),200)">
+      <div class="rel-av">${avEl(rid)}</div>
+      <div><div class="rel-name">${rp.name}</div><div class="rel-role">${rp.role||''}</div></div>
+    </div>`;
+  }).join('')||'<p style="color:var(--text4);font-size:13px;padding:12px 0">Нет связанных родственников</p>';
+
+  // switch to facts tab
+  switchTab('facts',document.querySelector('.modal-tab'));
+  document.getElementById('overlay').classList.add('open');
+}
+
+function switchTab(name,btn){
+  document.querySelectorAll('.tab-pane').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.modal-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  btn.classList.add('active');
+}
+
+function closeM(){ document.getElementById('overlay').classList.remove('open'); }
+function closeMOnBg(e){ if(e.target.id==='overlay') closeM(); }
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){ closeM(); closeEdit(); closeAddRel(); closeLightbox(); }
+});
+
+// ══════════════════════════════════════════════
+// EDIT MODAL
+// ══════════════════════════════════════════════
+let editId=null;
+
+function openEditFromModal(){
+  if(currentId) openEdit(currentId);
+}
+
+function openEdit(id){
+  editId=id;
+  const p=getPerson(id);
+  document.getElementById('em-title').textContent=p.name||'Редактировать';
+  document.getElementById('em-surname').value=p.surname||'';
+  document.getElementById('em-firstname').value=p.firstname||'';
+  document.getElementById('em-patronymic').value=p.patronymic||'';
+  document.getElementById('em-maiden').value=p.maiden||'';
+  document.getElementById('em-bdate').value=p.bdate||'';
+  document.getElementById('em-ddate').value=p.ddate||'';
+  document.getElementById('em-place').value=p.place||'';
+  document.getElementById('em-role').value=p.role||'';
+  document.getElementById('em-story').value=p.story||'';
+
+  setSex(p.sex||'M',false);
+  buildAvPicker(p.avStyle||0);
+  refreshEmPreview();
+  document.getElementById('edit-overlay').classList.add('open');
+}
+
+function setSex(s,refresh=true){
+  document.getElementById('sex-m').className='sex-btn'+(s==='M'?' active':'');
+  document.getElementById('sex-f').className='sex-btn'+(s==='F'?' active':'');
+  if(!overrides[editId]) overrides[editId]={};
+  overrides[editId].sex=s;
+  if(refresh) refreshEmPreview();
+}
+
+function buildAvPicker(current){
+  const labels=['Классик','Бородач','Дама','Пожилой','Малыш','Усач'];
+  const ids=['i51','i57','i53','i56','i542','i512'];
+  const p=document.getElementById('av-picker');
+  p.innerHTML=labels.map((l,i)=>{
+    const demoId=ids[i];
+    const tmp={...getPerson(editId), avStyle:i};
+    const svg=AV[i](editId);
+    return `<button class="av-pick-btn${i===current?' active':''}" onclick="setAvStyle(${i})" title="${l}">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">${svg}</svg>
+    </button>`;
+  }).join('');
+}
+
+function setAvStyle(s){
+  if(!overrides[editId]) overrides[editId]={};
+  overrides[editId].avStyle=s;
+  document.querySelectorAll('.av-pick-btn').forEach((b,i)=>b.classList.toggle('active',i===s));
+  refreshEmPreview();
+}
+
+function refreshEmPreview(){
+  if(!editId) return;
+  const p=getPerson(editId);
+  const ph=getPhoto(editId);
+  const prev=document.getElementById('em-preview');
+  prev.innerHTML=ph?`<img src="${ph}" alt="" style="width:100%;height:100%;object-fit:cover">`:makeAV(editId);
+  // update drop zone
+  const dz=document.getElementById('photo-drop-zone');
+  if(dz){
+    if(ph){
+      dz.innerHTML=`<div style="position:relative"><img src="${ph}" style="width:100%;height:100px;object-fit:cover;border-radius:8px"><div style="position:absolute;bottom:6px;right:6px;background:rgba(255,255,255,.9);padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;color:var(--brown);cursor:pointer" onclick="document.getElementById('photo-file-input').click()">Изменить</div></div>`;
+    } else {
+      dz.innerHTML=`<div class="icon">📷</div><p>Нажмите или перетащите фото</p><p style="font-size:11px;color:var(--text4);margin-top:4px;font-weight:400">JPG, PNG, WEBP · до 8 МБ</p>`;
+    }
+  }
+}
+
+function handlePhotoUpload(e){
+  const file=e.target.files[0];
+  if(!file||!editId) return;
+  loadPhotoFile(file, editId);
+}
+
+function handlePhotoDrop(e){
+  e.preventDefault();
+  const file=e.dataTransfer.files[0];
+  if(!file||!editId) return;
+  loadPhotoFile(file, editId);
+}
+
+function loadPhotoFile(file, id){
+  if(!file.type.startsWith('image/')) { showToast('Только изображения!'); return; }
+  if(file.size > 8*1024*1024) { showToast('Файл слишком большой (макс 8 МБ)'); return; }
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    // Resize in canvas before saving
+    const img=new Image();
+    img.onload=()=>{
+      const MAX=600;
+      let w=img.width, h=img.height;
+      if(w>MAX){h=Math.round(h*MAX/w);w=MAX;}
+      const canvas=document.createElement('canvas');
+      canvas.width=w; canvas.height=h;
+      canvas.getContext('2d').drawImage(img,0,0,w,h);
+      const compressed=canvas.toDataURL('image/jpeg',0.82);
+      photos[id]=compressed;
+      localStorage.setItem('androsov_ph3',JSON.stringify(photos));
+      // refresh card avatar
+      const cav=document.getElementById('cav-'+id);
+      if(cav) cav.innerHTML=avEl(id);
+      refreshEmPreview();
+      // update drop zone preview
+      const dz=document.getElementById('photo-drop-zone');
+      if(dz) dz.innerHTML='<img src="'+compressed+'" style="width:100%;height:100px;object-fit:cover;border-radius:8px">';
+      showToast('Фото загружено! ✓');
+    };
+    img.src=ev.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function triggerPhotoUploadForModal(){
+  // create temp input
+  const inp=document.createElement('input');
+  inp.type='file'; inp.accept='image/*';
+  inp.onchange=e=>{
+    const file=e.target.files[0]; if(!file||!currentId) return;
+    const reader=new FileReader();
+    reader.onload=ev=>{
+      const extra=JSON.parse(localStorage.getItem('androsov_extra_'+currentId)||'[]');
+      extra.push(ev.target.result);
+      localStorage.setItem('androsov_extra_'+currentId,JSON.stringify(extra));
+      openM(currentId);
+      showToast('Фото добавлено!');
+    };
+    reader.readAsDataURL(file);
+  };
+  inp.click();
+}
+
+function quickAddPhoto(e,id){
+  e.stopPropagation();
+  const inp=document.createElement('input');
+  inp.type='file'; inp.accept='image/*';
+  inp.onchange=ev=>{
+    const file=ev.target.files[0]; if(!file) return;
+    const reader=new FileReader();
+    reader.onload=el=>{
+      photos[id]=el.target.result;
+      localStorage.setItem('androsov_ph3',JSON.stringify(photos));
+      const avEl2=document.getElementById('cav-'+id);
+      if(avEl2) avEl2.innerHTML=avEl(id);
+      showToast('Фото добавлено!');
+    };
+    reader.readAsDataURL(file);
+  };
+  inp.click();
+}
+
+function saveEdit(){
+  if(!editId) return;
+  if(!overrides[editId]) overrides[editId]={};
+  const ov=overrides[editId];
+  const sn=document.getElementById('em-surname').value.trim();
+  const fn=document.getElementById('em-firstname').value.trim();
+  const pt=document.getElementById('em-patronymic').value.trim();
+  ov.surname=sn; ov.firstname=fn; ov.patronymic=pt;
+  ov.name=[sn,fn,pt].filter(Boolean).join(' ')||getPerson(editId).name;
+  ov.maiden=document.getElementById('em-maiden').value.trim();
+  ov.bdate=document.getElementById('em-bdate').value.trim();
+  ov.ddate=document.getElementById('em-ddate').value.trim();
+  ov.place=document.getElementById('em-place').value.trim();
+  ov.role=document.getElementById('em-role').value.trim();
+  ov.story=document.getElementById('em-story').value.trim();
+  localStorage.setItem('androsov_ov3',JSON.stringify(overrides));
+  // refresh card
+  const cav=document.getElementById('cav-'+editId);
+  if(cav) cav.innerHTML=avEl(editId);
+  const card=document.getElementById('c-'+editId);
+  if(card){
+    const nm=card.querySelector('.c-name'); if(nm) nm.textContent=getPerson(editId).name;
+    const dt=card.querySelector('.c-date'); if(dt) dt.textContent=getPerson(editId).bdate||'';
+  }
+  if(adminLoggedIn) buildAdminGrid();
+  closeEdit();
+  if(currentId===editId) openM(editId);
+  showToast('Сохранено ✓');
+}
+
+function resetPerson(){
+  if(!editId||!confirm('Сбросить к исходным данным?')) return;
+  delete overrides[editId];
+  localStorage.setItem('androsov_ov3',JSON.stringify(overrides));
+  const cav=document.getElementById('cav-'+editId);
+  if(cav) cav.innerHTML=avEl(editId);
+  openEdit(editId);
+  showToast('Сброшено');
+}
+
+function closeEdit(){ document.getElementById('edit-overlay').classList.remove('open'); editId=null; }
+function closeEditOnBg(e){ if(e.target.id==='edit-overlay') closeEdit(); }
+
+// ══════════════════════════════════════════════
+// ADD RELATIVE
+// ══════════════════════════════════════════════
+function openAddRel(){
+  if(!currentId) return;
+  const p=getPerson(currentId);
+  document.getElementById('add-rel-title').textContent=`Добавить к ${p.firstname||p.name}`;
+  document.getElementById('add-rel-overlay').classList.add('open');
+}
+
+function selectRelType(type){
+  // Opens edit modal for a new person of that relation type
+  closeAddRel();
+  showToast('Функция: добавить '+type+' — откройте редактор и сохраните нового человека');
+}
+
+function closeAddRel(){ document.getElementById('add-rel-overlay').classList.remove('open'); }
+function closeAddRelOnBg(e){ if(e.target.id==='add-rel-overlay') closeAddRel(); }
+
+// ══════════════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════════════
+function showSec(n,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
+  document.getElementById(n+'-sec').classList.add('active');
+  if(btn) btn.classList.add('active');
+}
+
+// ══════════════════════════════════════════════
+// SEARCH
+// ══════════════════════════════════════════════
+function doSearch(q){
+  const el=document.getElementById('sr');
+  if(!q.trim()){el.innerHTML='';return;}
+  const lo=q.toLowerCase();
+  const found=Object.keys(BASE).filter(id=>{
+    const p=getPerson(id);
+    return p.name.toLowerCase().includes(lo)||(p.bdate&&p.bdate.includes(q))||(p.role&&p.role.toLowerCase().includes(lo))||(p.story&&p.story.toLowerCase().includes(lo))||(p.place&&p.place.toLowerCase().includes(lo));
+  });
+  if(!found.length){el.innerHTML='<p style="color:var(--text4);padding:20px 0;font-size:14px">Никого не найдено.</p>';return;}
+  el.innerHTML=found.map(id=>{
+    const p=getPerson(id);
+    return `<div class="sr-item" onclick="openM('${id}')">
+      <div class="sr-av">${avEl(id)}</div>
+      <div><div class="sr-name">${p.name}</div><div class="sr-meta">${p.role||''}${p.bdate?' · '+p.bdate:''}</div></div>
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════════
+// ADMIN
+// ══════════════════════════════════════════════
+let adminLoggedIn=false;
+
+function showAdminSection(){
+  const nav=document.querySelector('.nav');
+  if(!document.getElementById('admin-nb')){
+    const btn=document.createElement('button');
+    btn.className='nb';btn.id='admin-nb';btn.textContent='⚙';
+    btn.onclick=e=>{ showSec('admin',null); document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); };
+    nav.appendChild(btn);
+  }
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('admin-sec').classList.add('active');
+  document.getElementById('admin-nb').classList.add('active');
+}
+
+function doLogin(){
+  const u=document.getElementById('al-u').value;
+  const p=document.getElementById('al-p').value;
+  if(u==='admin'&&p==='admin1234'){
+    adminLoggedIn=true;
+    document.getElementById('admin-login').style.display='none';
+    document.getElementById('admin-panel').style.display='block';
+    buildAdminGrid();
+  } else {
+    document.getElementById('al-err').style.display='block';
+  }
+}
+
+function doLogout(){
+  adminLoggedIn=false;
+  document.getElementById('admin-login').style.display='block';
+  document.getElementById('admin-panel').style.display='none';
+  document.getElementById('al-u').value='';
+  document.getElementById('al-p').value='';
+}
+
+function buildAdminGrid(){
+  const g=document.getElementById('admin-grid');
+  g.innerHTML=Object.keys(BASE).map(id=>{
+    const p=getPerson(id);
+    return `<div class="admin-card" onclick="openEdit('${id}')">
+      <div class="ac-av">${avEl(id)}</div>
+      <div>
+        <div class="ac-name">${p.name}</div>
+        <div class="ac-role">${p.role||''}</div>
+        <div class="ac-edit">✏️ Редактировать</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════════
+// LIGHTBOX
+// ══════════════════════════════════════════════
+function openLightbox(src){
+  document.getElementById('lb-img').src=src;
+  document.getElementById('lightbox').classList.add('open');
+}
+function closeLightbox(){ document.getElementById('lightbox').classList.remove('open'); }
+
+// ══════════════════════════════════════════════
+// TOAST
+// ══════════════════════════════════════════════
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2400);
+}
+
+// ══════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════
+
+// ══ ВСТРОЕННЫЕ ИСТОРИЧЕСКИЕ ФОТО ══
+const PHOTO_OLGA = "data:image/jpeg;base64,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";
+const PHOTO_FAMILY = "data:image/jpeg;base64,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";
+
+function applyEmbeddedPhotos() {
+  if(!photos['i517']) {
+    photos['i517'] = PHOTO_OLGA;
+  }
+  // Семейное фото — в галерею Таи, Ольги и Алексея
+  ['i56','i518','i517'].forEach(function(id) {
+    var key = 'androsov_extra_' + id;
+    var arr = JSON.parse(localStorage.getItem(key) || '[]');
+    var found = false;
+    for(var i=0;i<arr.length;i++) { if(arr[i]===PHOTO_FAMILY){found=true;break;} }
+    if(!found) { arr.unshift(PHOTO_FAMILY); localStorage.setItem(key, JSON.stringify(arr)); }
+  });
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  applyEmbeddedPhotos();
+  injectAvatars();
+  // card hover add-photo buttons already in html
+});
+</script>
+</body>
+</html>

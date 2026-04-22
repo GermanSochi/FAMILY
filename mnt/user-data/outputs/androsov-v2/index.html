@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Семейное древо Андросовых · с 1812</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0905;--bg2:#161210;--bg3:#201c16;--bg4:#2a241c;
+  --gold:#c8a84b;--gold2:#e6c870;--gold3:#f4e0a8;
+  --text:#ede5d5;--text2:#a8997e;--text3:#6a5e48;
+  --border:rgba(200,168,75,.18);--border2:rgba(200,168,75,.38);
+  --red:#c85050;--green:#4da870;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Jost',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+
+/* ── HERO ── */
+.hero{text-align:center;padding:70px 20px 50px;border-bottom:1px solid var(--border);position:relative}
+.hero::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:1px;height:50px;background:linear-gradient(to bottom,transparent,var(--gold))}
+.crest{font-size:20px;letter-spacing:10px;color:var(--gold);opacity:.6;margin-bottom:20px}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(34px,6vw,68px);font-weight:600;color:var(--gold2);letter-spacing:4px;line-height:1.05;margin-bottom:8px}
+.hero-sub{font-size:12px;color:var(--text3);letter-spacing:5px;text-transform:uppercase;margin-bottom:28px}
+.hero-span{font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--gold);letter-spacing:2px}
+
+/* ── STATS ── */
+.stats{display:flex;justify-content:center;gap:12px;padding:28px 20px;flex-wrap:wrap;border-bottom:1px solid var(--border)}
+.stat{text-align:center;padding:16px 24px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;min-width:120px}
+.stat-n{font-family:'Cormorant Garamond',serif;font-size:34px;color:var(--gold2);line-height:1}
+.stat-l{font-size:10px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-top:4px}
+
+/* ── NAV ── */
+.nav{display:flex;justify-content:center;gap:0;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(11,9,5,.96);backdrop-filter:blur(12px);z-index:200}
+.nb{padding:16px 28px;background:none;border:none;border-bottom:2px solid transparent;color:var(--text3);font-family:'Jost',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:color .25s,border-color .25s}
+.nb.active,.nb:hover{color:var(--gold2);border-bottom-color:var(--gold)}
+
+/* ── SECTIONS ── */
+.sec{display:none;min-height:80vh}.sec.active{display:block}
+
+/* ── TREE ── */
+#tree-sec{padding:40px 16px}
+.tree-wrap{max-width:1300px;margin:0 auto;overflow-x:auto}
+.gen-title{text-align:center;font-size:10px;color:var(--text3);letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;padding-top:8px}
+.gen-row{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;padding:16px 0;position:relative}
+.vline{width:1px;height:32px;background:linear-gradient(to bottom,var(--gold),transparent);margin:0 auto;opacity:.35}
+
+/* ── PERSON CARD ── */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;width:170px;cursor:pointer;transition:all .25s;text-align:center;flex-shrink:0;position:relative}
+.card:hover{border-color:var(--gold);background:var(--bg3);transform:translateY(-3px);box-shadow:0 10px 30px rgba(200,168,75,.1)}
+.card.me{border-color:var(--gold);background:var(--bg3)}
+.card.me::after{content:'ЯΩ';position:absolute;top:-9px;right:-6px;background:var(--gold);color:var(--bg);font-size:9px;font-weight:600;padding:2px 7px;border-radius:10px;letter-spacing:1px}
+.card.deceased{opacity:.7}
+.card.deceased::before{content:'†';position:absolute;top:6px;left:10px;color:var(--text3);font-size:11px}
+
+/* ── AVATAR ── */
+.av{width:52px;height:52px;border-radius:50%;margin:0 auto 10px;overflow:hidden;border:2px solid var(--border2);flex-shrink:0}
+.av svg{width:100%;height:100%}
+
+/* ── CARD TEXT ── */
+.c-role{font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}
+.c-name{font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--text);line-height:1.35;margin-bottom:3px}
+.c-maiden{font-size:10px;color:var(--text3);font-style:italic;margin-bottom:3px}
+.c-date{font-size:10px;color:var(--gold);letter-spacing:.5px}
+.c-note{font-size:9px;color:var(--text3);margin-top:4px;font-style:italic}
+
+/* ── COUPLE BRIDGE ── */
+.bridge{width:40px;height:2px;background:var(--border);margin-top:34px;flex-shrink:0;position:relative}
+.bridge::after{content:'✦';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:var(--gold);font-size:9px;background:var(--bg);padding:0 3px}
+
+/* ── MODAL ── */
+.overlay{display:none;position:fixed;inset:0;background:rgba(11,9,5,.92);z-index:1000;align-items:center;justify-content:center;padding:20px}
+.overlay.open{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:14px;max-width:460px;width:100%;padding:36px;position:relative;animation:mfade .3s ease}
+@keyframes mfade{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.mcl{position:absolute;top:14px;right:18px;background:none;border:none;color:var(--text3);font-size:22px;cursor:pointer;transition:color .2s;line-height:1}
+.mcl:hover{color:var(--gold)}
+.m-av{width:88px;height:88px;border-radius:50%;border:2px solid var(--gold);margin:0 auto 20px;overflow:hidden}
+.m-av svg{width:100%;height:100%}
+.m-role{text-align:center;font-size:10px;color:var(--text3);letter-spacing:3px;text-transform:uppercase;margin-bottom:6px}
+.m-name{text-align:center;font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--gold2);margin-bottom:20px;line-height:1.3}
+.m-det{border-top:1px solid var(--border);padding-top:16px}
+.m-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(200,168,75,.07);font-size:13px}
+.m-row:last-child{border-bottom:none}
+.m-rl{color:var(--text3);flex-shrink:0;margin-right:12px}
+.m-rv{color:var(--text);text-align:right;max-width:65%;line-height:1.4}
+.m-story{margin-top:14px;font-size:12px;color:var(--text2);line-height:1.7;font-style:italic;border-left:2px solid var(--gold);padding-left:12px}
+
+/* ── SURNAMES ── */
+#sur-sec{padding:60px 20px;max-width:1000px;margin:0 auto}
+.sec-h{font-family:'Cormorant Garamond',serif;font-size:30px;color:var(--gold2);margin-bottom:6px}
+.sec-div{width:48px;height:1px;background:var(--gold);opacity:.5;margin-bottom:36px}
+.sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:18px}
+.sc{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:24px;transition:border-color .25s}
+.sc:hover{border-color:var(--border2)}
+.sc-n{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--gold2);margin-bottom:5px}
+.sc-c{font-size:10px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.sc-d{font-size:13px;color:var(--text2);line-height:1.7}
+
+/* ── SEARCH ── */
+#src-sec{padding:60px 20px;max-width:820px;margin:0 auto}
+.sbar{display:flex;gap:10px;margin:28px 0 40px}
+.sinp{flex:1;background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:13px 18px;color:var(--text);font-family:'Jost',sans-serif;font-size:14px;outline:none;transition:border-color .25s}
+.sinp:focus{border-color:var(--gold)}
+.sinp::placeholder{color:var(--text3)}
+.sbtn{background:var(--gold);color:var(--bg);border:none;border-radius:6px;padding:13px 24px;font-family:'Jost',sans-serif;font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:background .25s}
+.sbtn:hover{background:var(--gold2)}
+.sr-item{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:14px 18px;cursor:pointer;transition:border-color .25s;display:flex;align-items:center;gap:14px;margin-bottom:10px}
+.sr-item:hover{border-color:var(--gold)}
+.sr-av{width:38px;height:38px;border-radius:50%;background:var(--bg3);border:1px solid var(--border2);overflow:hidden;flex-shrink:0}
+.sr-av svg{width:100%;height:100%}
+.sr-name{font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--text)}
+.sr-meta{font-size:11px;color:var(--text3);margin-top:2px}
+
+/* ── IDEAS ── */
+#ideas-sec{padding:60px 20px;max-width:1000px;margin:0 auto}
+.ig{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:18px;margin-top:36px}
+.ic{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:24px;transition:all .25s}
+.ic:hover{border-color:var(--border2);transform:translateY(-2px)}
+.ic-ico{font-size:28px;margin-bottom:14px}
+.ic-t{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--gold2);margin-bottom:8px}
+.ic-d{font-size:13px;color:var(--text2);line-height:1.7}
+.ic-tag{display:inline-block;margin-top:12px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);border:1px solid var(--border);padding:3px 9px;border-radius:12px}
+
+/* ── ADMIN ── */
+#admin-sec{padding:60px 20px;max-width:900px;margin:0 auto}
+.admin-login{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:40px;max-width:380px;margin:0 auto}
+.al-t{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--gold2);text-align:center;margin-bottom:24px}
+.ainp{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:12px 16px;color:var(--text);font-family:'Jost',sans-serif;font-size:14px;outline:none;margin-bottom:14px;transition:border-color .25s}
+.ainp:focus{border-color:var(--gold)}
+.ainp::placeholder{color:var(--text3)}
+.abtn{width:100%;background:var(--gold);color:var(--bg);border:none;border-radius:6px;padding:13px;font-family:'Jost',sans-serif;font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:background .25s}
+.abtn:hover{background:var(--gold2)}
+.al-err{color:var(--red);font-size:12px;text-align:center;margin-top:10px;display:none}
+
+.admin-panel{display:none}
+.ap-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}
+.ap-title{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--gold2)}
+.ap-logout{background:none;border:1px solid var(--border);color:var(--text3);padding:8px 16px;border-radius:6px;cursor:pointer;font-family:'Jost',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;transition:all .25s}
+.ap-logout:hover{border-color:var(--red);color:var(--red)}
+
+.admin-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-bottom:32px}
+.admin-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:18px;cursor:pointer;transition:all .25s;display:flex;align-items:center;gap:14px}
+.admin-card:hover{border-color:var(--gold);background:var(--bg3)}
+.admin-card .av-sm{width:40px;height:40px;border-radius:50%;overflow:hidden;border:1px solid var(--border2);flex-shrink:0}
+.admin-card .av-sm svg{width:100%;height:100%}
+.ac-info{}
+.ac-name{font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--text)}
+.ac-role{font-size:10px;color:var(--text3);letter-spacing:1px;margin-top:2px}
+.ac-edit{font-size:10px;color:var(--gold);margin-top:4px}
+
+/* ── EDIT MODAL ── */
+.edit-overlay{display:none;position:fixed;inset:0;background:rgba(11,9,5,.92);z-index:2000;align-items:center;justify-content:center;padding:20px;overflow-y:auto}
+.edit-overlay.open{display:flex}
+.edit-modal{background:var(--bg2);border:1px solid var(--border2);border-radius:14px;max-width:500px;width:100%;padding:36px;position:relative;max-height:90vh;overflow-y:auto}
+.em-title{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--gold2);margin-bottom:24px}
+.em-row{margin-bottom:16px}
+.em-label{font-size:11px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+.em-input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:10px 14px;color:var(--text);font-family:'Jost',sans-serif;font-size:13px;outline:none;transition:border-color .25s}
+.em-input:focus{border-color:var(--gold)}
+.em-textarea{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:10px 14px;color:var(--text);font-family:'Jost',sans-serif;font-size:13px;outline:none;transition:border-color .25s;resize:vertical;min-height:80px}
+.em-textarea:focus{border-color:var(--gold)}
+.em-av-preview{width:70px;height:70px;border-radius:50%;border:2px solid var(--border2);overflow:hidden;margin:0 auto 14px}
+.em-av-preview svg{width:100%;height:100%}
+.em-save{width:100%;background:var(--gold);color:var(--bg);border:none;border-radius:6px;padding:12px;font-family:'Jost',sans-serif;font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase;cursor:pointer;margin-top:8px;transition:background .25s}
+.em-save:hover{background:var(--gold2)}
+.em-del{width:100%;background:none;color:var(--red);border:1px solid rgba(200,80,80,.3);border-radius:6px;padding:10px;font-family:'Jost',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;margin-top:8px;transition:all .25s}
+.em-del:hover{background:rgba(200,80,80,.1)}
+.em-close{position:absolute;top:14px;right:18px;background:none;border:none;color:var(--text3);font-size:22px;cursor:pointer;line-height:1}
+.em-close:hover{color:var(--gold)}
+.avatar-style-btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.av-style-btn{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:6px 12px;color:var(--text2);font-size:11px;cursor:pointer;transition:all .25s}
+.av-style-btn:hover,.av-style-btn.active{border-color:var(--gold);color:var(--gold2)}
+
+/* ── FOOTER ── */
+footer{text-align:center;padding:36px 20px;border-top:1px solid var(--border);color:var(--text3);font-size:11px;letter-spacing:2px;margin-top:60px}
+
+/* ── ADMIN NAV HINT ── */
+.admin-hint{position:fixed;bottom:20px;right:20px;width:8px;height:8px;border-radius:50%;background:var(--bg3);border:1px solid var(--border);cursor:pointer;transition:all .3s;z-index:500;opacity:.4}
+.admin-hint:hover{opacity:1;background:var(--gold);box-shadow:0 0 12px rgba(200,168,75,.4)}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="crest">✦ ✦ ✦</div>
+  <h1>АНДРОСОВЫ</h1>
+  <div class="hero-sub">Семейное Древо · с 1812 года</div>
+  <div class="hero-span">Саломин Федот · 1812 &mdash; Оливия Германовна · 2026</div>
+</div>
+
+<div class="stats">
+  <div class="stat"><div class="stat-n">97</div><div class="stat-l">Человек</div></div>
+  <div class="stat"><div class="stat-n">8+</div><div class="stat-l">Поколений</div></div>
+  <div class="stat"><div class="stat-n">214</div><div class="stat-l">Лет истории</div></div>
+  <div class="stat"><div class="stat-n">12</div><div class="stat-l">Фамилий</div></div>
+</div>
+
+<nav class="nav">
+  <button class="nb active" onclick="showSec('tree')">Древо</button>
+  <button class="nb" onclick="showSec('sur')">Фамилии</button>
+  <button class="nb" onclick="showSec('src')">Поиск</button>
+  <button class="nb" onclick="showSec('ideas')">Идеи</button>
+</nav>
+
+<!-- ══════════════════════════════════
+     TREE SECTION
+═══════════════════════════════════ -->
+<div id="tree-sec" class="sec active">
+<div class="tree-wrap">
+
+<!-- GEN I: Прапрапредки -->
+<div class="gen-title">I · Прапрапредки · 1812</div>
+<div class="gen-row">
+  <div class="card" onclick="openM('i556')">
+    <div class="av" id="av-i556"></div>
+    <div class="c-role">Прапрапрадед</div>
+    <div class="c-name">Саломин Федот</div>
+    <div class="c-date">1812</div>
+  </div>
+  <div class="bridge"></div>
+  <div class="card" onclick="openM('i555')">
+    <div class="av" id="av-i555"></div>
+    <div class="c-role">Прапрапрабабушка</div>
+    <div class="c-name">Саломина Параскева (Пелагея) Ивановна</div>
+  </div>
+</div>
+<div class="vline"></div>
+
+<!-- GEN II: Прапрадеды -->
+<div class="gen-title">II · Прапрадеды</div>
+<div class="gen-row">
+  <div class="card" onclick="openM('i550')">
+    <div class="av" id="av-i550"></div>
+    <div class="c-role">Прапрадед</div>
+    <div class="c-name">Саломин Федот Герасимович</div>
+    <div class="c-note">† ум. 27.03.1913 от воспаления лёгких</div>
+  </div>
+  <div class="bridge"></div>
+  <div class="card" onclick="openM('i551')">
+    <div class="av" id="av-i551"></div>
+    <div class="c-role">Прапрабабушка</div>
+    <div class="c-name">Саломина Анна Тимофеевна</div>
+  </div>
+  <div style="width:24px"></div>
+  <div class="card" onclick="openM('i557')">
+    <div class="av" id="av-i557"></div>
+    <div class="c-role">Прапрадед (Ромашкины)</div>
+    <div class="c-name">Ромашкин Михаил</div>
+  </div>
+  <div class="bridge"></div>
+  <div class="card" onclick="openM('i558')">
+    <div class="av" id="av-i558"></div>
+    <div class="c-role">Прапрабабушка</div>
+    <div class="c-name">Ромашкина Евдокия</div>
+  </div>
+  <div style="width:24px"></div>
+  <div class="card" onclick="openM('i582')">
+    <div class="av" id="av-i582"></div>
+    <div class="c-role">Прапрадед (Щербаковы)</div>
+    <div class="c-name">Щербаков Михаил</div>
+  </div>
+  <div class="bridge"></div>
+  <div class="card" onclick="openM('i583')">
+    <div class="av" id="av-i583"></div>
+    <div class="c-role">Прапрабабушка</div>
+    <div class="c-name">Щербакова Анна</div>
+  </div>
+  <div style="width:24px"></div>
+  <div class="card" onclick="openM('i584')">
+    <div class="av" id="av-i584"></div>
+    <div class="c-role">Прапрадед (Коротеевы)</div>
+    <div class="c-name">Коротеев Иван</div>
+  </div>
+  <div class="bridge"></div>
+  <div class="card" onclick="openM('i585')">
+    <div class="av" id="av-i585"></div>
+    <div class="c-role">Прапрабабушка</div>
+    <div class="c-name">Коротеева ?</div>
+  </div>
+</div>
+<div class="vline"></div>
+
+<!-- GEN III: Прадеды -->
+<div class="gen-title">III · Прадеды и прабабушки</div>
+<div class="gen-row">
+  <div class="card" onclick="openM('i543')">
+    <div class="av" id="av-i543"></div>
+    <div class="c-role">Прадед</div>
+    <div class="c-name">Саломин Михаил Федотович</div>
+  </div>
+  <div class="bridge"></div>
+  <div class="card" onclick="openM('i544')">
+    <div class="av" id="av-i544"></div>
+    <div class="c-role">Прабабушка</div>
+    <div class="c-name">Саломина Анастасия Сергеевна</div>
+  </div>
+  <div style="width:24px"></div>
+  <div class="card" onclick="openM('i519')">
+    <div class="av" id="av-i519"></div>
+    <div class="c-role">Прадед (Хвостовы)</div>
+    <div class="c-name">Хвостов Антон</div>
+  </div>
+  <div class="bridge"></div>
+  <div class="card" onclick="openM('i520')">
+    <div class="av" id="av-i520"></div>
+    <div class="c-role">Прабабушка</div>
+    <div class="c-name">Хвостова Клавдия Леонтьевна</div>
+    <div class="c-date">апрель 1911</div>
+  </div>
+  <div style="width:24px"></div>
+  <div class="card" onclick="openM('i518')">
+    <div class="av" id="av-i518"></div>
+    <div class="c-role">Прадед (Щербаковы)</div>
+    <div class="c-name">Щербаков Алексей Михайлович</div>
+    <div class="c-date">02.06.1912</div>
+  </div>
+  <div class="bridge"></div>
+  <div class="card" onclick="openM('i517')">
+    <div class="av" id="av-i517"></div>
+    <div class="c-role">Прабабушка</div>
+    <div class="c-name">Щербакова Ольга Михайловна</div>
+    <div class="c-maiden">(Саломина)</div>
+    <div class="c-date">02.06.1912 – 01.03.1988</div>
+  </div>
+  <div style="width:24px"></div>
+  <div class="card" onclick="openM('i531')">
+    <div class="av" id="av-i531"></div>
+    <div class="c-role">Прадед (Андросовы)</div>
+    <div class="c-name">Андросов Леонид Семёнович</div>
+  </div>
+  <div class="bridge"></div>
+  <div class="card" onclick="openM('i530')">
+    <div class="av" id="av-i530"></div>
+    <div class="c-role">Прабабушка</div>
+    <div class="c-name">Андросова Александра</div>
+    <div class="c-maiden">(Украинская)</div>
+  </div>
+  <div style="width:24px"></div>
+  <div class="card" onclick="openM('i528')">
+    <div class="av" id="av-i528"></div>
+    <div class="c-role">Прадед (Коротеевы)</div>
+    <div class="c-name">Коротеев Николай Иванович</div>
+  </div>
+  <div class="bridge"></div>
+  <div class="card" onclick="openM('i529')">
+    <div class="av" id="av-i529"></div>
+    <div class="c-role">Прабабушка</div>
+    <div class="c-name">Коротеева Александра Михайловна</div>
+    <div class="c-maiden">(Ромашкина)</div>
+  </div>
+</div>
+<div class="vline"></div>
+
+<!-- GEN IV: Деды -->
+<div class="gen-title">IV · Дедушки и бабушки</div>
+<div class="gen-row">
+  <div class="card" onclick="openM('i57')">
+    <div class="av" id="av-i57"></div>
+    <div class="c-role">Дедушка</div>
+    <div class="c-name">Хвостов Евгений Антонович</div>
+    <div class="c-date">21.06.1935</div>
+  </div>
+  <div class="bridge"></div>
+  <div class="card" onclick="openM('i56')">
+    <div class="av" id="av-i56"></div>
+    <div class="c-role">Бабушка</div>
+    <div class="c-name">Хвостова Таисия Алексеевна</div>
+    <div class="c-maiden">(Щербакова)</div>
+  </div>
+  <div style="width:32px"></div>
+  <div class="card" onclick="openM('i58')">
+    <div class="av" id="av-i58"></div>
+    <div class="c-role">Дедушка</div>
+    <div class="c-name">Андросов Валерий Леонидович</div>
+  </div>
+  <div class="bridge"></div>
+  <div class="card" onclick="openM('i55')">
+    <div class="av" id="av-i55"></div>
+    <div class="c-role">Бабушка</div>
+    <div class="c-name">Андросова Ванда Николаевна</div>
+    <div class="c-maiden">(Коротеева)</div>
+  </div>
+  <div style="width:32px"></div>
+  <div class="card" onclick="openM('i540')">
+    <div class="av" id="av-i540"></div>
+    <div class="c-role">Прадед (Блинниковы)</div>
+    <div class="c-name">Блинников Константин Тимофеевич</div>
+    <div class="c-date">11.06.1916 – 02.04.1998</div>
+    <div class="c-note">Ветеран ВОВ</div>
+  </div>
+  <div class="bridge"></div>
+  <div class="card" onclick="openM('i539')">
+    <div class="av" id="av-i539"></div>
+    <div class="c-role">Прабабушка</div>
+    <div class="c-name">Блинникова Анна Васильевна</div>
+    <div class="c-maiden">(Кудюркина)</div>
+    <div class="c-date">13.02.1921 – 02.06.1993</div>
+  </div>
+</div>
+<div class="vline"></div>
+
+<!-- GEN V: Родители -->
+<div class="gen-title">V · Родители и их братья / сёстры</div>
+<div class="gen-row">
+  <div class="card" onclick="openM('i510')">
+    <div class="av" id="av-i510"></div>
+    <div class="c-role">Тётя</div>
+    <div class="c-name">Блинникова Татьяна Валерьевна</div>
+    <div class="c-maiden">(Андросова)</div>
+    <div class="c-date">04.03.1967</div>
+  </div>
+  <div style="width:10px"></div>
+  <div class="card" onclick="openM('i533')">
+    <div class="av" id="av-i533"></div>
+    <div class="c-role">Дядя</div>
+    <div class="c-name">Андросов Леонид Валерьевич</div>
+  </div>
+  <div style="width:10px"></div>
+  <div class="card" onclick="openM('i52')">
+    <div class="av" id="av-i52"></div>
+    <div class="c-role">Отец</div>
+    <div class="c-name">Андросов Анатолий Валерьевич</div>
+    <div class="c-date">24.04.1958</div>
+  </div>
+  <div class="bridge"></div>
+  <div class="card" onclick="openM('i53')">
+    <div class="av" id="av-i53"></div>
+    <div class="c-role">Мать</div>
+    <div class="c-name">Андросова Ольга Евгеньевна</div>
+    <div class="c-maiden">(Хвостова)</div>
+  </div>
+  <div style="width:10px"></div>
+  <div class="card" onclick="openM('i537')">
+    <div class="av" id="av-i537"></div>
+    <div class="c-role">Дядя (Блинниковы)</div>
+    <div class="c-name">Блинников Олег Константинович</div>
+    <div class="c-date">04.12.1943 – 12.09.2024</div>
+  </div>
+</div>
+<div class="vline"></div>
+
+<!-- GEN VI: Я -->
+<div class="gen-title">VI · Моё поколение</div>
+<div class="gen-row">
+  <div class="card" onclick="openM('i515')">
+    <div class="av" id="av-i515"></div>
+    <div class="c-role">Сестра</div>
+    <div class="c-name">Андросова Юля Анатольевна</div>
+  </div>
+  <div style="width:10px"></div>
+  <div class="card" onclick="openM('i54')">
+    <div class="av" id="av-i54"></div>
+    <div class="c-role">Сестра</div>
+    <div class="c-name">Андросова Ангелина Анатольевна</div>
+    <div class="c-date">03.06.1985 · Сочи</div>
+  </div>
+  <div style="width:10px"></div>
+  <div class="card me" onclick="openM('i51')">
+    <div class="av" id="av-i51"></div>
+    <div class="c-role">Я</div>
+    <div class="c-name">Андросов Герман Анатольевич</div>
+    <div class="c-date">27.08.1987</div>
+  </div>
+  <div class="bridge"></div>
+  <div class="card" onclick="openM('i541')">
+    <div class="av" id="av-i541"></div>
+    <div class="c-role">Жена</div>
+    <div class="c-name">Андросова Лилия Сергеевна</div>
+    <div class="c-maiden">(Шевякова)</div>
+    <div class="c-date">06.02.1997</div>
+  </div>
+  <div style="width:10px"></div>
+  <div class="card" onclick="openM('i511')">
+    <div class="av" id="av-i511"></div>
+    <div class="c-role">Двоюродный брат</div>
+    <div class="c-name">Блинников Денис Евгеньевич</div>
+    <div class="c-date">28.11.1996</div>
+  </div>
+  <div style="width:10px"></div>
+  <div class="card" onclick="openM('i513')">
+    <div class="av" id="av-i513"></div>
+    <div class="c-role">Двоюродная сестра</div>
+    <div class="c-name">Чальцева Ксенья Евгеньевна</div>
+    <div class="c-maiden">(Блинникова)</div>
+    <div class="c-date">17.01.1990</div>
+  </div>
+</div>
+<div class="vline"></div>
+
+<!-- GEN VII: Дети -->
+<div class="gen-title">VII · Дети и племянники</div>
+<div class="gen-row">
+  <div class="card" onclick="openM('i516')">
+    <div class="av" id="av-i516"></div>
+    <div class="c-role">Племянница</div>
+    <div class="c-name">Андросова Злата Ильинишна</div>
+    <div class="c-date">25.03.2012</div>
+  </div>
+  <div style="width:14px"></div>
+  <div class="card" onclick="openM('i542')">
+    <div class="av" id="av-i542"></div>
+    <div class="c-role">Дочь</div>
+    <div class="c-name">Андросова Оливия Германовна</div>
+    <div class="c-date">05.04.2026</div>
+  </div>
+  <div style="width:14px"></div>
+  <div class="card" onclick="openM('i572')">
+    <div class="av" id="av-i572"></div>
+    <div class="c-role">Двоюродная племянница</div>
+    <div class="c-name">Чальцева Ксения Романовна</div>
+  </div>
+  <div style="width:10px"></div>
+  <div class="card" onclick="openM('i573')">
+    <div class="av" id="av-i573"></div>
+    <div class="c-role">Двоюродный племянник</div>
+    <div class="c-name">Чальцев Егор Романович</div>
+  </div>
+</div>
+
+</div><!-- /tree-wrap -->
+</div><!-- /tree-sec -->
+
+<!-- ══════════════════════════════════
+     SURNAMES
+═══════════════════════════════════ -->
+<div id="sur-sec" class="sec">
+<div style="max-width:1000px;margin:0 auto;padding:60px 20px">
+  <div class="sec-h">Фамилии в роду</div>
+  <div class="sec-div"></div>
+  <div class="sg">
+    <div class="sc"><div class="sc-n">Андросовы</div><div class="sc-c">Главная линия · 8 поколений</div><div class="sc-d">Центральная ветвь. Прослеживается от Андросовой Ольги и Семёна через Леонида Семёновича → Валерий Леонидович → Анатолий → Герман → Оливия.</div></div>
+    <div class="sc"><div class="sc-n">Саломины</div><div class="sc-c">Древнейшая ветвь · с 1812</div><div class="sc-d">Федот Саломин (1812) — самый ранний известный предок. Его сын Федот Герасимович умер в 1913. Георгий Федотович был репрессирован в 1958 и реабилитирован. Ветвь ведёт к Щербаковым.</div></div>
+    <div class="sc"><div class="sc-n">Хвостовы</div><div class="sc-c">По материнской линии</div><div class="sc-d">Евгений Антонович (р. 21.06.1935) — дед по маме. Алексей Михайлович и Клавдия Леонтьевна — прадеды. Антон Хвостов — прапрадед. Мать Ольга — урождённая Хвостова.</div></div>
+    <div class="sc"><div class="sc-n">Коротеевы</div><div class="sc-c">По линии бабушки Ванды</div><div class="sc-d">Бабушка Ванда Николаевна (Коротеева). Предки — крепостные в Тамбовской губернии, село Никольское. Прабабушка Александра Михайловна (Ромашкина по рождению).</div></div>
+    <div class="sc"><div class="sc-n">Щербаковы</div><div class="sc-c">Через Хвостовых и Саломиных</div><div class="sc-d">Ольга Михайловна (Саломина) — прабабушка. Алексей Михайлович Щербаков — прадед. Таисия Алексеевна (Щербакова) — бабушка по маме. Анатолий Алексеевич погиб в шахте в 20 лет.</div></div>
+    <div class="sc"><div class="sc-n">Ромашкины</div><div class="sc-c">Через Коротеевых</div><div class="sc-d">Михаил Ромашкин и Евдокия — прапрадеды. Их дети: Александра Михайловна (прабабушка-Коротеева), Фёдор, Константин. Ветвь идёт дальше к Италия и Кочубей.</div></div>
+    <div class="sc"><div class="sc-n">Блинниковы</div><div class="sc-c">По линии тёти Татьяны</div><div class="sc-d">Константин Тимофеевич — ветеран ВОВ (р. 1916, Оренбург). Евгений Олегович (1967–2001) — муж тёти. Денис Евгеньевич (р. 1996) — двоюродный брат.</div></div>
+    <div class="sc"><div class="sc-n">Шевяковы</div><div class="sc-c">Жена · современная ветвь</div><div class="sc-d">Лилия Сергеевна Шевякова (р. 06.02.1997) — жена Германа. Мать Оливии Германовны (р. 05.04.2026).</div></div>
+    <div class="sc"><div class="sc-n">Королевы</div><div class="sc-c">Через Щербаковых</div><div class="sc-d">Ирина Михайловна (Щербакова) вышла замуж. Дети: Никита, Роман. Внуки: Эвелина Никитична, Егор и Ульяна Романовны.</div></div>
+    <div class="sc"><div class="sc-n">Грис</div><div class="sc-c">Через Коротеевых</div><div class="sc-d">Клара Николаевна (Коротеева) вышла за Эдуарда Гриса (Кaraganda). Юрий Эдуардович → Андрей Юрьевич → Лев Андреевич.</div></div>
+    <div class="sc"><div class="sc-n">Чальцевы</div><div class="sc-c">Через Блинниковых</div><div class="sc-d">Ксенья Евгеньевна (Блинникова) вышла за Романа Чальцева. Дети: Ксения Романовна и Егор Романович.</div></div>
+    <div class="sc"><div class="sc-n">Украинские</div><div class="sc-c">Прабабушкина ветвь</div><div class="sc-d">Прабабушка Александра (Украинская) — жена Леонида Семёновича Андросова. Дала начало главной ветви Андросовых.</div></div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════
+     SEARCH
+═══════════════════════════════════ -->
+<div id="src-sec" class="sec">
+<div style="max-width:820px;margin:0 auto;padding:60px 20px">
+  <div class="sec-h">Поиск по дереву</div>
+  <div class="sec-div"></div>
+  <div class="sbar">
+    <input class="sinp" type="text" id="si" placeholder="Имя, фамилия, год рождения..." oninput="doSearch(this.value)">
+  </div>
+  <div id="sr"></div>
+
+  <div style="margin-top:60px">
+    <div class="sec-h" style="font-size:22px">Где искать новых родственников</div>
+    <div class="sec-div"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px">
+      <div class="ic"><div class="ic-t">ВКонтакте</div><div class="ic-d">Ищи по фамилиям: Андросов, Хвостов, Коротеев, Саломин, Щербаков, Ромашкин. Фильтруй по городу.</div><a href="https://vk.com/search?c%5Bsection%5D=people&q=Андросов" target="_blank" class="ic-tag">Открыть →</a></div>
+      <div class="ic"><div class="ic-t">FamilySearch</div><div class="ic-d">Бесплатная база архивов. Метрические книги XIX–XX вв. Особенно перспективно для Саломиных с 1812.</div><a href="https://www.familysearch.org" target="_blank" class="ic-tag">Искать →</a></div>
+      <div class="ic"><div class="ic-t">Архив России</div><div class="ic-d">Ревизские сказки 1811–1858 — Саломин Федот как раз попадает! Запрос в Тамбовский архив (Коротеевы были крепостными там).</div><a href="https://archives.ru" target="_blank" class="ic-tag">Архивы →</a></div>
+      <div class="ic"><div class="ic-t">Бессмертный полк</div><div class="ic-d">Константин Тимофеевич Блинников (р. 1916) воевал. Алексей Михайлович Щербаков (р. 1912) — тоже возраст ВОВ.</div><a href="https://moypolk.ru" target="_blank" class="ic-tag">Искать →</a></div>
+      <div class="ic"><div class="ic-t">MyHeritage</div><div class="ic-d">Загрузи GEDCOM файл и система найдёт совпадения с другими деревьями. У тебя уже есть .ged файл!</div><a href="https://www.myheritage.com" target="_blank" class="ic-tag">Загрузить →</a></div>
+      <div class="ic"><div class="ic-t">Одноклассники</div><div class="ic-d">Старшее поколение. Ищи двоюродных по Коротеев, Щербаков, Ромашкин — несколько ветвей упомянуты в дереве.</div><a href="https://ok.ru" target="_blank" class="ic-tag">Открыть →</a></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════
+     IDEAS
+═══════════════════════════════════ -->
+<div id="ideas-sec" class="sec">
+<div style="max-width:1000px;margin:0 auto;padding:60px 20px">
+  <div class="sec-h">Идеи для семейного проекта</div>
+  <div class="sec-div"></div>
+  <div class="ig">
+    <div class="ic"><div class="ic-ico">🧬</div><div class="ic-t">ДНК-тест</div><div class="ic-d">MyHeritage DNA или 23andMe. Особенно интересно с корнями XIX века — Саломины, Ромашкины из Тамбовской губернии. Найдёшь дальних родственников автоматически.</div><div class="ic-tag">~5 000 руб.</div></div>
+    <div class="ic"><div class="ic-ico">📖</div><div class="ic-t">Семейная книга</div><div class="ic-d">Hardcover с деревом, историями, фотографиями. У тебя уже 97 человек + история с 1812. Сервисы Ridero, Blurb. Оливии — когда вырастет.</div><div class="ic-tag">Печатная память</div></div>
+    <div class="ic"><div class="ic-ico">🖼️</div><div class="ic-t">Постер A0</div><div class="ic-d">Этот сайт можно конвертировать в постер формата A0 или A1. На стену дома. Саломин Федот 1812 → Оливия 2026 — 214 лет!</div><div class="ic-tag">На стену</div></div>
+    <div class="ic"><div class="ic-ico">🎙️</div><div class="ic-t">Интервью со старшими</div><div class="ic-d">Запиши дедушку Евгения Антоновича (р. 1935) пока это возможно. Спроси о детстве, войне, воспоминаниях о родителях. Это бесценно для Оливии.</div><div class="ic-tag">Приоритет №1</div></div>
+    <div class="ic"><div class="ic-ico">🏛️</div><div class="ic-t">Архивный запрос</div><div class="ic-d">Саломин Федот 1812 → ревизская сказка 7-й ревизии (1815) Тамбовской губернии. Коротеевы были крепостными в с. Никольское — это прямая зацепка!</div><div class="ic-tag">Бесплатно</div></div>
+    <div class="ic"><div class="ic-ico">📍</div><div class="ic-t">Карта предков</div><div class="ic-d">Тамбовская губерния (Ромашкины-Коротеевы), Москва–Зюзино (Щербакова Ольга), Оренбург (Блинниковы), Сочи, Краснодар. Интерактивная карта на сайт.</div><div class="ic-tag">Можем добавить</div></div>
+    <div class="ic"><div class="ic-ico">🌐</div><div class="ic-t">GitHub Pages</div><div class="ic-d">Этот сайт готов к деплою. Бесплатный хостинг, постоянный URL. Поделись со всеми 97 родственниками!</div><div class="ic-tag">Следующий шаг</div></div>
+    <div class="ic"><div class="ic-ico">🌳</div><div class="ic-t">GEDCOM в Ancestry</div><div class="ic-d">У тебя уже есть .ged файл из FamyTale! Загрузи его на Ancestry.com или Geni.com — они автоматически ищут совпадения с миллионами других деревьев.</div><div class="ic-tag">Уже готово к загрузке</div></div>
+    <div class="ic"><div class="ic-ico">☦️</div><div class="ic-t">Георгий Федотович</div><div class="ic-d">Был репрессирован 13.12.1958 и реабилитирован. Служил на Кубани. Запрос в ФСБ даст его дело — имена, годы, места. Это история о выживании семьи.</div><div class="ic-tag">Особая история</div></div>
+  </div>
+
+  <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:28px;text-align:center;margin-top:40px">
+    <div style="font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--gold2);margin-bottom:10px">Деплой на GitHub Pages</div>
+    <p style="color:var(--text2);font-size:13px;margin-bottom:18px;line-height:1.7">Создай репозиторий → загрузи index.html → включи Pages. Бесплатно, навсегда.</p>
+    <a href="https://github.com/new" target="_blank" style="display:inline-block;padding:11px 28px;border:1px solid var(--gold);color:var(--gold2);text-decoration:none;border-radius:4px;font-size:12px;letter-spacing:2px;text-transform:uppercase;transition:all .25s" onmouseover="this.style.background='var(--gold)';this.style.color='var(--bg)'" onmouseout="this.style.background='none';this.style.color='var(--gold2)'">Создать репозиторий →</a>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════
+     ADMIN
+═══════════════════════════════════ -->
+<div id="admin-sec" class="sec">
+<div style="max-width:900px;margin:0 auto;padding:60px 20px">
+
+  <!-- LOGIN -->
+  <div class="admin-login" id="admin-login">
+    <div class="al-t">Администрация</div>
+    <input class="ainp" type="text" id="al-user" placeholder="Логин">
+    <input class="ainp" type="password" id="al-pass" placeholder="Пароль">
+    <button class="abtn" onclick="doLogin()">Войти</button>
+    <div class="al-err" id="al-err">Неверный логин или пароль</div>
+  </div>
+
+  <!-- PANEL -->
+  <div class="admin-panel" id="admin-panel">
+    <div class="ap-header">
+      <div class="ap-title">Редактор карточек</div>
+      <button class="ap-logout" onclick="doLogout()">Выйти</button>
+    </div>
+    <p style="color:var(--text3);font-size:13px;margin-bottom:24px">Нажмите на карточку чтобы редактировать. Изменения сохраняются в браузере.</p>
+    <div class="admin-grid" id="admin-grid"></div>
+  </div>
+
+</div>
+</div>
+
+<!-- MODAL -->
+<div class="overlay" id="overlay" onclick="closeMOnBg(event)">
+  <div class="modal">
+    <button class="mcl" onclick="closeM()">×</button>
+    <div class="m-av"><svg id="m-svg" viewBox="0 0 100 100"></svg></div>
+    <div class="m-role" id="m-role"></div>
+    <div class="m-name" id="m-name"></div>
+    <div class="m-det" id="m-det"></div>
+  </div>
+</div>
+
+<!-- EDIT MODAL -->
+<div class="edit-overlay" id="edit-overlay" onclick="closeEditOnBg(event)">
+  <div class="edit-modal">
+    <button class="em-close" onclick="closeEdit()">×</button>
+    <div class="em-title" id="em-title">Редактировать</div>
+    <div class="em-av-preview"><svg id="em-av-svg" viewBox="0 0 100 100"></svg></div>
+    <div style="text-align:center;margin-bottom:16px;font-size:11px;color:var(--text3);letter-spacing:2px;text-transform:uppercase">Стиль аватара</div>
+    <div class="avatar-style-btns" id="av-style-btns">
+      <button class="av-style-btn" onclick="setAvStyle(0)">Классик</button>
+      <button class="av-style-btn" onclick="setAvStyle(1)">Бородач</button>
+      <button class="av-style-btn" onclick="setAvStyle(2)">Дама</button>
+      <button class="av-style-btn" onclick="setAvStyle(3)">Пожилой</button>
+      <button class="av-style-btn" onclick="setAvStyle(4)">Младенец</button>
+      <button class="av-style-btn" onclick="setAvStyle(5)">Усач</button>
+    </div>
+    <div style="height:16px"></div>
+    <div class="em-row"><div class="em-label">Роль</div><input class="em-input" id="em-role" type="text"></div>
+    <div class="em-row"><div class="em-label">Имя</div><input class="em-input" id="em-name" type="text"></div>
+    <div class="em-row"><div class="em-label">Девичья фамилия</div><input class="em-input" id="em-maiden" type="text"></div>
+    <div class="em-row"><div class="em-label">Дата рождения</div><input class="em-input" id="em-date" type="text"></div>
+    <div class="em-row"><div class="em-label">История / заметки</div><textarea class="em-textarea" id="em-story"></textarea></div>
+    <button class="em-save" onclick="saveEdit()">Сохранить</button>
+    <button class="em-del" onclick="resetPerson()">Сбросить к оригиналу</button>
+  </div>
+</div>
+
+<!-- HIDDEN ADMIN TRIGGER -->
+<div class="admin-hint" title="⚙" onclick="showAdminSection()" id="admin-dot"></div>
+
+<footer>✦ &nbsp; Семейное древо Андросовых &nbsp; ✦ &nbsp; создано с любовью для Оливии Германовны · 2026 &nbsp; ✦</footer>
+
+<script>
+// ══════════════════════════════════════════════
+// DATA — все 97 человек из GED файла
+// ══════════════════════════════════════════════
+const BASE = {
+  i51:{id:'i51',role:'Я',name:'Андросов Герман Анатольевич',date:'27.08.1987',sex:'M',story:'Составитель этого семейного архива. Муж Лилии, отец Оливии.',relation:'Главный герой',avStyle:0},
+  i52:{id:'i52',role:'Отец',name:'Андросов Анатолий Валерьевич',date:'24.04.1958',sex:'M',story:'Папа.',relation:'Отец',avStyle:0},
+  i53:{id:'i53',role:'Мать',name:'Андросова Ольга Евгеньевна',maiden:'Хвостова',sex:'F',story:'Мама. Урождённая Хвостова.',relation:'Мать',avStyle:2},
+  i54:{id:'i54',role:'Сестра',name:'Андросова Ангелина Анатольевна',date:'03.06.1985',place:'Сочи',sex:'F',relation:'Сестра',avStyle:2},
+  i55:{id:'i55',role:'Бабушка',name:'Андросова Ванда Николаевна',maiden:'Коротеева',sex:'F',relation:'Бабушка по папе',avStyle:3},
+  i56:{id:'i56',role:'Бабушка',name:'Хвостова Таисия Алексеевна',maiden:'Щербакова',sex:'F',relation:'Бабушка по маме',avStyle:3},
+  i57:{id:'i57',role:'Дедушка',name:'Хвостов Евгений Антонович',date:'21.06.1935',sex:'M',relation:'Дедушка по маме',avStyle:3},
+  i58:{id:'i58',role:'Дедушка',name:'Андросов Валерий Леонидович',sex:'M',relation:'Дедушка по папе',avStyle:3},
+  i59:{id:'i59',role:'Другая бабушка',name:'Андросова Зоя',sex:'F',avStyle:3},
+  i510:{id:'i510',role:'Тётя',name:'Блинникова Татьяна Валерьевна',maiden:'Андросова',date:'04.03.1967',sex:'F',relation:'Сестра папы',avStyle:2},
+  i511:{id:'i511',role:'Двоюродный брат',name:'Блинников Денис Евгеньевич',date:'28.11.1996',sex:'M',relation:'Сын тёти Татьяны',avStyle:0},
+  i512:{id:'i512',role:'Муж тёти',name:'Блинников Евгений Олегович',date:'24.08.1967',died:'26.06.2001',sex:'M',story:'Муж тёти Татьяны. Умер 26.06.2001.',avStyle:5},
+  i513:{id:'i513',role:'Двоюродная сестра',name:'Чальцева Ксенья Евгеньевна',maiden:'Блинникова',date:'17.01.1990',sex:'F',relation:'Дочь тёти Татьяны',avStyle:2},
+  i514:{id:'i514',role:'Жена папы (2й брак)',name:'Андросова Наташа Петровна',maiden:'Афонина',sex:'F',avStyle:2},
+  i515:{id:'i515',role:'Сестра',name:'Андросова Юля Анатольевна',sex:'F',relation:'Сестра',avStyle:2},
+  i516:{id:'i516',role:'Племянница',name:'Андросова Злата Ильинишна',date:'25.03.2012',sex:'F',relation:'Дочь Юли',avStyle:4},
+  i517:{id:'i517',role:'Прабабушка',name:'Щербакова Ольга Михайловна',maiden:'Саломина',date:'02.06.1912',died:'01.03.1988',place:'Зюзино, Москва',sex:'F',story:'Урождённая Саломина — прямая связь с Федотом Саломиным 1812. Умерла от атеросклероза. Похоронена в пос. Яблоновский, Адыгея.',relation:'Прабабушка (Саломина по рождению)',avStyle:3},
+  i518:{id:'i518',role:'Прадед',name:'Щербаков Алексей Михайлович',date:'02.06.1912',sex:'M',relation:'Прадед',avStyle:3},
+  i519:{id:'i519',role:'Прапрадед',name:'Хвостов Антон',sex:'M',avStyle:3},
+  i520:{id:'i520',role:'Прапрабабушка',name:'Хвостова Клавдия Леонтьевна',date:'апрель 1911',sex:'F',avStyle:3},
+  i521:{id:'i521',role:'Двоюродный дед',name:'Щербаков Михаил Алексеевич',date:'20.06.1941',sex:'M',avStyle:3},
+  i522:{id:'i522',role:'Двоюродный дядя',name:'Щербаков Дмитрий Михайлович',sex:'M',avStyle:0},
+  i523:{id:'i523',role:'Двоюродная тётя',name:'Королева Ирина Михайловна',maiden:'Щербакова',sex:'F',avStyle:2},
+  i524:{id:'i524',role:'Троюродный брат',name:'Королев Никита',sex:'M',avStyle:0},
+  i525:{id:'i525',role:'Троюродный брат',name:'Королев Роман',sex:'M',avStyle:0},
+  i526:{id:'i526',role:'Троюродный племянник',name:'Королев Егор',sex:'M',avStyle:4},
+  i527:{id:'i527',role:'Другая прабабушка',name:'Щербакова Антонина',sex:'F',avStyle:3},
+  i528:{id:'i528',role:'Прадед',name:'Коротеев Николай Иванович',sex:'M',relation:'Прадед по бабушке Ванде',avStyle:3},
+  i529:{id:'i529',role:'Прабабушка',name:'Коротеева Александра Михайловна',maiden:'Ромашкина',sex:'F',story:'Урождённая Ромашкина. Предки были крепостными в Тамбовской губернии, село Никольское.',relation:'Прабабушка (Ромашкина по рождению)',avStyle:3},
+  i530:{id:'i530',role:'Прабабушка',name:'Андросова Александра',maiden:'Украинская',sex:'F',relation:'Прабабушка по папиной линии',avStyle:3},
+  i531:{id:'i531',role:'Прадед',name:'Андросов Леонид Семёнович',sex:'M',relation:'Прадед по папиной линии',avStyle:3},
+  i532:{id:'i532',role:'Прапрабабушка',name:'Андросова Ольга',sex:'F',avStyle:3},
+  i533:{id:'i533',role:'Дядя',name:'Андросов Леонид Валерьевич',sex:'M',relation:'Брат папы',avStyle:0},
+  i534:{id:'i534',role:'Двоюродная сестра',name:'Катя Леонидовна',maiden:'Андросова',sex:'F',avStyle:2},
+  i535:{id:'i535',role:'Двоюродный брат',name:'Андросов Валерий Леонидович (мл.)',sex:'M',avStyle:0},
+  i536:{id:'i536',role:'Прапрадед',name:'Андросов Семён',sex:'M',avStyle:3},
+  i537:{id:'i537',role:'Двоюродный дед',name:'Блинников Олег Константинович',date:'04.12.1943',died:'12.09.2024',place:'Оренбург',sex:'M',story:'Жил в Сочи. Умер 12.09.2024.',avStyle:3},
+  i538:{id:'i538',role:'Двоюродная бабушка',name:'Блинникова Земфира/Ирина Васильевна',maiden:'Хатинова',date:'04.05.1939',sex:'F',avStyle:3},
+  i539:{id:'i539',role:'Прапрабабушка',name:'Блинникова Анна Васильевна',maiden:'Кудюркина',date:'13.02.1921',died:'02.06.1993',sex:'F',avStyle:3},
+  i540:{id:'i540',role:'Прапрадед',name:'Блинников Константин Тимофеевич',date:'11.06.1916',died:'02.04.1998',place:'Оренбург',sex:'M',story:'Воевал в ВОВ / внутренние войска / охранял вагоны / один раз обстреляли вагон и контузили.',avStyle:3},
+  i541:{id:'i541',role:'Жена',name:'Андросова Лилия Сергеевна',maiden:'Шевякова',date:'06.02.1997',sex:'F',relation:'Жена Германа',avStyle:2},
+  i542:{id:'i542',role:'Дочь',name:'Андросова Оливия Германовна',date:'05.04.2026',sex:'F',story:'Младшее поколение. Это дерево создаётся для неё.',avStyle:4},
+  i543:{id:'i543',role:'Прадед',name:'Саломин Михаил Федотович',sex:'M',avStyle:3},
+  i544:{id:'i544',role:'Прабабушка',name:'Саломина Анастасия Сергеевна',sex:'F',avStyle:3},
+  i545:{id:'i545',role:'Умер в детстве',name:'Саломин Иоанн (младенец) Михайлович',died:'1912',sex:'M',avStyle:4},
+  i546:{id:'i546',role:'Двоюродный прадед',name:'Саломин Александр Михайлович',date:'1901',sex:'M',avStyle:3},
+  i547:{id:'i547',role:'Двоюродная прабабушка',name:'Саломина Наталья Михайловна',date:'1903',sex:'F',avStyle:3},
+  i548:{id:'i548',role:'Двоюродный прадед',name:'Саломин Виктор Михайлович',date:'1906',sex:'M',avStyle:3},
+  i549:{id:'i549',role:'Двоюродный прадед',name:'Саломин Дмитрий Михайлович',date:'1907',sex:'M',avStyle:3},
+  i550:{id:'i550',role:'Прапрадед',name:'Саломин Федот Герасимович',sex:'M',story:'Умер 27.03.1913 от воспаления лёгких.',avStyle:3},
+  i551:{id:'i551',role:'Прапрабабушка',name:'Саломина Анна Тимофеевна',sex:'F',avStyle:3},
+  i552:{id:'i552',role:'Двоюродный дед',name:'Саломин Георгий Федотович',sex:'M',story:'Был репрессирован 13.12.1958, реабилитирован. Служил на Кубани.',avStyle:3},
+  i553:{id:'i553',role:'Двоюродный дед',name:'Саломин Федот Федотович',sex:'M',avStyle:3},
+  i554:{id:'i554',role:'Двоюродный дед',name:'Саломин Иван Федотович',sex:'M',avStyle:3},
+  i555:{id:'i555',role:'Прапрапрабабушка',name:'Саломина Параскева (Пелагея) Ивановна',sex:'F',avStyle:3},
+  i556:{id:'i556',role:'Прапрапрадед',name:'Саломин Федот',date:'1812',sex:'M',story:'Самый ранний известный предок семьи. Жил в эпоху Наполеона.',avStyle:3},
+  i557:{id:'i557',role:'Прапрадед',name:'Ромашкин Михаил',sex:'M',avStyle:3},
+  i558:{id:'i558',role:'Прапрабабушка',name:'Ромашкина Евдокия',sex:'F',avStyle:3},
+  i559:{id:'i559',role:'Двоюродный прадед',name:'Ромашкин Фёдор',sex:'M',avStyle:3},
+  i560:{id:'i560',role:'Двоюродный прадед',name:'Ромашкин Константин',sex:'M',avStyle:3},
+  i561:{id:'i561',role:'Двоюродный дед',name:'Коротеев Анатолий Николаевич',sex:'M',avStyle:3},
+  i562:{id:'i562',role:'Двоюродный дед',name:'Коротеев Александр Николаевич',sex:'M',avStyle:0},
+  i563:{id:'i563',role:'Двоюродная бабушка',name:'Коротеева Светлана Николаевна',sex:'F',avStyle:3},
+  i564:{id:'i564',role:'Двоюродный дед',name:'Коротеев Юрий Николаевич',sex:'M',avStyle:3},
+  i565:{id:'i565',role:'Двоюродная бабушка',name:'Грис Клара Николаевна',maiden:'Коротеева',sex:'F',avStyle:3},
+  i566:{id:'i566',role:'Муж',name:'Грис Эдуард',place:'Karaganda',sex:'M',avStyle:0},
+  i567:{id:'i567',role:'Двоюродный дядя',name:'Грис Юрий Эдуардович',sex:'M',avStyle:0},
+  i568:{id:'i568',role:'Троюродный брат',name:'Грис Андрей Юрьевич',sex:'M',avStyle:0},
+  i569:{id:'i569',role:'Жена',name:'Грис Светлана',sex:'F',avStyle:2},
+  i570:{id:'i570',role:'Троюродный племянник',name:'Грис Лев Андреевич',sex:'M',avStyle:4},
+  i571:{id:'i571',role:'Муж',name:'Чальцев Роман',sex:'M',avStyle:0},
+  i572:{id:'i572',role:'Двоюродная племянница',name:'Чальцева Ксения Романовна',sex:'F',avStyle:4},
+  i573:{id:'i573',role:'Двоюродный племянник',name:'Чальцев Егор Романович',sex:'M',avStyle:4},
+  i574:{id:'i574',role:'Жена двоюродного брата',name:'Блинникова Мария',sex:'F',avStyle:2},
+  i575:{id:'i575',role:'Муж Юли',name:'Казаченко Илья',sex:'M',avStyle:0},
+  i576:{id:'i576',role:'Двоюродный дед',name:'Хвостов Юрий Антонович',sex:'M',avStyle:3},
+  i577:{id:'i577',role:'Троюродная племянница',name:'Королева Эвелина Никитична',sex:'F',avStyle:4},
+  i578:{id:'i578',role:'Троюродная племянница',name:'Королева Ульяна Романовна',sex:'F',avStyle:4},
+  i579:{id:'i579',role:'Жена',name:'Королева Екатерина',sex:'F',avStyle:2},
+  i580:{id:'i580',role:'Жена',name:'Королева Ирина',sex:'F',avStyle:2},
+  i581:{id:'i581',role:'Двоюродный дед',name:'Щербаков Анатолий Алексеевич',sex:'M',story:'Погиб в шахте в 20 лет в Армии.',avStyle:0},
+  i582:{id:'i582',role:'Прапрадед',name:'Щербаков Михаил',sex:'M',avStyle:3},
+  i583:{id:'i583',role:'Прапрабабушка',name:'Щербакова Анна',sex:'F',avStyle:3},
+  i584:{id:'i584',role:'Прапрадед',name:'Коротеев Иван',sex:'M',avStyle:3},
+  i585:{id:'i585',role:'Прапрабабушка',name:'Коротеева ?',sex:'F',avStyle:3},
+  i586:{id:'i586',role:'Двоюродный прадед',name:'Ромашкин Валерий Константинович',sex:'M',avStyle:3},
+  i587:{id:'i587',role:'Троюродная тётя',name:'Италия Елена Валерьевна',maiden:'Ромашкина',sex:'F',avStyle:2},
+  i588:{id:'i588',role:'Троюродный дядя',name:'Ромашкин Сергей Валериевич',sex:'M',avStyle:0},
+  i589:{id:'i589',role:'Четвероюродная сестра',name:'Италия ?',sex:'F',avStyle:2},
+  i590:{id:'i590',role:'Троюродный дед',name:'Ромашкин Владимир Фёдорович',sex:'M',avStyle:3},
+  i591:{id:'i591',role:'Жена',name:'Ромашкина Елена',sex:'F',avStyle:3},
+  i592:{id:'i592',role:'Четвероюродный дядя',name:'Ромашкин Саша Владимирович',sex:'M',avStyle:0},
+  i593:{id:'i593',role:'Четвероюродная тётя',name:'Ромашкина Света ?',sex:'F',story:'Живёт в Одессе.',avStyle:2},
+  i594:{id:'i594',role:'Пятиюродная сестра',name:'Ромашкина Елена Александровна',sex:'F',avStyle:2},
+  i595:{id:'i595',role:'Муж',name:'Кочубей ?',sex:'M',avStyle:0},
+  i596:{id:'i596',role:'Шестиюродная сестра',name:'Ромашкина ?',sex:'F',avStyle:2},
+  i597:{id:'i597',role:'Шестиюродная сестра',name:'Ромашкина ?',sex:'F',avStyle:2},
+};
+
+// ── LOCAL OVERRIDES (admin edits) ──
+let overrides = JSON.parse(localStorage.getItem('androsov_overrides')||'{}');
+
+function getPerson(id){
+  return Object.assign({}, BASE[id]||{}, overrides[id]||{});
+}
+
+// ══════════════════════════════════════════════
+// AVATAR GENERATOR
+// ══════════════════════════════════════════════
+function getHue(id){
+  let h=0; for(let c of id) h=(h*31+c.charCodeAt(0))%360; return h;
+}
+
+const AV_STYLES = [
+  // 0: classic male
+  (id,sex)=>{
+    const h=getHue(id);
+    const face=`hsl(${h},35%,68%)`, hair=`hsl(${(h+180)%360},40%,25%)`, bg=`hsl(${h},20%,20%)`;
+    return `<rect width="100" height="100" fill="${bg}"/>
+    <circle cx="50" cy="38" r="22" fill="${face}"/>
+    <ellipse cx="50" cy="90" rx="28" ry="18" fill="${face}"/>
+    <ellipse cx="50" cy="22" rx="22" ry="14" fill="${hair}"/>
+    <circle cx="43" cy="36" r="3" fill="#2a1a0a" opacity=".7"/>
+    <circle cx="57" cy="36" r="3" fill="#2a1a0a" opacity=".7"/>
+    <path d="M44 44 q6 4 12 0" stroke="#8a5a3a" stroke-width="1.5" fill="none" stroke-linecap="round"/>`;
+  },
+  // 1: bearded male
+  (id,sex)=>{
+    const h=getHue(id);
+    const face=`hsl(${h},35%,68%)`, hair=`hsl(${(h+180)%360},40%,20%)`, bg=`hsl(${h},18%,18%)`;
+    return `<rect width="100" height="100" fill="${bg}"/>
+    <circle cx="50" cy="38" r="22" fill="${face}"/>
+    <ellipse cx="50" cy="90" rx="28" ry="18" fill="${face}"/>
+    <ellipse cx="50" cy="22" rx="22" ry="14" fill="${hair}"/>
+    <ellipse cx="50" cy="52" rx="14" ry="8" fill="${hair}" opacity=".7"/>
+    <circle cx="43" cy="36" r="3" fill="#1a0a0a" opacity=".8"/>
+    <circle cx="57" cy="36" r="3" fill="#1a0a0a" opacity=".8"/>
+    <path d="M43 44 q7 3 14 0" stroke="#6a3a1a" stroke-width="1.5" fill="none"/>`;
+  },
+  // 2: female
+  (id,sex)=>{
+    const h=getHue(id);
+    const face=`hsl(${h},40%,75%)`, hair=`hsl(${(h+150)%360},45%,35%)`, bg=`hsl(${h},22%,22%)`;
+    return `<rect width="100" height="100" fill="${bg}"/>
+    <circle cx="50" cy="38" r="22" fill="${face}"/>
+    <ellipse cx="50" cy="90" rx="28" ry="18" fill="${face}"/>
+    <path d="M28 30 q22-18 44 0 q0 -22 -22 -22 q-22 0 -22 22z" fill="${hair}"/>
+    <path d="M28 30 q-6 20 -2 40" stroke="${hair}" stroke-width="8" fill="none" stroke-linecap="round"/>
+    <path d="M72 30 q6 20 2 40" stroke="${hair}" stroke-width="8" fill="none" stroke-linecap="round"/>
+    <circle cx="43" cy="36" r="3" fill="#3a1a2a" opacity=".8"/>
+    <circle cx="57" cy="36" r="3" fill="#3a1a2a" opacity=".8"/>
+    <path d="M44 44 q6 5 12 0" stroke="#c06070" stroke-width="1.5" fill="none" stroke-linecap="round"/>`;
+  },
+  // 3: elder
+  (id,sex)=>{
+    const h=getHue(id);
+    const face=`hsl(${h},25%,72%)`, hair=`hsl(${h},5%,75%)`, bg=`hsl(${h},15%,15%)`;
+    const isFem = sex==='F';
+    return `<rect width="100" height="100" fill="${bg}"/>
+    <circle cx="50" cy="38" r="22" fill="${face}"/>
+    <ellipse cx="50" cy="90" rx="28" ry="18" fill="${face}"/>
+    ${isFem
+      ? `<path d="M28 30 q22-16 44 0 q0-20-22-20q-22 0-22 20z" fill="${hair}"/>
+         <path d="M28 30 q-5 18 -1 36" stroke="${hair}" stroke-width="7" fill="none" stroke-linecap="round"/>
+         <path d="M72 30 q5 18 1 36" stroke="${hair}" stroke-width="7" fill="none" stroke-linecap="round"/>`
+      : `<ellipse cx="50" cy="22" rx="22" ry="12" fill="${hair}"/>`
+    }
+    <circle cx="43" cy="36" r="2.5" fill="#3a3030" opacity=".7"/>
+    <circle cx="57" cy="36" r="2.5" fill="#3a3030" opacity=".7"/>
+    <path d="M43 44 q7 3 14 0" stroke="#8a6a5a" stroke-width="1.2" fill="none"/>
+    <path d="M36 36 q-2 -4 -4 0" stroke="${face}" stroke-width=".8" fill="none" opacity=".5"/>
+    <path d="M60 36 q2 -4 4 0" stroke="${face}" stroke-width=".8" fill="none" opacity=".5"/>`;
+  },
+  // 4: baby
+  (id,sex)=>{
+    const h=getHue(id);
+    const face=`hsl(${h},50%,82%)`, bg=`hsl(${h},25%,25%)`;
+    return `<rect width="100" height="100" fill="${bg}"/>
+    <circle cx="50" cy="42" r="26" fill="${face}"/>
+    <ellipse cx="50" cy="90" rx="24" ry="14" fill="${face}"/>
+    <circle cx="42" cy="40" r="4" fill="#4a2a1a" opacity=".7"/>
+    <circle cx="58" cy="40" r="4" fill="#4a2a1a" opacity=".7"/>
+    <circle cx="43" cy="39" r="1.5" fill="white" opacity=".7"/>
+    <circle cx="59" cy="39" r="1.5" fill="white" opacity=".7"/>
+    <ellipse cx="50" cy="56" rx="5" ry="3" fill="#e8a0a0" opacity=".6"/>
+    <path d="M44 50 q6 4 12 0" stroke="#e08080" stroke-width="1.5" fill="none" stroke-linecap="round"/>`;
+  },
+  // 5: mustache
+  (id,sex)=>{
+    const h=getHue(id);
+    const face=`hsl(${h},35%,68%)`, hair=`hsl(${(h+200)%360},40%,22%)`, bg=`hsl(${h},18%,16%)`;
+    return `<rect width="100" height="100" fill="${bg}"/>
+    <circle cx="50" cy="38" r="22" fill="${face}"/>
+    <ellipse cx="50" cy="90" rx="28" ry="18" fill="${face}"/>
+    <ellipse cx="50" cy="22" rx="22" ry="14" fill="${hair}"/>
+    <path d="M40 44 q4-5 10 0 q6-5 10 0" fill="${hair}" opacity=".85"/>
+    <circle cx="43" cy="36" r="3" fill="#1a1010" opacity=".8"/>
+    <circle cx="57" cy="36" r="3" fill="#1a1010" opacity=".8"/>
+    <path d="M43 47 q7 2 14 0" stroke="#5a3a1a" stroke-width="1.2" fill="none"/>`;
+  },
+];
+
+function renderAV(id, style, size=52){
+  const p = getPerson(id);
+  const s = (p.avStyle!==undefined ? p.avStyle : (style||0));
+  return `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">${AV_STYLES[s](id,p.sex||'M')}</svg>`;
+}
+
+function injectAvatars(){
+  Object.keys(BASE).forEach(id=>{
+    const el = document.getElementById('av-'+id);
+    if(el) el.innerHTML = renderAV(id);
+  });
+}
+
+// ══════════════════════════════════════════════
+// MODAL
+// ══════════════════════════════════════════════
+function openM(id){
+  const p = getPerson(id);
+  if(!p.name) return;
+  document.getElementById('m-svg').innerHTML = AV_STYLES[p.avStyle||0](id,p.sex||'M');
+  document.getElementById('m-role').textContent = p.role||'';
+  document.getElementById('m-name').textContent = p.name;
+  let rows='';
+  if(p.maiden) rows+=row('Урождённая',p.maiden);
+  if(p.date) rows+=row('Родился / -лась',p.date);
+  if(p.died) rows+=row('Умер / умерла',p.died);
+  if(p.place) rows+=row('Место',p.place);
+  if(p.relation) rows+=row('Кем приходится',p.relation);
+  let det = rows ? `<div class="m-det">${rows}</div>` : '';
+  if(p.story) det += `<div class="m-story">${p.story}</div>`;
+  document.getElementById('m-det').innerHTML = det;
+  document.getElementById('overlay').classList.add('open');
+}
+
+function row(l,v){
+  return `<div class="m-row"><span class="m-rl">${l}</span><span class="m-rv">${v}</span></div>`;
+}
+
+function closeM(){ document.getElementById('overlay').classList.remove('open'); }
+function closeMOnBg(e){ if(e.target===document.getElementById('overlay')) closeM(); }
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'){closeM();closeEdit();} });
+
+// ══════════════════════════════════════════════
+// NAV
+// ══════════════════════════════════════════════
+function showSec(n){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
+  document.getElementById(n+'-sec').classList.add('active');
+  event.target.classList.add('active');
+}
+
+function showAdminSection(){
+  // Show admin in nav if not present
+  const nav = document.querySelector('.nav');
+  if(!document.getElementById('admin-nb')){
+    const btn = document.createElement('button');
+    btn.className='nb'; btn.id='admin-nb';
+    btn.textContent='⚙ Адм';
+    btn.onclick = function(e){ showSec('admin'); document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); };
+    nav.appendChild(btn);
+  }
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('admin-sec').classList.add('active');
+  document.getElementById('admin-nb').classList.add('active');
+}
+
+// ══════════════════════════════════════════════
+// SEARCH
+// ══════════════════════════════════════════════
+function doSearch(q){
+  const el = document.getElementById('sr');
+  if(!q.trim()){el.innerHTML='';return;}
+  const lo=q.toLowerCase();
+  const found=Object.keys(BASE).filter(id=>{
+    const p=getPerson(id);
+    return p.name.toLowerCase().includes(lo)||(p.date&&p.date.includes(q))||(p.role&&p.role.toLowerCase().includes(lo))||(p.story&&p.story.toLowerCase().includes(lo));
+  });
+  if(!found.length){
+    el.innerHTML='<p style="color:var(--text3);padding:20px 0;font-size:14px">Никого не найдено.</p>';
+    return;
+  }
+  el.innerHTML=found.map(id=>{
+    const p=getPerson(id);
+    return `<div class="sr-item" onclick="openM('${id}')">
+      <div class="sr-av">${renderAV(id)}</div>
+      <div><div class="sr-name">${p.name}</div><div class="sr-meta">${p.role||''}${p.date?' · '+p.date:''}</div></div>
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════════
+// ADMIN
+// ══════════════════════════════════════════════
+function doLogin(){
+  const u=document.getElementById('al-user').value;
+  const p=document.getElementById('al-pass').value;
+  if(u==='admin'&&p==='admin1234'){
+    document.getElementById('admin-login').style.display='none';
+    document.getElementById('admin-panel').style.display='block';
+    buildAdminGrid();
+  } else {
+    document.getElementById('al-err').style.display='block';
+  }
+}
+
+function doLogout(){
+  document.getElementById('admin-login').style.display='block';
+  document.getElementById('admin-panel').style.display='none';
+  document.getElementById('al-user').value='';
+  document.getElementById('al-pass').value='';
+}
+
+function buildAdminGrid(){
+  const g = document.getElementById('admin-grid');
+  g.innerHTML = Object.keys(BASE).map(id=>{
+    const p=getPerson(id);
+    return `<div class="admin-card" onclick="openEdit('${id}')">
+      <div class="av-sm">${renderAV(id)}</div>
+      <div class="ac-info">
+        <div class="ac-name">${p.name}</div>
+        <div class="ac-role">${p.role||''}</div>
+        <div class="ac-edit">Редактировать →</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════════
+// EDIT
+// ══════════════════════════════════════════════
+let editId = null;
+
+function openEdit(id){
+  editId=id;
+  const p=getPerson(id);
+  document.getElementById('em-title').textContent=p.name||'Редактировать';
+  document.getElementById('em-role').value=p.role||'';
+  document.getElementById('em-name').value=p.name||'';
+  document.getElementById('em-maiden').value=p.maiden||'';
+  document.getElementById('em-date').value=p.date||'';
+  document.getElementById('em-story').value=p.story||'';
+  updateEmAv(p.avStyle||0);
+  document.querySelectorAll('.av-style-btn').forEach((b,i)=>{
+    b.classList.toggle('active', i===(p.avStyle||0));
+  });
+  document.getElementById('edit-overlay').classList.add('open');
+}
+
+function updateEmAv(style){
+  if(!editId) return;
+  const p=getPerson(editId);
+  document.getElementById('em-av-svg').innerHTML = AV_STYLES[style](editId, p.sex||'M');
+}
+
+function setAvStyle(s){
+  if(!editId) return;
+  if(!overrides[editId]) overrides[editId]={};
+  overrides[editId].avStyle=s;
+  updateEmAv(s);
+  document.querySelectorAll('.av-style-btn').forEach((b,i)=>b.classList.toggle('active',i===s));
+}
+
+function saveEdit(){
+  if(!editId) return;
+  if(!overrides[editId]) overrides[editId]={};
+  const p=overrides[editId];
+  p.role=document.getElementById('em-role').value;
+  p.name=document.getElementById('em-name').value;
+  p.maiden=document.getElementById('em-maiden').value;
+  p.date=document.getElementById('em-date').value;
+  p.story=document.getElementById('em-story').value;
+  localStorage.setItem('androsov_overrides',JSON.stringify(overrides));
+  // Refresh avatar everywhere
+  const avEl=document.getElementById('av-'+editId);
+  if(avEl) avEl.innerHTML=renderAV(editId);
+  buildAdminGrid();
+  closeEdit();
+  // Show success
+  alert('Сохранено! Изменения применены.');
+}
+
+function resetPerson(){
+  if(!editId) return;
+  if(confirm('Сбросить к оригинальным данным?')){
+    delete overrides[editId];
+    localStorage.setItem('androsov_overrides',JSON.stringify(overrides));
+    const avEl=document.getElementById('av-'+editId);
+    if(avEl) avEl.innerHTML=renderAV(editId);
+    openEdit(editId);
+    buildAdminGrid();
+  }
+}
+
+function closeEdit(){ document.getElementById('edit-overlay').classList.remove('open'); editId=null; }
+function closeEditOnBg(e){ if(e.target===document.getElementById('edit-overlay')) closeEdit(); }
+
+// ══════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', ()=>{
+  injectAvatars();
+});
+</script>
+</body>
+</html>

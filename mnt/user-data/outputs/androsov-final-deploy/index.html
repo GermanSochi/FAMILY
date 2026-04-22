@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#03070f">
+<title>Семья Андросовых · 1812—2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --gold:#d4a843;--gold2:#f0c96b;--gold3:rgba(212,168,67,.18);
+  --blue-m:#3b6bca;--pink-f:#c45a8a;
+  --glass:rgba(255,255,255,.055);--glass-b:rgba(255,255,255,.11);
+  --glass-h:rgba(255,255,255,.09);
+  --tp:rgba(240,237,232,1);--ts:rgba(240,237,232,.58);
+  --bg:#03070f;
+}
+html,body{width:100%;height:100%;overflow:hidden;font-family:"DM Sans",sans-serif;background:var(--bg);color:var(--tp)}
+#bgc{position:fixed;inset:0;z-index:0}
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  padding:0 max(20px,env(safe-area-inset-left));
+  background:rgba(3,7,15,.45);
+  backdrop-filter:blur(28px) saturate(1.4);
+  -webkit-backdrop-filter:blur(28px) saturate(1.4);
+  border-bottom:1px solid rgba(255,255,255,.07);
+  box-shadow:0 1px 0 rgba(255,255,255,.04),0 4px 24px rgba(0,0,0,.4);
+}
+.nav-inner{
+  max-width:1200px;margin:0 auto;height:58px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+}
+.brand{
+  font-family:"Cormorant Garamond",serif;font-size:21px;font-weight:600;letter-spacing:.5px;
+  background:linear-gradient(135deg,#fff8e6,var(--gold2) 40%,var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  white-space:nowrap;
+}
+.tabs{display:flex;gap:3px;flex-wrap:nowrap}
+.tab{
+  padding:7px 15px;border:none;background:none;
+  color:var(--ts);font-family:"DM Sans",sans-serif;font-size:13px;font-weight:400;
+  border-radius:22px;cursor:pointer;transition:all .22s;letter-spacing:.2px;white-space:nowrap;
+}
+.tab:hover{color:var(--gold2);background:rgba(212,168,67,.08)}
+.tab.on{color:var(--gold);background:rgba(212,168,67,.12);border:1px solid rgba(212,168,67,.22)}
+.nav-r{display:flex;gap:16px;font-size:12px;color:var(--ts);letter-spacing:.4px}
+.nv{font-family:"Cormorant Garamond",serif;font-size:18px;color:var(--gold2);font-weight:600;margin-right:3px}
+@media(max-width:640px){.nav-r{display:none}.tab{padding:6px 11px;font-size:12px}}
+@media(max-width:420px){.brand{font-size:17px}.tabs .tab:nth-child(n+4){display:none}}
+/* ── VIEWS ── */
+main{position:fixed;inset:0;top:58px;z-index:10}
+.view{position:absolute;inset:0;display:none;overflow:hidden}
+.view.on{display:block}
+/* ── HOME ── */
+#vh{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;gap:0}
+.eyebrow{font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);opacity:.65;margin-bottom:18px;font-weight:500;transform:translateY(30px);opacity:0;animation:riseIn .8s .2s ease forwards}
+.htitle{
+  font-family:"Cormorant Garamond",serif;font-size:clamp(50px,9vw,100px);
+  font-weight:300;line-height:.9;letter-spacing:-2px;margin-bottom:14px;
+  transform:translateY(30px);opacity:0;animation:riseIn .9s .35s ease forwards;
+}
+.htitle span{
+  background:linear-gradient(135deg,#fff 10%,var(--gold2) 50%,var(--gold) 90%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hsub{
+  font-size:14px;color:var(--ts);letter-spacing:2.5px;font-weight:300;margin-bottom:44px;
+  transform:translateY(20px);opacity:0;animation:riseIn .8s .5s ease forwards;
+}
+.ctas{display:flex;gap:12px;margin-bottom:52px;flex-wrap:wrap;justify-content:center;
+  transform:translateY(20px);opacity:0;animation:riseIn .8s .65s ease forwards}
+.cbtn{
+  padding:14px 34px;font-family:"DM Sans",sans-serif;font-size:14px;
+  border-radius:40px;cursor:pointer;letter-spacing:.4px;transition:all .28s;
+}
+.cbtn-p{
+  background:linear-gradient(135deg,rgba(212,168,67,.22),rgba(212,168,67,.08));
+  border:1px solid rgba(212,168,67,.38);color:var(--gold2);
+}
+.cbtn-p:hover{background:rgba(212,168,67,.2);border-color:rgba(212,168,67,.65);box-shadow:0 0 32px rgba(212,168,67,.16);transform:translateY(-2px)}
+.cbtn-s{background:var(--glass);border:1px solid var(--glass-b);color:var(--ts)}
+.cbtn-s:hover{background:var(--glass-h);border-color:rgba(255,255,255,.22);color:var(--tp);transform:translateY(-1px)}
+.hcards{
+  display:flex;gap:12px;flex-wrap:wrap;justify-content:center;
+  transform:translateY(20px);opacity:0;animation:riseIn .9s .8s ease forwards;
+}
+.hc{
+  background:var(--glass);border:1px solid var(--glass-b);
+  backdrop-filter:blur(18px) saturate(1.3);-webkit-backdrop-filter:blur(18px);
+  border-radius:18px;padding:18px 24px;min-width:110px;text-align:center;
+  transition:all .28s;position:relative;overflow:hidden;
+}
+.hc::before{
+  content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.05),transparent 60%);
+  pointer-events:none;
+}
+.hc:hover{background:var(--glass-h);border-color:rgba(212,168,67,.28);transform:translateY(-4px);box-shadow:0 12px 40px rgba(212,168,67,.07)}
+.hcn{font-family:"Cormorant Garamond",serif;font-size:34px;font-weight:600;background:linear-gradient(135deg,var(--gold2),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hcl{font-size:10px;color:var(--ts);letter-spacing:2px;text-transform:uppercase;margin-top:3px}
+@keyframes riseIn{to{transform:translateY(0);opacity:1}}
+/* ── TREE ── */
+#vt{position:relative}
+.ttb{position:absolute;top:14px;right:14px;z-index:20;display:flex;gap:6px}
+.tbtn{
+  width:38px;height:38px;
+  background:rgba(8,14,26,.65);border:1px solid var(--glass-b);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-radius:10px;color:var(--ts);cursor:pointer;font-size:16px;
+  transition:all .2s;display:flex;align-items:center;justify-content:center;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06);
+}
+.tbtn:hover{background:rgba(30,50,90,.7);color:var(--gold2);border-color:rgba(212,168,67,.3);box-shadow:0 0 14px rgba(212,168,67,.12)}
+#tc{position:absolute;inset:0;cursor:grab;touch-action:none;user-select:none}
+#tc.grab{cursor:grabbing}
+.tleg{
+  position:absolute;bottom:18px;left:18px;
+  background:rgba(5,10,20,.7);border:1px solid var(--glass-b);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border-radius:14px;padding:14px 18px;display:flex;flex-direction:column;gap:8px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.07);
+}
+.lr{display:flex;align-items:center;gap:8px;color:var(--ts);font-size:11px;letter-spacing:.2px}
+.ld{width:12px;height:12px;border-radius:50%}
+.thint{
+  position:absolute;top:14px;left:50%;transform:translateX(-50%);
+  background:rgba(5,10,20,.78);color:rgba(240,237,232,.7);
+  padding:7px 16px;border-radius:22px;font-size:12px;letter-spacing:.4px;
+  pointer-events:none;z-index:10;
+  animation:hintFade 4.5s ease forwards;
+  border:1px solid rgba(255,255,255,.08);
+}
+@keyframes hintFade{0%,60%{opacity:1}100%{opacity:0;visibility:hidden}}
+/* ── SURNAMES ── */
+#vn{overflow-y:auto;padding:24px max(16px,env(safe-area-inset-left)) 40px}
+#vn::-webkit-scrollbar{width:4px}
+#vn::-webkit-scrollbar-track{background:transparent}
+#vn::-webkit-scrollbar-thumb{background:rgba(212,168,67,.2);border-radius:2px}
+.sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px;max-width:1200px;margin:0 auto}
+.sc{
+  background:var(--glass);border:1px solid var(--glass-b);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-radius:18px;padding:22px;transition:all .25s;
+  position:relative;overflow:hidden;
+}
+.sc::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent)}
+.sc:hover{background:var(--glass-h);border-color:rgba(212,168,67,.22);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,.35)}
+.si{font-size:24px;margin-bottom:10px}
+.sn{font-family:"Cormorant Garamond",serif;font-size:19px;font-weight:600;margin-bottom:4px}
+.sm{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.06)}
+.sd{font-size:13px;color:var(--ts);line-height:1.65}
+/* ── SEARCH ── */
+#vs{overflow-y:auto;padding:24px max(16px,env(safe-area-inset-left)) 40px}
+#vs::-webkit-scrollbar{width:4px}
+#vs::-webkit-scrollbar-track{background:transparent}
+#vs::-webkit-scrollbar-thumb{background:rgba(212,168,67,.2);border-radius:2px}
+.sw{max-width:720px;margin:0 auto}
+.sinp{
+  width:100%;padding:15px 50px 15px 20px;
+  background:rgba(8,14,26,.7);border:1px solid var(--glass-b);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-radius:16px;color:var(--tp);font-family:"DM Sans",sans-serif;font-size:15px;
+  outline:none;margin-bottom:18px;transition:all .22s;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06);
+}
+.sinp:focus{border-color:rgba(212,168,67,.4);box-shadow:0 0 0 3px rgba(212,168,67,.07),inset 0 1px 0 rgba(255,255,255,.06)}
+.sinp::placeholder{color:rgba(240,237,232,.25)}
+.sri{
+  display:flex;align-items:center;gap:14px;padding:14px 16px;
+  background:rgba(8,14,26,.6);border:1px solid var(--glass-b);
+  border-radius:14px;margin-bottom:8px;cursor:pointer;transition:all .2s;
+  position:relative;overflow:hidden;
+}
+.sri::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.07),transparent)}
+.sri:hover{background:rgba(20,35,70,.65);border-color:rgba(212,168,67,.22);transform:translateX(4px)}
+.sav{
+  width:44px;height:44px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:18px;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);
+}
+.snm{font-size:15px;font-weight:500;color:var(--tp)}
+.smt{font-size:11px;color:var(--ts);margin-top:2px}
+.stg{
+  margin-left:auto;font-size:10px;letter-spacing:1px;text-transform:uppercase;
+  padding:4px 10px;border-radius:10px;white-space:nowrap;flex-shrink:0;
+  background:rgba(212,168,67,.1);border:1px solid rgba(212,168,67,.2);color:var(--gold);
+}
+/* ── MODAL ── */
+.mov{
+  position:fixed;inset:0;z-index:500;
+  background:rgba(2,5,12,.8);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  display:none;align-items:center;justify-content:center;padding:16px;
+}
+.mov.on{display:flex;animation:fadeBg .25s ease}
+@keyframes fadeBg{from{opacity:0}to{opacity:1}}
+.mod{
+  background:rgba(6,12,24,.92);
+  border:1px solid rgba(255,255,255,.1);
+  backdrop-filter:blur(40px) saturate(1.5);-webkit-backdrop-filter:blur(40px) saturate(1.5);
+  border-radius:26px;width:100%;max-width:480px;max-height:88vh;overflow-y:auto;
+  box-shadow:0 32px 80px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.04),inset 0 1px 0 rgba(255,255,255,.08);
+  animation:modPop .32s cubic-bezier(.18,.89,.32,1.1);
+  position:relative;
+}
+.mod::-webkit-scrollbar{width:3px}
+.mod::-webkit-scrollbar-thumb{background:rgba(212,168,67,.2);border-radius:2px}
+@keyframes modPop{from{transform:scale(.94) translateY(16px);opacity:0}to{transform:none;opacity:1}}
+.mh{
+  padding:26px 26px 20px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  display:flex;align-items:flex-start;justify-content:space-between;gap:14px;
+  position:relative;overflow:hidden;
+}
+.mh::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.15) 40%,rgba(212,168,67,.2) 60%,transparent)}
+.mav{
+  width:66px;height:66px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:26px;
+  border:2px solid rgba(255,255,255,.1);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.1);
+}
+.mi{flex:1;min-width:0}
+.mn{font-family:"Cormorant Garamond",serif;font-size:22px;font-weight:600;line-height:1.15;margin-bottom:4px}
+.mr{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:500}
+.mcl{
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);
+  border-radius:50%;width:32px;height:32px;cursor:pointer;
+  color:var(--ts);font-size:14px;flex-shrink:0;transition:all .2s;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06);
+}
+.mcl:hover{background:rgba(200,50,50,.2);border-color:rgba(200,50,50,.35);color:#f07070}
+.mb{padding:18px 26px 26px;display:flex;flex-direction:column;gap:12px}
+.mf{
+  display:flex;align-items:flex-start;gap:12px;padding:11px 13px;
+  background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.055);
+  border-radius:13px;transition:background .2s;
+  position:relative;overflow:hidden;
+}
+.mf::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent)}
+.mf:hover{background:rgba(255,255,255,.055)}
+.mfi{font-size:15px;flex-shrink:0;margin-top:1px}
+.mfl{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ts);margin-bottom:2px}
+.mfv{font-size:14px;color:var(--tp)}
+.mst{
+  padding:14px 16px;
+  border-left:2px solid rgba(212,168,67,.38);
+  background:rgba(212,168,67,.04);border-radius:0 12px 12px 0;
+  font-family:"Cormorant Garamond",serif;font-style:italic;font-size:15px;
+  line-height:1.7;color:rgba(240,237,232,.72);
+  position:relative;
+}
+.mst::before{
+  content:"“";position:absolute;top:-8px;left:8px;
+  font-family:"Cormorant Garamond",serif;font-size:52px;color:var(--gold);opacity:.25;line-height:1;
+}
+</style>
+</head>
+<body>
+<canvas id="bgc"></canvas>
+<nav>
+  <div class="nav-inner">
+    <div class="brand">Андросовы</div>
+    <div class="tabs">
+      <button class="tab on" onclick="show('h',this)">Главная</button>
+      <button class="tab" onclick="show('t',this)">Древо</button>
+      <button class="tab" onclick="show('n',this)">Фамилии</button>
+      <button class="tab" onclick="show('s',this)">Поиск</button>
+    </div>
+    <div class="nav-r">
+      <span><span class="nv">97</span>персон</span>
+      <span><span class="nv">8</span>поколений</span>
+      <span><span class="nv">1812</span></span>
+    </div>
+  </div>
+</nav>
+<main>
+<!-- HOME -->
+<div id="vh" class="view on">
+  <p class="eyebrow">✦ Семейный архив · Anno Domini 1812 ✦</p>
+  <h1 class="htitle"><span>Андросовы</span></h1>
+  <p class="hsub">214 лет истории · для Оливии Германовны</p>
+  <div class="ctas">
+    <button class="cbtn cbtn-p" onclick="show('t',document.querySelectorAll('.tab')[1])">Открыть древо</button>
+    <button class="cbtn cbtn-s" onclick="show('n',document.querySelectorAll('.tab')[2])">Изучить фамилии</button>
+  </div>
+  <div class="hcards">
+    <div class="hc"><div class="hcn">97</div><div class="hcl">Персон</div></div>
+    <div class="hc"><div class="hcn">8</div><div class="hcl">Поколений</div></div>
+    <div class="hc"><div class="hcn">12</div><div class="hcl">Фамилий</div></div>
+    <div class="hc"><div class="hcn">39</div><div class="hcl">Семей</div></div>
+    <div class="hc"><div class="hcn">1812</div><div class="hcl">Начало</div></div>
+  </div>
+</div>
+<!-- TREE -->
+<div id="vt" class="view">
+  <div class="ttb">
+    <button class="tbtn" onclick="zi()" title="Увеличить">+</button>
+    <button class="tbtn" onclick="zo()" title="Уменьшить">−</button>
+    <button class="tbtn" onclick="zf()" title="Вписать">⊡</button>
+    <button class="tbtn" onclick="zc()" title="Центр">⊙</button>
+  </div>
+  <div class="thint">Перетащите для навигации · Щипок или колёсико — масштаб</div>
+  <canvas id="tc"></canvas>
+  <div class="tleg">
+    <div class="lr"><div class="ld" style="background:#3b6bca;box-shadow:0 0 7px rgba(59,107,202,.6)"></div>Мужчина · прямой предок</div>
+    <div class="lr"><div class="ld" style="background:#5b8edb;box-shadow:0 0 5px rgba(91,142,219,.4)"></div>Мужчина · боковая ветвь</div>
+    <div class="lr"><div class="ld" style="background:#c45a8a;box-shadow:0 0 7px rgba(196,90,138,.6)"></div>Женщина · прямая</div>
+    <div class="lr"><div class="ld" style="background:#d47aa8;box-shadow:0 0 5px rgba(212,122,168,.4)"></div>Женщина · боковая</div>
+    <div class="lr"><div class="ld" style="background:#d4a843;box-shadow:0 0 10px rgba(212,168,67,.7)"></div>Составитель (Герман) ★</div>
+  </div>
+</div>
+<!-- SURNAMES -->
+<div id="vn" class="view">
+  <div class="sgrid">
+    <div class="sc"><div class="si">🌳</div><div class="sn">Андросовы</div><div class="sm">Главная ветвь · 8 поколений</div><div class="sd">Центральная линия. Семён → Леонид → Валерий → Анатолий → Герман → Оливия. Пять прямых поколений.</div></div>
+    <div class="sc"><div class="si">⚜️</div><div class="sn">Саломины</div><div class="sm">Древнейшая ветвь · с 1812</div><div class="sd">Федот (1812) — самый ранний предок. Георгий Федотович репрессирован 13.12.1958, реабилитирован.</div></div>
+    <div class="sc"><div class="si">🌿</div><div class="sn">Хвостовы</div><div class="sm">По материнской линии</div><div class="sd">Дед Евгений Антонович (р. 1935). Прадед Алексей Михайлович. Бабушка Таисия Алексеевна (Щербакова).</div></div>
+    <div class="sc"><div class="si">🏡</div><div class="sn">Коротеевы</div><div class="sm">Крепостные · Тамбовская губерния</div><div class="sd">Предки — крепостные в с. Никольское. Прабабушка Александра (урождённая Ромашкина).</div></div>
+    <div class="sc"><div class="si">🗡️</div><div class="sn">Щербаковы</div><div class="sm">Через Хвостовых</div><div class="sd">Ольга Михайловна (Саломина) — прабабушка, Зюзино. Анатолий Алексеевич погиб в шахте в 20 лет.</div></div>
+    <div class="sc"><div class="si">🌾</div><div class="sn">Ромашкины</div><div class="sm">Через Коротеевых</div><div class="sd">Михаил и Евдокия — прапрадеды. Ветвь в Одессу и Европу.</div></div>
+    <div class="sc"><div class="si">🎖️</div><div class="sn">Блинниковы</div><div class="sm">Ветеран ВОВ</div><div class="sd">Константин Тимофеевич — ветеран ВОВ (1916–1998), контужен в бою, Оренбург.</div></div>
+    <div class="sc"><div class="si">💍</div><div class="sn">Шевяковы</div><div class="sm">Жена · современная ветвь</div><div class="sd">Лилия Сергеевна (р. 06.02.1997) — жена Германа. Мать Оливии (05.04.2026).</div></div>
+    <div class="sc"><div class="si">🇰🇿</div><div class="sn">Грис</div><div class="sm">Через Коротеевых · Казахстан</div><div class="sd">Клара Николаевна (Коротеева) вышла за Эдуарда Гриса из Карааганды. Три поколения.</div></div>
+    <div class="sc"><div class="si">👑</div><div class="sn">Королевы</div><div class="sm">Через Щербаковых</div><div class="sd">Ирина Михайловна (Щербакова). Внуки: Эвелина, Егор, Ульяна.</div></div>
+    <div class="sc"><div class="si">🌻</div><div class="sn">Чальцевы</div><div class="sm">Через Блинниковых</div><div class="sd">Ксения Евгеньевна (Блинникова) + Роман. Дети: Ксения и Егор.</div></div>
+    <div class="sc"><div class="si">🌍</div><div class="sn">Украинские</div><div class="sm">Прабабушка</div><div class="sd">Александра (Украинская) — жена Леонида Семёновича, начало главной ветви Андросовых.</div></div>
+  </div>
+</div>
+<!-- SEARCH -->
+<div id="vs" class="view">
+  <div class="sw">
+    <input class="sinp" id="si" type="text" placeholder="Имя, фамилия, год рождения, место..." oninput="doSearch(this.value)">
+    <div id="sr"></div>
+  </div>
+</div>
+</main>
+<!-- MODAL -->
+<div class="mov" id="mov" onclick="closeM(event)">
+  <div class="mod" onclick="event.stopPropagation()">
+    <div class="mh">
+      <div class="mav" id="mav">👤</div>
+      <div class="mi"><div class="mn" id="mn"></div><div class="mr" id="mr"></div></div>
+      <button class="mcl" onclick="document.getElementById('mov').classList.remove('on')">✕</button>
+    </div>
+    <div class="mb" id="mb"></div>
+  </div>
+</div>
+<script>
+/* ════════ ANIMATED BG — fluid orbs + particles @ 60fps ════════ */
+(()=>{
+  const cv=document.getElementById("bgc"),cx=cv.getContext("2d");
+  let W,H,t=0,raf;
+  const orbs=[
+    {x:.18,y:.28,r:.38,c:[10,20,52],sp:.00035,ox:.14,oy:.09,phase:0},
+    {x:.82,y:.18,r:.32,c:[14,22,46],sp:.00055,ox:.09,oy:.13,phase:2.1},
+    {x:.5,y:.82,r:.42,c:[8,16,44],sp:.00028,ox:.16,oy:.07,phase:4.2},
+    {x:.08,y:.7,r:.26,c:[10,18,48],sp:.00065,ox:.07,oy:.16,phase:1},
+    {x:.92,y:.6,r:.3,c:[12,20,50],sp:.00045,ox:.11,oy:.11,phase:3.3},
+  ];
+  const streaks=Array.from({length:6},(_,i)=>({
+    x:Math.random(),y:Math.random(),len:.08+Math.random()*.14,
+    angle:Math.PI/5+Math.random()*.6,phase:Math.random()*Math.PI*2,
+    sp:.0007+Math.random()*.0009,
+    vx:.00008+Math.random()*.00006,vy:-.00005-Math.random()*.00008
+  }));
+  const pts=Array.from({length:55},()=>({
+    x:Math.random(),y:Math.random(),
+    sz:.3+Math.random()*1.6,a:.08+Math.random()*.42,
+    ph:Math.random()*Math.PI*2,sp:.0004+Math.random()*.0008,
+    vx:(Math.random()-.5)*.00012,vy:-.00008-Math.random()*.00016,
+    gold:Math.random()<.16
+  }));
+  function resize(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight}
+  resize();window.addEventListener("resize",resize,{passive:true});
+  function frame(){
+    t++;
+    const bg=cx.createRadialGradient(W*.5,H*.5,0,W*.5,H*.5,W*.8);
+    bg.addColorStop(0,"#030810");bg.addColorStop(1,"#010408");
+    cx.fillStyle=bg;cx.fillRect(0,0,W,H);
+    cx.globalCompositeOperation="source-over";
+    orbs.forEach(o=>{
+      const ox=Math.sin(t*o.sp+o.phase)*o.ox+Math.cos(t*o.sp*.65)*o.ox*.4;
+      const oy=Math.cos(t*o.sp*.85+o.phase)*o.oy+Math.sin(t*o.sp*1.1)*o.oy*.4;
+      const gx=(o.x+ox)*W,gy=(o.y+oy)*H,gr=o.r*Math.max(W,H);
+      const g=cx.createRadialGradient(gx,gy,0,gx,gy,gr);
+      const[r,g2,b]=o.c;
+      g.addColorStop(0,`rgba(${r},${g2},${b},.75)`);
+      g.addColorStop(.55,`rgba(${r},${g2},${b},.3)`);
+      g.addColorStop(1,"transparent");
+      cx.fillStyle=g;cx.fillRect(0,0,W,H);
+    });
+    streaks.forEach(s=>{
+      s.x+=s.vx;s.y+=s.vy;
+      if(s.x>1.1)s.x=-.1;if(s.y<-.1){s.y=1.1;s.x=Math.random()}
+      const a=.038*(Math.sin(t*s.sp+s.phase)+1)*.5;
+      cx.save();cx.translate(s.x*W,s.y*H);cx.rotate(s.angle);
+      const sl=cx.createLinearGradient(-s.len*W*.5,0,s.len*W*.5,0);
+      sl.addColorStop(0,"transparent");
+      sl.addColorStop(.5,`rgba(212,168,67,${a})`);
+      sl.addColorStop(1,"transparent");
+      cx.strokeStyle=sl;cx.lineWidth=.9;
+      cx.beginPath();cx.moveTo(-s.len*W*.5,0);cx.lineTo(s.len*W*.5,0);cx.stroke();
+      cx.restore();
+    });
+    pts.forEach(p=>{
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.y<-.01){p.y=1.01;p.x=Math.random()}
+      if(p.x<-.01||p.x>1.01){p.x=Math.random();p.y=Math.random()}
+      const pulse=(Math.sin(t*p.sp*6+p.ph)+1)*.5;
+      const a=p.a*.55*pulse+p.a*.45;
+      cx.globalAlpha=Math.min(a,.9);
+      cx.beginPath();cx.arc(p.x*W,p.y*H,p.sz,0,Math.PI*2);
+      if(p.gold){
+        cx.fillStyle=`rgba(212,168,67,${a})`;cx.fill();
+        if(a>.12){cx.globalAlpha=a*.22;cx.beginPath();cx.arc(p.x*W,p.y*H,p.sz*3.5,0,Math.PI*2);cx.fillStyle="rgba(212,168,67,.07)";cx.fill()}
+      } else {
+        cx.fillStyle=`rgba(160,185,255,${a*.45})`;cx.fill();
+      }
+    });
+    cx.globalAlpha=1;cx.globalCompositeOperation="source-over";
+    raf=requestAnimationFrame(frame);
+  }
+  frame();
+  document.addEventListener("visibilitychange",()=>document.hidden?cancelAnimationFrame(raf):frame());
+})();
+
+/* ════════ DATA ════════ */
+const PP=[
+  {id:"i556",n:"Саломин Федот",r:"Пра(4)дед",s:"M",b:"1812",st:"Самый ранний известный предок. Жил в эпоху Наполеоновских войн.",gn:-6,dr:1},
+  {id:"i555",n:"Саломина Параскева Ивановна",r:"Пра(4)бабушка",s:"F",gn:-6,dr:1},
+  {id:"i550",n:"Саломин Федот Герасимович",r:"Прапрадед",s:"M",st:"Умер 27.03.1913 от воспаления лёгких.",gn:-5,dr:1},
+  {id:"i551",n:"Саломина Анна Тимофеевна",r:"Прапрабабушка",s:"F",gn:-5,dr:1},
+  {id:"i557",n:"Ромашкин Михаил",r:"Прапрадед",s:"M",gn:-5,dr:1},
+  {id:"i558",n:"Ромашкина Евдокия",r:"Прапрабабушка",s:"F",gn:-5,dr:1},
+  {id:"i518",n:"Щербаков Алексей Михайлович",r:"Прадед",s:"M",b:"02.06.1912",gn:-4,dr:1},
+  {id:"i517",n:"Щербакова Ольга Михайловна",r:"Прабабушка",s:"F",b:"02.06.1912",d:"01.03.1988",pl:"Зюзино, Москва",st:"Урождённая Саломина — прямая связь с Федотом 1812. На фото в медицинской шапочке.",gn:-4,dr:1},
+  {id:"i528",n:"Коротеев Николай Иванович",r:"Прадед",s:"M",gn:-4,dr:1},
+  {id:"i529",n:"Коротеева Александра Михайловна",r:"Прабабушка",s:"F",st:"Урождённая Ромашкина. Предки — крепостные в с. Никольское Тамбовской губернии.",gn:-4,dr:1},
+  {id:"i531",n:"Андросов Леонид Семёнович",r:"Прадед",s:"M",gn:-4,dr:1},
+  {id:"i530",n:"Андросова Александра",r:"Прабабушка",s:"F",gn:-4,dr:1},
+  {id:"i540",n:"Блинников Константин Тимофеевич",r:"Прапрадед",s:"M",b:"11.06.1916",d:"02.04.1998",pl:"Оренбург",st:"Ветеран ВОВ. Охранял вагоны, был обстрелян и контужен.",gn:-4,dr:0},
+  {id:"i57",n:"Хвостов Евгений Антонович",r:"Дедушка",s:"M",b:"21.06.1935",gn:-3,dr:1},
+  {id:"i56",n:"Хвостова Таисия Алексеевна",r:"Бабушка",s:"F",gn:-3,dr:1},
+  {id:"i58",n:"Андросов Валерий Леонидович",r:"Дедушка",s:"M",gn:-3,dr:1},
+  {id:"i55",n:"Андросова Ванда Николаевна",r:"Бабушка",s:"F",gn:-3,dr:1},
+  {id:"i537",n:"Блинников Олег Константинович",r:"Двоюродный дед",s:"M",b:"04.12.1943",d:"12.09.2024",st:"Жил в Сочи. Умер 12.09.2024.",gn:-3,dr:0},
+  {id:"i52",n:"Андросов Анатолий Валерьевич",r:"Отец",s:"M",b:"24.04.1958",gn:-2,dr:1},
+  {id:"i53",n:"Андросова Ольга Евгеньевна",r:"Мать",s:"F",gn:-2,dr:1},
+  {id:"i510",n:"Блинникова Татьяна Валерьевна",r:"Тётя",s:"F",b:"04.03.1967",gn:-2,dr:0},
+  {id:"i533",n:"Андросов Леонид Валерьевич",r:"Дядя",s:"M",gn:-2,dr:0},
+  {id:"i51",n:"Андросов Герман Анатольевич",r:"Я ★",s:"M",b:"27.08.1987",st:"Составитель этого семейного архива. Муж Лилии, папа Оливии.",gn:-1,dr:1,me:1},
+  {id:"i541",n:"Андросова Лилия Сергеевна",r:"Жена",s:"F",b:"06.02.1997",gn:-1,dr:1},
+  {id:"i54",n:"Андросова Ангелина Анатольевна",r:"Сестра",s:"F",b:"03.06.1985",pl:"Сочи",gn:-1,dr:0},
+  {id:"i515",n:"Андросова Юля Анатольевна",r:"Сестра",s:"F",gn:-1,dr:0},
+  {id:"i511",n:"Блинников Денис Евгеньевич",r:"Двоюродный брат",s:"M",b:"28.11.1996",gn:-1,dr:0},
+  {id:"i513",n:"Чальцева Ксенья Евгеньевна",r:"Двоюродная сестра",s:"F",b:"17.01.1990",gn:-1,dr:0},
+  {id:"i542",n:"Андросова Оливия Германовна",r:"Дочь 💛",s:"F",b:"05.04.2026",st:"Наша любимая дочь. Для неё создаётся этот архив.",gn:0,dr:1},
+  {id:"i516",n:"Андросова Злата Ильинишна",r:"Племянница",s:"F",b:"25.03.2012",gn:0,dr:0},
+];
+
+/* ════════ TREE ENGINE ════════ */
+const cv2=document.getElementById("tc"),cx2=cv2.getContext("2d",{alpha:false});
+let TW=0,TH=0,TX=0,TY=0,TS=1,drag=false,dsx=0,dsy=0,dtx=0,dty=0,ldist=0,hov=null,aT=0,raf2;
+let nodes=[],bounds={};
+let nodeRevealProgress=0; // 0→1 for branch-by-branch reveal
+
+const NW=88,NH=50,HG=14,VG=82;
+
+function buildNodes(){
+  const bg={};
+  PP.forEach(p=>{const g=p.gn??0;(bg[g]||(bg[g]=[])).push(p)});
+  const gks=Object.keys(bg).map(Number).sort((a,b)=>a-b);
+  nodes=[];
+  gks.forEach((g,gi)=>{
+    const ids=bg[g];const rw=ids.length*(NW+HG)-HG;
+    const y=gi*(NH+VG)+40;
+    ids.forEach((p,i)=>nodes.push({...p,x:-rw/2+i*(NW+HG),y,w:NW,h:NH,gi,revealDelay:gi*.15+i*.04}));
+  });
+  const xs=nodes.map(n=>n.x),ys=nodes.map(n=>n.y);
+  bounds={x0:Math.min(...xs)-20,x1:Math.max(...xs)+NW+20,y0:Math.min(...ys)-20,y1:Math.max(...ys)+NH+20};
+  bounds.w=bounds.x1-bounds.x0;bounds.h=bounds.y1-bounds.y0;
+}
+
+function resize2(){TW=cv2.width=cv2.offsetWidth;TH=cv2.height=cv2.offsetHeight}
+
+function nc(n){
+  if(n.me) return{f:"rgba(212,168,67,.22)",s:"rgba(212,168,67,.95)",g:"rgba(212,168,67,.5)"};
+  if(n.s==="M"&&n.dr) return{f:"rgba(20,50,115,.6)",s:"rgba(59,107,202,.95)",g:"rgba(59,107,202,.4)"};
+  if(n.s==="M") return{f:"rgba(14,36,85,.5)",s:"rgba(91,142,219,.75)",g:"rgba(91,142,219,.28)"};
+  if(n.dr) return{f:"rgba(95,28,65,.6)",s:"rgba(196,90,138,.95)",g:"rgba(196,90,138,.4)"};
+  return{f:"rgba(75,22,52,.48)",s:"rgba(212,122,168,.75)",g:"rgba(212,122,168,.28)"};
+}
+
+function rr(ctx,x,y,w,h,r){
+  ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+  ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+  ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+  ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath();
+}
+
+function drawFrame(){
+  aT+=.016;
+  // Reveal animation: progress increases from 0 to 1 over ~3s
+  if(nodeRevealProgress<1) nodeRevealProgress=Math.min(1,nodeRevealProgress+.006);
+
+  cx2.fillStyle="#03070f";cx2.fillRect(0,0,TW,TH);
+  cx2.save();
+  cx2.translate(TX+TW/2,TY+TH/2);cx2.scale(TS,TS);
+  cx2.translate(-(bounds.x0+bounds.w/2),-(bounds.y0+bounds.h/2));
+
+  // Subtle grid
+  cx2.strokeStyle="rgba(255,255,255,.022)";cx2.lineWidth=.5;
+  const gs=55;
+  for(let x=bounds.x0-20;x<bounds.x1+20;x+=gs){cx2.beginPath();cx2.moveTo(x,bounds.y0);cx2.lineTo(x,bounds.y1);cx2.stroke()}
+  for(let y=bounds.y0;y<bounds.y1+20;y+=gs){cx2.beginPath();cx2.moveTo(bounds.x0-20,y);cx2.lineTo(bounds.x1+20,y);cx2.stroke()}
+
+  // Connection lines (animated bezier with gold glow)
+  const byGen={};
+  nodes.forEach(n=>{(byGen[n.gn]||(byGen[n.gn]=[])).push(n)});
+  const gksSorted=Object.keys(byGen).map(Number).sort((a,b)=>a-b);
+  gksSorted.forEach((gk,gi)=>{
+    if(gi===0) return;
+    const cur=byGen[gk],prev=byGen[gksSorted[gi-1]];
+    if(!prev) return;
+    const pm=prev.find(p=>p.dr)||prev[Math.floor(prev.length/2)];
+    if(!pm) return;
+    cur.forEach(child=>{
+      const prog=Math.max(0,Math.min(1,(nodeRevealProgress-pm.revealDelay/.8)*3));
+      if(prog<=0) return;
+      const cx_=child.x+NW/2,cy_=child.y;
+      const px_=pm.x+NW/2,py_=pm.y+NH;
+      const mid=(py_+cy_)/2+10*Math.sin(aT*1.2+child.x*.005);
+      cx2.save();
+      cx2.globalAlpha=prog*.38;
+      cx2.shadowColor="rgba(212,168,67,.22)";cx2.shadowBlur=4;
+      const lg=cx2.createLinearGradient(px_,py_,cx_,cy_);
+      lg.addColorStop(0,"rgba(212,168,67,.12)");
+      lg.addColorStop(.5,"rgba(212,168,67,.3)");
+      lg.addColorStop(1,"rgba(212,168,67,.12)");
+      cx2.strokeStyle=lg;cx2.lineWidth=.9;
+      cx2.beginPath();cx2.moveTo(px_,py_);cx2.bezierCurveTo(px_,mid,cx_,mid,cx_,cy_);cx2.stroke();
+      cx2.restore();
+    });
+  });
+
+  // Draw nodes
+  nodes.forEach(n=>{
+    const prog=Math.max(0,Math.min(1,(nodeRevealProgress-n.revealDelay*.8)*4));
+    if(prog<=0) return;
+    const isH=n.id===hov;
+    const c=nc(n);
+    const {x,y,w,h}=n;
+    const pulse=n.me?(.05*Math.sin(aT*2)):0;
+    const sc=1+(.06*(prog<1?prog:0));// pop-in scale
+
+    cx2.save();
+    // Pop-in transform
+    if(prog<1){
+      cx2.translate(x+w/2,y+h/2);cx2.scale(prog*sc,prog*sc);cx2.translate(-(x+w/2),-(y+h/2));
+    }
+    cx2.globalAlpha=prog;
+
+    // Glow
+    if(isH||n.me){
+      cx2.shadowColor=c.g;cx2.shadowBlur=isH?26:18+pulse*8;
+    }
+
+    // Card fill
+    rr(cx2,x,y,w,h,9);cx2.fillStyle=c.f;cx2.fill();
+
+    // Inner glass shine
+    const hg2=cx2.createLinearGradient(x,y,x,y+h*.35);
+    hg2.addColorStop(0,"rgba(255,255,255,.08)");hg2.addColorStop(1,"rgba(255,255,255,0)");
+    rr(cx2,x+1,y+1,w-2,h*.4,9);cx2.fillStyle=hg2;cx2.fill();
+
+    // Border
+    rr(cx2,x,y,w,h,9);
+    cx2.strokeStyle=c.s;cx2.lineWidth=n.me?(1.6+pulse):isH?1.8:1;cx2.stroke();
+
+    // Top highlight line
+    cx2.strokeStyle=isH?"rgba(255,255,255,.18)":"rgba(255,255,255,.08)";
+    cx2.lineWidth=.8;
+    cx2.beginPath();cx2.moveTo(x+9,y+.6);cx2.lineTo(x+w-9,y+.6);cx2.stroke();
+
+    // Text
+    const parts=n.n.split(" ");
+    const sn=parts[0]||"";
+    let fn=(parts[1]||"");if(parts[2])fn+=` ${parts[2].charAt(0)}.`;
+
+    cx2.shadowColor="transparent";cx2.shadowBlur=0;
+    cx2.textAlign="center";cx2.textBaseline="middle";
+    cx2.fillStyle=n.me?"rgba(240,200,90,.98)":"rgba(230,234,245,.92)";
+    cx2.font=`500 ${Math.min(10.5,72/Math.max(sn.length,1))}px "DM Sans",sans-serif`;
+    cx2.fillText(sn.substring(0,14),x+w/2,y+h*.29);
+
+    cx2.fillStyle="rgba(175,185,215,.65)";
+    cx2.font=`400 9px "DM Sans",sans-serif`;
+    cx2.fillText(fn.substring(0,16),x+w/2,y+h*.51);
+
+    if(n.b||n.d){
+      cx2.fillStyle="rgba(155,165,195,.44)";
+      cx2.font=`400 8px "DM Sans",sans-serif`;
+      const ds=(n.b?n.b.slice(-4):"?")+(n.d?" — "+n.d.slice(-4):"");
+      cx2.fillText(ds.substring(0,14),x+w/2,y+h*.73);
+    }
+    if(n.me){
+      cx2.fillStyle="rgba(212,168,67,.9)";cx2.font="9px sans-serif";cx2.textAlign="right";cx2.textBaseline="top";
+      cx2.fillText("★",x+w-6,y+4);
+    }
+    cx2.restore();
+  });
+  cx2.restore();
+  raf2=requestAnimationFrame(drawFrame);
+}
+
+function nodeAt(mx,my){
+  const wx=(mx-TX-TW/2)/TS+(bounds.x0+bounds.w/2);
+  const wy=(my-TY-TH/2)/TS+(bounds.y0+bounds.h/2);
+  return nodes.find(n=>wx>=n.x&&wx<=n.x+n.w&&wy>=n.y&&wy<=n.y+n.h)||null;
+}
+
+// Mouse
+cv2.addEventListener("mousedown",e=>{const n=nodeAt(e.offsetX,e.offsetY);if(n){openM(n);return}drag=true;dsx=e.clientX;dsy=e.clientY;dtx=TX;dty=TY;cv2.classList.add("grab")});
+cv2.addEventListener("mousemove",e=>{
+  if(drag){TX=dtx+(e.clientX-dsx);TY=dty+(e.clientY-dsy)}
+  else{const n=nodeAt(e.offsetX,e.offsetY);hov=n?n.id:null;cv2.style.cursor=n?"pointer":"grab"}
+});
+window.addEventListener("mouseup",()=>{drag=false;cv2.classList.remove("grab")});
+cv2.addEventListener("wheel",e=>{
+  e.preventDefault();const d=e.deltaY>0?.87:1.15;
+  const os=TS,ns=Math.max(.08,Math.min(4,os*d));
+  TX=e.offsetX-(e.offsetX-TX)*(ns/os);TY=e.offsetY-(e.offsetY-TY)*(ns/os);TS=ns;
+},{passive:false});
+
+// Touch
+cv2.addEventListener("touchstart",e=>{
+  e.preventDefault();
+  if(e.touches.length===1){
+    const t=e.touches[0],rect=cv2.getBoundingClientRect();
+    const n=nodeAt(t.clientX-rect.left,t.clientY-rect.top);
+    if(n){openM(n);return}
+    drag=true;dsx=t.clientX;dsy=t.clientY;dtx=TX;dty=TY;
+  } else if(e.touches.length===2){
+    drag=false;const t1=e.touches[0],t2=e.touches[1];
+    ldist=Math.hypot(t2.clientX-t1.clientX,t2.clientY-t1.clientY);
+  }
+},{passive:false});
+cv2.addEventListener("touchmove",e=>{
+  e.preventDefault();
+  if(e.touches.length===1&&drag){const t=e.touches[0];TX=dtx+(t.clientX-dsx);TY=dty+(t.clientY-dsy)}
+  else if(e.touches.length===2){
+    const t1=e.touches[0],t2=e.touches[1];
+    const dist=Math.hypot(t2.clientX-t1.clientX,t2.clientY-t1.clientY);
+    if(ldist){const ratio=dist/ldist,os=TS,ns=Math.max(.08,Math.min(4,os*ratio));
+    const mx=(t1.clientX+t2.clientX)/2,my=(t1.clientY+t2.clientY)/2;
+    const rect=cv2.getBoundingClientRect(),ox=mx-rect.left,oy=my-rect.top;
+    TX=ox-(ox-TX)*(ns/os);TY=oy-(oy-TY)*(ns/os);TS=ns}
+    ldist=dist}
+},{passive:false});
+cv2.addEventListener("touchend",()=>{drag=false;ldist=0},{passive:true});
+
+function zi(){TS=Math.min(4,TS*1.2)}
+function zo(){TS=Math.max(.08,TS*.83)}
+function zc(){TX=0;TY=0}
+function zf(){
+  if(!TW||!TH) return;
+  const sx=(TW-60)/bounds.w,sy=(TH-60)/bounds.h;
+  TS=Math.min(sx,sy,.95);TX=0;TY=0;
+}
+
+/* ════════ MODAL ════════ */
+function openM(p){
+  document.getElementById("mn").textContent=p.n;
+  document.getElementById("mr").textContent=p.r||"";
+  const av=document.getElementById("mav");
+  av.textContent=p.s==="F"?"👩":"👨";
+  av.style.background=p.me?"rgba(212,168,67,.18)":p.s==="F"?"rgba(196,90,138,.18)":"rgba(59,107,202,.18)";
+  av.style.borderColor=p.me?"rgba(212,168,67,.4)":p.s==="F"?"rgba(196,90,138,.4)":"rgba(59,107,202,.4)";
+  let body="";
+  if(p.b) body+=`<div class="mf"><span class="mfi">★</span><div><div class="mfl">Дата рождения</div><div class="mfv">${p.b}</div></div></div>`;
+  if(p.d) body+=`<div class="mf"><span class="mfi">†</span><div><div class="mfl">Дата смерти</div><div class="mfv">${p.d}</div></div></div>`;
+  if(p.pl) body+=`<div class="mf"><span class="mfi">📍</span><div><div class="mfl">Место</div><div class="mfv">${p.pl}</div></div></div>`;
+  if(p.st) body+=`<div class="mst">${p.st}</div>`;
+  if(!body) body=`<div class="mf"><span class="mfi">📋</span><div><div class="mfl">Данные</div><div class="mfv">Нет дополнительной информации</div></div></div>`;
+  document.getElementById("mb").innerHTML=body;
+  document.getElementById("mov").classList.add("on");
+}
+function closeM(e){if(e.target.id==="mov")document.getElementById("mov").classList.remove("on")}
+document.addEventListener("keydown",e=>{if(e.key==="Escape")document.getElementById("mov").classList.remove("on")});
+
+/* ════════ SEARCH ════════ */
+function doSearch(q){
+  const el=document.getElementById("sr");
+  if(!q.trim()){el.innerHTML="";return}
+  const lo=q.toLowerCase();
+  const f=PP.filter(p=>p.n.toLowerCase().includes(lo)||(p.r&&p.r.toLowerCase().includes(lo))||(p.b&&p.b.includes(q))||(p.pl&&p.pl.toLowerCase().includes(lo))||(p.st&&p.st.toLowerCase().includes(lo)));
+  if(!f.length){el.innerHTML=`<p style="text-align:center;color:rgba(240,237,232,.3);padding:40px;font-family:'Cormorant Garamond',serif;font-style:italic">Никого не найдено</p>`;return}
+  el.innerHTML=f.map(p=>`<div class="sri" onclick='openM(${JSON.stringify(p)})'>
+    <div class="sav" style="background:${p.me?"rgba(212,168,67,.16)":p.s==="F"?"rgba(196,90,138,.16)":"rgba(59,107,202,.16)"}">${p.s==="F"?"👩":"👨"}</div>
+    <div><div class="snm">${p.n}</div><div class="smt">${p.r||""}${p.b?" · ★ "+p.b:""}</div></div>
+    <div class="stg">${p.dr?"Прямой":"Боковой"}</div>
+  </div>`).join("");
+}
+
+/* ════════ NAV ════════ */
+function show(id,btn){
+  document.querySelectorAll(".view").forEach(v=>{v.style.display="none";v.classList.remove("on")});
+  document.querySelectorAll(".tab").forEach(b=>b.classList.remove("on"));
+  const v=document.getElementById("v"+id);if(v){v.style.display="block";v.style.display="";v.classList.add("on")}
+  if(btn) btn.classList.add("on");
+  if(id==="t"){
+    resize2();
+    if(nodeRevealProgress===0||nodeRevealProgress===1){nodeRevealProgress=0}
+    zf();
+    cancelAnimationFrame(raf2);drawFrame();
+  }
+}
+
+/* ════════ INIT ════════ */
+buildNodes();
+window.addEventListener("resize",()=>{if(document.getElementById("vt").classList.contains("on")){resize2()}},{passive:true});
+</script>
+</body>
+</html>
