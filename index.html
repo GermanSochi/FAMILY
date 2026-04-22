@@ -2,2314 +2,530 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Семейное древо Андросовых</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#030508">
+<title>Семья Андросовых · 1812—2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════════
-   ROOT — тёплая семейная палитра
-═══════════════════════════════════════ */
-:root {
-  --cream: #faf6ef;
-  --cream2: #f3ece0;
-  --cream3: #e8ddc8;
-  --paper: #f7f0e3;
-  --brown: #6b4c2a;
-  --brown2: #8b6340;
-  --brown3: #a07848;
-  --gold: #c8962a;
-  --gold2: #e6b048;
-  --gold3: #f5d080;
-  --text: #2c1f0e;
-  --text2: #5a3e22;
-  --text3: #9a7a52;
-  --text4: #c4a47a;
-  --border: rgba(107,76,42,.15);
-  --border2: rgba(107,76,42,.3);
-  --shadow: rgba(107,76,42,.12);
-  --red: #c04040;
-  --green: #4a8a5a;
-  --blue: #3a6898;
-  --rad: 12px;
-}
-
-* { margin:0; padding:0; box-sizing:border-box; }
-
-body {
-  font-family: 'Nunito', sans-serif;
-  background: var(--cream);
-  color: var(--text);
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-/* ── texture overlay ── */
-body::before {
-  content:'';
-  position:fixed;
-  inset:0;
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-  pointer-events:none;
-  z-index:0;
-}
-
-/* ═══════════════════════════════════════
-   HERO
-═══════════════════════════════════════ */
-.hero {
-  position:relative;
-  background: linear-gradient(160deg, #3d2810 0%, #6b4c2a 40%, #8b6340 70%, #a07848 100%);
-  overflow: hidden;
-  padding: 64px 20px 52px;
-  text-align: center;
-}
-
-.hero::after {
-  content:'';
-  position:absolute;
-  bottom:0; left:0; right:0;
-  height:48px;
-  background: var(--cream);
-  clip-path: ellipse(55% 100% at 50% 100%);
-}
-
-/* decorative leaves */
-.hero-leaf {
-  position:absolute;
-  font-size:80px;
-  opacity:.06;
-  pointer-events:none;
-  line-height:1;
-}
-.hero-leaf:nth-child(1){top:-10px;left:-20px;transform:rotate(-20deg);font-size:120px}
-.hero-leaf:nth-child(2){top:10px;right:-10px;transform:rotate(15deg);font-size:100px}
-.hero-leaf:nth-child(3){bottom:30px;left:40px;transform:rotate(30deg);font-size:60px}
-.hero-leaf:nth-child(4){bottom:20px;right:60px;transform:rotate(-40deg);font-size:70px}
-
-.hero-badge {
-  display:inline-block;
-  font-size:11px;
-  letter-spacing:4px;
-  text-transform:uppercase;
-  color:rgba(245,208,128,.7);
-  margin-bottom:18px;
-}
-
-.hero h1 {
-  font-family:'Playfair Display',serif;
-  font-size:clamp(36px,7vw,80px);
-  font-weight:700;
-  color:#fdf8f0;
-  letter-spacing:3px;
-  line-height:1.05;
-  margin-bottom:8px;
-  text-shadow:0 2px 20px rgba(0,0,0,.3);
-}
-
-.hero-sub {
-  font-size:14px;
-  color:rgba(245,208,128,.8);
-  letter-spacing:2px;
-  margin-bottom:28px;
-}
-
-/* ── STATS ── */
-.stats {
-  display:flex;
-  justify-content:center;
-  gap:8px;
-  flex-wrap:wrap;
-  position:relative;
-  z-index:1;
-}
-
-.stat {
-  background:rgba(255,255,255,.12);
-  backdrop-filter:blur(8px);
-  border:1px solid rgba(255,255,255,.2);
-  border-radius:10px;
-  padding:14px 20px;
-  text-align:center;
-  min-width:110px;
-}
-
-.stat-n {
-  font-family:'Playfair Display',serif;
-  font-size:28px;
-  color:#fdf8f0;
-  line-height:1;
-}
-
-.stat-l {
-  font-size:10px;
-  color:rgba(245,208,128,.75);
-  letter-spacing:2px;
-  text-transform:uppercase;
-  margin-top:3px;
-}
-
-/* ═══════════════════════════════════════
-   NAV
-═══════════════════════════════════════ */
-.nav {
-  display:flex;
-  justify-content:center;
-  background:var(--cream);
-  border-bottom:2px solid var(--cream3);
-  position:sticky;
-  top:0;
-  z-index:300;
-  gap:0;
-}
-
-.nb {
-  padding:16px 24px;
-  background:none;
-  border:none;
-  border-bottom:3px solid transparent;
-  color:var(--text3);
-  font-family:'Nunito',sans-serif;
-  font-size:13px;
-  font-weight:600;
-  letter-spacing:1px;
-  cursor:pointer;
-  transition:all .2s;
-  position:relative;
-  top:2px;
-}
-
-.nb:hover { color:var(--brown2); }
-.nb.active { color:var(--brown); border-bottom-color:var(--gold); }
-
-/* ═══════════════════════════════════════
-   SECTIONS
-═══════════════════════════════════════ */
-.sec { display:none; min-height:80vh; }
-.sec.active { display:block; }
-
-/* ═══════════════════════════════════════
-   TREE SECTION
-═══════════════════════════════════════ */
-#tree-sec {
-  padding: 40px 16px 60px;
-  background: linear-gradient(to bottom, var(--cream), var(--paper));
-}
-
-.tree-wrap { max-width:1400px; margin:0 auto; overflow-x:auto; padding-bottom:20px; }
-
-.gen-label {
-  text-align:center;
-  font-size:10px;
-  color:var(--text4);
-  letter-spacing:3px;
-  text-transform:uppercase;
-  padding:20px 0 8px;
-}
-
-.gen-row {
-  display:flex;
-  justify-content:center;
-  flex-wrap:wrap;
-  gap:12px;
-  padding:4px 0;
-}
-
-/* ── CONNECTOR ── */
-.vline {
-  width:2px;
-  height:28px;
-  background:linear-gradient(to bottom, var(--gold2), var(--cream3));
-  margin:0 auto;
-  border-radius:2px;
-  opacity:.6;
-}
-
-.bridge {
-  width:36px;
-  height:2px;
-  background:var(--cream3);
-  margin-top:52px;
-  flex-shrink:0;
-  position:relative;
-  border-radius:1px;
-}
-
-.bridge::before, .bridge::after {
-  content:'';
-  position:absolute;
-  top:50%;
-  transform:translateY(-50%);
-  width:7px;
-  height:7px;
-  border-radius:50%;
-  background:var(--gold2);
-}
-.bridge::before { left:-3px; }
-.bridge::after { right:-3px; }
-
-/* ═══════════════════════════════════════
-   PERSON CARD — heart of the redesign
-═══════════════════════════════════════ */
-.card {
-  background:#fff;
-  border:1.5px solid var(--cream3);
-  border-radius:var(--rad);
-  width:166px;
-  flex-shrink:0;
-  cursor:pointer;
-  transition:all .25s cubic-bezier(.2,.8,.2,1);
-  overflow:hidden;
-  position:relative;
-  box-shadow:0 2px 12px var(--shadow);
-}
-
-.card:hover {
-  border-color:var(--gold2);
-  box-shadow:0 8px 32px rgba(107,76,42,.18);
-  transform:translateY(-4px);
-}
-
-.card.me {
-  border-color:var(--gold);
-  box-shadow:0 4px 20px rgba(200,150,42,.25);
-}
-
-.card.me .card-photo-wrap::after {
-  content:'★ Я';
-  position:absolute;
-  bottom:6px;
-  right:6px;
-  background:var(--gold);
-  color:#fff;
-  font-size:9px;
-  font-weight:700;
-  padding:2px 7px;
-  border-radius:10px;
-  letter-spacing:1px;
-}
-
-.card.deceased { opacity:.78; }
-.card.deceased .card-photo-wrap::before {
-  content:'†';
-  position:absolute;
-  top:7px;
-  left:8px;
-  color:rgba(255,255,255,.85);
-  font-size:14px;
-  z-index:2;
-  text-shadow:0 1px 3px rgba(0,0,0,.5);
-}
-
-/* ── PHOTO AREA ── */
-.card-photo-wrap {
-  width:100%;
-  height:110px;
-  background:linear-gradient(135deg, var(--cream2), var(--cream3));
-  position:relative;
-  overflow:hidden;
-}
-
-.card-photo-wrap img {
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  transition:transform .4s ease;
-}
-
-.card:hover .card-photo-wrap img { transform:scale(1.05); }
-
-.card-photo-wrap .card-av {
-  width:100%;
-  height:100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.card-photo-wrap .card-av svg { width:72px; height:72px; }
-
-/* ── CARD BODY ── */
-.card-body {
-  padding:10px 12px 12px;
-}
-
-.c-role {
-  font-size:9px;
-  color:var(--text4);
-  letter-spacing:2px;
-  text-transform:uppercase;
-  margin-bottom:4px;
-}
-
-.c-name {
-  font-family:'Playfair Display',serif;
-  font-size:13px;
-  color:var(--text);
-  line-height:1.35;
-  margin-bottom:3px;
-}
-
-.c-maiden {
-  font-size:10px;
-  color:var(--text3);
-  font-style:italic;
-  margin-bottom:3px;
-}
-
-.c-date {
-  font-size:10px;
-  color:var(--gold);
-  font-weight:600;
-}
-
-.c-story-hint {
-  font-size:9px;
-  color:var(--text4);
-  margin-top:4px;
-  font-style:italic;
-  display:-webkit-box;
-  -webkit-line-clamp:2;
-  -webkit-box-orient:vertical;
-  overflow:hidden;
-}
-
-/* ─── add-photo button on card ─── */
-.card-add-photo {
-  position:absolute;
-  bottom:6px;
-  right:6px;
-  width:26px;
-  height:26px;
-  border-radius:50%;
-  background:rgba(255,255,255,.9);
-  border:1px solid var(--cream3);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:14px;
-  color:var(--brown2);
-  cursor:pointer;
-  transition:all .2s;
-  z-index:3;
-  opacity:0;
-}
-
-.card:hover .card-add-photo { opacity:1; }
-.card-add-photo:hover { background:var(--gold2); color:#fff; border-color:var(--gold2); }
-
-/* ═══════════════════════════════════════
-   PERSON MODAL — FamyTale style
-═══════════════════════════════════════ */
-.overlay {
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(44,31,14,.6);
-  backdrop-filter:blur(4px);
-  z-index:1000;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-}
-.overlay.open { display:flex; }
-
-.modal {
-  background:#fff;
-  border-radius:16px;
-  max-width:520px;
-  width:100%;
-  max-height:90vh;
-  overflow-y:auto;
-  position:relative;
-  box-shadow:0 20px 80px rgba(44,31,14,.3);
-  animation:mfade .3s cubic-bezier(.2,.8,.2,1);
-}
-
-@keyframes mfade {
-  from{opacity:0;transform:translateY(24px) scale(.97)}
-  to{opacity:1;transform:none}
-}
-
-/* ── modal header photo ── */
-.modal-photo {
-  width:100%;
-  height:220px;
-  position:relative;
-  overflow:hidden;
-  background:linear-gradient(135deg, var(--cream2) 0%, var(--cream3) 100%);
-  border-radius:16px 16px 0 0;
-}
-
-.modal-photo img {
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-.modal-photo .modal-av {
-  width:100%;
-  height:100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.modal-photo .modal-av svg { width:110px; height:110px; }
-
-.modal-photo-overlay {
-  position:absolute;
-  inset:0;
-  background:linear-gradient(to top, rgba(44,31,14,.7) 0%, transparent 50%);
-}
-
-.modal-photo-btns {
-  position:absolute;
-  bottom:12px;
-  right:12px;
-  display:flex;
-  gap:8px;
-}
-
-.modal-photo-btn {
-  background:rgba(255,255,255,.92);
-  border:none;
-  border-radius:8px;
-  padding:7px 12px;
-  font-family:'Nunito',sans-serif;
-  font-size:12px;
-  font-weight:600;
-  color:var(--brown);
-  cursor:pointer;
-  transition:all .2s;
-  display:flex;
-  align-items:center;
-  gap:5px;
-}
-
-.modal-photo-btn:hover { background:var(--gold2); color:#fff; }
-
-.modal-name-block {
-  position:absolute;
-  bottom:14px;
-  left:18px;
-  right:100px;
-}
-
-.modal-name-block .m-role {
-  font-size:10px;
-  color:rgba(245,208,128,.85);
-  letter-spacing:3px;
-  text-transform:uppercase;
-  margin-bottom:4px;
-}
-
-.modal-name-block .m-name {
-  font-family:'Playfair Display',serif;
-  font-size:20px;
-  color:#fff;
-  line-height:1.25;
-  text-shadow:0 1px 8px rgba(0,0,0,.4);
-}
-
-/* ── modal close ── */
-.mcl {
-  position:absolute;
-  top:12px;
-  right:14px;
-  background:rgba(255,255,255,.85);
-  border:none;
-  border-radius:50%;
-  width:32px;
-  height:32px;
-  font-size:16px;
-  color:var(--brown);
-  cursor:pointer;
-  transition:all .2s;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:10;
-}
-
-.mcl:hover { background:#fff; color:var(--red); }
-
-/* ── modal tabs ── */
-.modal-tabs {
-  display:flex;
-  border-bottom:1px solid var(--cream3);
-  padding:0 18px;
-  gap:0;
-}
-
-.modal-tab {
-  padding:14px 16px;
-  background:none;
-  border:none;
-  border-bottom:2px solid transparent;
-  font-family:'Nunito',sans-serif;
-  font-size:13px;
-  font-weight:600;
-  color:var(--text3);
-  cursor:pointer;
-  transition:all .2s;
-  position:relative;
-  top:1px;
-}
-
-.modal-tab.active { color:var(--brown); border-bottom-color:var(--gold); }
-.modal-tab:hover:not(.active) { color:var(--brown2); }
-
-/* ── modal body ── */
-.modal-body { padding:20px 20px 24px; }
-
-.tab-pane { display:none; }
-.tab-pane.active { display:block; }
-
-/* facts */
-.fact-row {
-  display:flex;
-  align-items:flex-start;
-  padding:10px 0;
-  border-bottom:1px solid var(--cream3);
-  gap:12px;
-}
-
-.fact-row:last-child { border-bottom:none; }
-
-.fact-icon {
-  width:32px;
-  height:32px;
-  border-radius:8px;
-  background:var(--cream2);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:14px;
-  flex-shrink:0;
-}
-
-.fact-label {
-  font-size:11px;
-  color:var(--text3);
-  letter-spacing:1px;
-  text-transform:uppercase;
-  margin-bottom:2px;
-}
-
-.fact-val {
-  font-size:14px;
-  color:var(--text);
-  font-weight:500;
-}
-
-.fact-empty {
-  font-size:13px;
-  color:var(--text4);
-  font-style:italic;
-  cursor:pointer;
-  transition:color .2s;
-}
-
-.fact-empty:hover { color:var(--blue); }
-
-/* story block */
-.story-block {
-  background:var(--cream);
-  border-left:3px solid var(--gold2);
-  border-radius:0 8px 8px 0;
-  padding:14px 16px;
-  font-size:13px;
-  color:var(--text2);
-  line-height:1.75;
-  font-style:italic;
-  margin-top:4px;
-}
-
-/* photos grid */
-.photos-grid {
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;
-}
-
-.photo-thumb {
-  aspect-ratio:1;
-  border-radius:8px;
-  overflow:hidden;
-  background:var(--cream2);
-  cursor:pointer;
-  transition:all .2s;
-}
-
-.photo-thumb:hover { transform:scale(1.03); box-shadow:0 4px 16px var(--shadow); }
-
-.photo-thumb img {
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-.photo-add-btn {
-  aspect-ratio:1;
-  border-radius:8px;
-  border:2px dashed var(--cream3);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:6px;
-  cursor:pointer;
-  transition:all .2s;
-  color:var(--text3);
-  font-size:12px;
-  font-weight:600;
-}
-
-.photo-add-btn:hover { border-color:var(--gold2); color:var(--gold); background:var(--cream); }
-.photo-add-btn span { font-size:22px; }
-
-/* relatives */
-.rel-list { display:flex; flex-direction:column; gap:8px; }
-
-.rel-item {
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:8px 12px;
-  background:var(--cream);
-  border-radius:10px;
-  cursor:pointer;
-  transition:all .2s;
-}
-
-.rel-item:hover { background:var(--cream2); transform:translateX(4px); }
-
-.rel-av {
-  width:40px;
-  height:40px;
-  border-radius:50%;
-  overflow:hidden;
-  flex-shrink:0;
-  background:var(--cream2);
-  border:2px solid var(--cream3);
-}
-
-.rel-av svg { width:100%; height:100%; }
-.rel-av img { width:100%; height:100%; object-fit:cover; }
-
-.rel-name { font-size:14px; color:var(--text); font-weight:500; }
-.rel-role { font-size:11px; color:var(--text3); }
-
-/* modal actions */
-.modal-actions {
-  display:flex;
-  gap:8px;
-  padding:0 20px 20px;
-  flex-wrap:wrap;
-}
-
-.btn {
-  padding:10px 18px;
-  border-radius:8px;
-  font-family:'Nunito',sans-serif;
-  font-size:13px;
-  font-weight:600;
-  cursor:pointer;
-  transition:all .2s;
-  border:none;
-  display:flex;
-  align-items:center;
-  gap:6px;
-}
-
-.btn-primary {
-  background:var(--brown);
-  color:#fff;
-}
-
-.btn-primary:hover { background:var(--brown2); }
-
-.btn-secondary {
-  background:var(--cream);
-  color:var(--brown);
-  border:1.5px solid var(--cream3);
-}
-
-.btn-secondary:hover { border-color:var(--brown2); background:var(--cream2); }
-
-.btn-danger {
-  background:none;
-  color:var(--red);
-  border:1.5px solid rgba(192,64,64,.3);
-}
-
-.btn-danger:hover { background:rgba(192,64,64,.08); }
-
-/* ═══════════════════════════════════════
-   EDIT MODAL — full FamyTale form
-═══════════════════════════════════════ */
-.edit-overlay {
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(44,31,14,.65);
-  backdrop-filter:blur(6px);
-  z-index:2000;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  overflow-y:auto;
-}
-.edit-overlay.open { display:flex; }
-
-.edit-modal {
-  background:#fff;
-  border-radius:16px;
-  max-width:560px;
-  width:100%;
-  max-height:92vh;
-  overflow-y:auto;
-  box-shadow:0 24px 80px rgba(44,31,14,.35);
-  animation:mfade .3s ease;
-}
-
-.em-header {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:20px 24px 16px;
-  border-bottom:1px solid var(--cream3);
-  position:sticky;
-  top:0;
-  background:#fff;
-  z-index:5;
-  border-radius:16px 16px 0 0;
-}
-
-.em-title {
-  font-family:'Playfair Display',serif;
-  font-size:20px;
-  color:var(--text);
-}
-
-.em-close {
-  background:var(--cream);
-  border:none;
-  border-radius:50%;
-  width:32px;
-  height:32px;
-  font-size:16px;
-  color:var(--text3);
-  cursor:pointer;
-  transition:all .2s;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-.em-close:hover { background:var(--cream2); color:var(--red); }
-
-.em-body { padding:20px 24px; }
-
-/* sex toggle */
-.sex-toggle {
-  display:flex;
-  border:1.5px solid var(--cream3);
-  border-radius:10px;
-  overflow:hidden;
-  margin-bottom:20px;
-}
-
-.sex-btn {
-  flex:1;
-  padding:11px;
-  background:none;
-  border:none;
-  font-family:'Nunito',sans-serif;
-  font-size:14px;
-  font-weight:600;
-  color:var(--text3);
-  cursor:pointer;
-  transition:all .2s;
-}
-
-.sex-btn.active {
-  background:var(--brown);
-  color:#fff;
-}
-
-/* form group */
-.fg {
-  margin-bottom:16px;
-  position:relative;
-}
-
-.fg label {
-  display:block;
-  font-size:11px;
-  font-weight:600;
-  color:var(--text3);
-  letter-spacing:1.5px;
-  text-transform:uppercase;
-  margin-bottom:6px;
-}
-
-.fg input, .fg textarea, .fg select {
-  width:100%;
-  border:1.5px solid var(--cream3);
-  border-radius:10px;
-  padding:11px 40px 11px 14px;
-  font-family:'Nunito',sans-serif;
-  font-size:14px;
-  color:var(--text);
-  background:#fff;
-  outline:none;
-  transition:border-color .2s;
-}
-
-.fg input:focus, .fg textarea:focus { border-color:var(--gold2); box-shadow:0 0 0 3px rgba(200,150,42,.1); }
-.fg input::placeholder { color:var(--text4); }
-
-.fg .clear-btn {
-  position:absolute;
-  right:12px;
-  bottom:12px;
-  width:18px;
-  height:18px;
-  border-radius:50%;
-  background:var(--cream3);
-  border:none;
-  color:var(--text3);
-  font-size:11px;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  transition:all .2s;
-}
-
-.fg .clear-btn:hover { background:var(--gold2); color:#fff; }
-
-.fg textarea {
-  min-height:90px;
-  resize:vertical;
-  padding:11px 14px;
-  line-height:1.6;
-}
-
-/* avatar style picker */
-.av-picker {
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin-top:8px;
-}
-
-.av-pick-btn {
-  width:56px;
-  height:56px;
-  border-radius:50%;
-  border:2px solid var(--cream3);
-  overflow:hidden;
-  cursor:pointer;
-  transition:all .2s;
-  padding:0;
-  background:var(--cream2);
-}
-
-.av-pick-btn:hover { border-color:var(--gold2); }
-.av-pick-btn.active { border-color:var(--gold); box-shadow:0 0 0 3px rgba(200,150,42,.2); }
-.av-pick-btn svg { width:100%; height:100%; }
-
-.em-preview-wrap {
-  text-align:center;
-  margin-bottom:20px;
-}
-
-.em-preview {
-  width:90px;
-  height:90px;
-  border-radius:50%;
-  border:3px solid var(--gold2);
-  overflow:hidden;
-  margin:0 auto 8px;
-  background:var(--cream2);
-}
-
-.em-preview svg, .em-preview img {
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-.photo-upload-area {
-  border:2px dashed var(--cream3);
-  border-radius:12px;
-  padding:20px;
-  text-align:center;
-  cursor:pointer;
-  transition:all .2s;
-  color:var(--text3);
-}
-
-.photo-upload-area:hover {
-  border-color:var(--gold2);
-  background:var(--cream);
-  color:var(--brown2);
-}
-
-.photo-upload-area .icon { font-size:28px; margin-bottom:6px; }
-.photo-upload-area p { font-size:12px; font-weight:600; }
-
-.em-footer {
-  padding:16px 24px 20px;
-  border-top:1px solid var(--cream3);
-  display:flex;
-  gap:10px;
-  align-items:center;
-  flex-wrap:wrap;
-  position:sticky;
-  bottom:0;
-  background:#fff;
-  border-radius:0 0 16px 16px;
-}
-
-.em-footer .btn-primary { flex:1; justify-content:center; }
-
-/* ═══════════════════════════════════════
-   ADD RELATIVE MODAL
-═══════════════════════════════════════ */
-.add-rel-overlay {
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(44,31,14,.65);
-  backdrop-filter:blur(4px);
-  z-index:3000;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-}
-.add-rel-overlay.open { display:flex; }
-
-.add-rel-modal {
-  background:#fff;
-  border-radius:16px;
-  max-width:420px;
-  width:100%;
-  padding:28px;
-  box-shadow:0 24px 80px rgba(44,31,14,.35);
-  animation:mfade .25s ease;
-}
-
-.add-rel-title {
-  font-family:'Playfair Display',serif;
-  font-size:20px;
-  color:var(--text);
-  margin-bottom:6px;
-}
-
-.add-rel-sub {
-  font-size:13px;
-  color:var(--text3);
-  margin-bottom:20px;
-}
-
-.rel-type-list { display:flex; flex-direction:column; gap:6px; }
-
-.rel-type-btn {
-  width:100%;
-  text-align:left;
-  padding:13px 16px;
-  border:1.5px solid var(--cream3);
-  border-radius:10px;
-  background:#fff;
-  font-family:'Nunito',sans-serif;
-  font-size:14px;
-  cursor:pointer;
-  transition:all .2s;
-  color:var(--text);
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.rel-type-btn:hover { border-color:var(--gold2); background:var(--cream); color:var(--brown); }
-.rel-type-btn .rel-type-icon { font-size:18px; }
-.rel-type-btn .rel-type-name { font-weight:600; }
-.rel-type-btn .rel-type-of { color:var(--text3); font-size:12px; }
-
-.add-rel-footer {
-  margin-top:16px;
-  text-align:right;
-}
-
-/* ═══════════════════════════════════════
-   SURNAMES SECTION
-═══════════════════════════════════════ */
-#sur-sec {
-  padding:60px 20px;
-  max-width:1060px;
-  margin:0 auto;
-}
-
-.sec-h {
-  font-family:'Playfair Display',serif;
-  font-size:32px;
-  color:var(--text);
-  margin-bottom:6px;
-}
-
-.sec-div {
-  width:48px;
-  height:3px;
-  background:linear-gradient(to right, var(--gold), var(--gold3));
-  border-radius:2px;
-  margin-bottom:36px;
-}
-
-.sg { display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:18px; }
-
-.sc {
-  background:#fff;
-  border:1.5px solid var(--cream3);
-  border-radius:var(--rad);
-  padding:24px;
-  transition:all .25s;
-  box-shadow:0 2px 8px var(--shadow);
-}
-
-.sc:hover { border-color:var(--gold2); box-shadow:0 6px 24px rgba(107,76,42,.14); transform:translateY(-2px); }
-.sc-n { font-family:'Playfair Display',serif; font-size:20px; color:var(--text); margin-bottom:4px; }
-.sc-c { font-size:10px; color:var(--text4); letter-spacing:2px; text-transform:uppercase; margin-bottom:12px; }
-.sc-d { font-size:13px; color:var(--text2); line-height:1.75; }
-
-/* ═══════════════════════════════════════
-   SEARCH SECTION
-═══════════════════════════════════════ */
-#src-sec { padding:60px 20px; max-width:820px; margin:0 auto; }
-
-.sbar { display:flex; gap:10px; margin:24px 0 36px; }
-
-.sinp {
-  flex:1;
-  background:#fff;
-  border:1.5px solid var(--cream3);
-  border-radius:10px;
-  padding:13px 18px;
-  font-family:'Nunito',sans-serif;
-  font-size:14px;
-  color:var(--text);
-  outline:none;
-  transition:border-color .2s;
-  box-shadow:0 2px 8px var(--shadow);
-}
-
-.sinp:focus { border-color:var(--gold2); box-shadow:0 2px 8px var(--shadow), 0 0 0 3px rgba(200,150,42,.1); }
-.sinp::placeholder { color:var(--text4); }
-
-.sr-item {
-  background:#fff;
-  border:1.5px solid var(--cream3);
-  border-radius:10px;
-  padding:12px 16px;
-  cursor:pointer;
-  transition:all .2s;
-  display:flex;
-  align-items:center;
-  gap:14px;
-  margin-bottom:10px;
-  box-shadow:0 1px 4px var(--shadow);
-}
-
-.sr-item:hover { border-color:var(--gold2); transform:translateX(4px); }
-
-.sr-av {
-  width:40px;
-  height:40px;
-  border-radius:50%;
-  overflow:hidden;
-  flex-shrink:0;
-  background:var(--cream2);
-  border:2px solid var(--cream3);
-}
-
-.sr-av svg, .sr-av img { width:100%; height:100%; object-fit:cover; }
-.sr-name { font-family:'Playfair Display',serif; font-size:16px; color:var(--text); }
-.sr-meta { font-size:11px; color:var(--text3); margin-top:2px; }
-
-/* ═══════════════════════════════════════
-   IDEAS SECTION
-═══════════════════════════════════════ */
-#ideas-sec { padding:60px 20px; max-width:1060px; margin:0 auto; }
-
-.ig { display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:18px; margin-top:36px; }
-
-.ic {
-  background:#fff;
-  border:1.5px solid var(--cream3);
-  border-radius:var(--rad);
-  padding:24px;
-  transition:all .25s;
-  box-shadow:0 2px 8px var(--shadow);
-}
-
-.ic:hover { border-color:var(--gold2); box-shadow:0 6px 24px rgba(107,76,42,.14); transform:translateY(-2px); }
-.ic-ico { font-size:30px; margin-bottom:14px; }
-.ic-t { font-family:'Playfair Display',serif; font-size:18px; color:var(--text); margin-bottom:8px; }
-.ic-d { font-size:13px; color:var(--text2); line-height:1.75; }
-.ic-tag { display:inline-block; margin-top:12px; font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--brown2); background:var(--cream2); border:1px solid var(--cream3); padding:3px 10px; border-radius:10px; font-weight:600; }
-
-/* ═══════════════════════════════════════
-   ADMIN SECTION
-═══════════════════════════════════════ */
-#admin-sec { padding:60px 20px; max-width:960px; margin:0 auto; }
-
-.admin-login {
-  background:#fff;
-  border:1.5px solid var(--cream3);
-  border-radius:16px;
-  padding:40px;
-  max-width:380px;
-  margin:0 auto;
-  box-shadow:0 4px 24px var(--shadow);
-}
-
-.al-t { font-family:'Playfair Display',serif; font-size:22px; color:var(--text); text-align:center; margin-bottom:24px; }
-
-.ainp {
-  width:100%;
-  background:var(--cream);
-  border:1.5px solid var(--cream3);
-  border-radius:10px;
-  padding:12px 16px;
-  font-family:'Nunito',sans-serif;
-  font-size:14px;
-  color:var(--text);
-  outline:none;
-  margin-bottom:14px;
-  transition:border-color .2s;
-}
-
-.ainp:focus { border-color:var(--gold2); }
-.ainp::placeholder { color:var(--text4); }
-
-.abtn {
-  width:100%;
-  background:var(--brown);
-  color:#fff;
-  border:none;
-  border-radius:10px;
-  padding:13px;
-  font-family:'Nunito',sans-serif;
-  font-size:14px;
-  font-weight:700;
-  cursor:pointer;
-  transition:background .2s;
-}
-
-.abtn:hover { background:var(--brown2); }
-.al-err { color:var(--red); font-size:12px; text-align:center; margin-top:10px; display:none; }
-
-.admin-panel { display:none; }
-.ap-hdr { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; }
-.ap-title { font-family:'Playfair Display',serif; font-size:26px; color:var(--text); }
-
-.ap-logout {
-  background:none;
-  border:1.5px solid var(--cream3);
-  color:var(--text3);
-  padding:8px 16px;
-  border-radius:8px;
-  cursor:pointer;
-  font-family:'Nunito',sans-serif;
-  font-size:12px;
-  font-weight:600;
-  transition:all .2s;
-}
-.ap-logout:hover { border-color:var(--red); color:var(--red); }
-
-.admin-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:12px; }
-
-.admin-card {
-  background:#fff;
-  border:1.5px solid var(--cream3);
-  border-radius:var(--rad);
-  padding:16px;
-  cursor:pointer;
-  transition:all .2s;
-  display:flex;
-  align-items:center;
-  gap:12px;
-  box-shadow:0 1px 4px var(--shadow);
-}
-
-.admin-card:hover { border-color:var(--gold2); transform:translateY(-2px); box-shadow:0 4px 16px var(--shadow); }
-.admin-card .ac-av { width:44px; height:44px; border-radius:50%; overflow:hidden; flex-shrink:0; background:var(--cream2); border:2px solid var(--cream3); }
-.admin-card .ac-av svg, .admin-card .ac-av img { width:100%; height:100%; object-fit:cover; }
-.ac-name { font-family:'Playfair Display',serif; font-size:14px; color:var(--text); }
-.ac-role { font-size:10px; color:var(--text3); margin-top:2px; }
-.ac-edit { font-size:10px; color:var(--gold); margin-top:3px; font-weight:600; }
-
-/* ─── hidden admin dot ─── */
-.admin-dot {
-  position:fixed;
-  bottom:18px;
-  right:18px;
-  width:10px;
-  height:10px;
-  border-radius:50%;
-  background:var(--cream3);
-  cursor:pointer;
-  z-index:500;
-  opacity:.35;
-  transition:all .3s;
-}
-.admin-dot:hover { opacity:1; background:var(--gold2); box-shadow:0 0 10px rgba(200,150,42,.4); }
-
-/* ═══════════════════════════════════════
-   PHOTO LIGHTBOX
-═══════════════════════════════════════ */
-.lightbox {
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.9);
-  z-index:5000;
-  align-items:center;
-  justify-content:center;
-}
-
-.lightbox.open { display:flex; }
-
-.lightbox img {
-  max-width:90vw;
-  max-height:90vh;
-  border-radius:8px;
-  box-shadow:0 8px 40px rgba(0,0,0,.6);
-}
-
-.lightbox-close {
-  position:absolute;
-  top:20px;
-  right:24px;
-  background:rgba(255,255,255,.15);
-  border:none;
-  color:#fff;
-  font-size:24px;
-  width:44px;
-  height:44px;
-  border-radius:50%;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  transition:background .2s;
-}
-.lightbox-close:hover { background:rgba(255,255,255,.25); }
-
-/* ═══════════════════════════════════════
-   FOOTER
-═══════════════════════════════════════ */
-footer {
-  text-align:center;
-  padding:32px 20px;
-  border-top:1px solid var(--cream3);
-  color:var(--text4);
-  font-size:12px;
-  letter-spacing:1px;
-  background:var(--cream2);
-}
-
-/* ── toast notification ── */
-.toast {
-  position:fixed;
-  bottom:40px;
-  left:50%;
-  transform:translateX(-50%) translateY(20px);
-  background:var(--brown);
-  color:#fff;
-  padding:12px 24px;
-  border-radius:10px;
-  font-size:14px;
-  font-weight:600;
-  box-shadow:0 4px 20px rgba(44,31,14,.3);
-  opacity:0;
-  transition:all .3s;
-  z-index:9999;
-  pointer-events:none;
-}
-.toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{background:#030508;color:#f5ede0;font-family:"Geist",system-ui,sans-serif;font-weight:300;min-height:100vh}
+body{overflow-x:hidden}
+::selection{background:rgba(212,168,67,.3)}
+#bgVid,#bgc{position:fixed;inset:0;width:100%;height:100%;z-index:0;object-fit:cover}
+#bgVid{filter:saturate(1.1) brightness(.55)}
+#bgOverlay{position:fixed;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(3,5,8,.35) 0%,rgba(3,5,8,.55) 50%,rgba(3,5,8,.8) 100%)}
+#vignette{position:fixed;inset:0;z-index:2;pointer-events:none;background:radial-gradient(ellipse at center,transparent 40%,rgba(0,0,0,.6) 100%)}
+main{position:relative;z-index:10}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 20px;background:rgba(5,8,16,.55);backdrop-filter:blur(28px) saturate(1.6);-webkit-backdrop-filter:blur(28px) saturate(1.6);border-bottom:1px solid rgba(255,255,255,.05)}
+nav::before{content:"";position:absolute;bottom:-1px;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(212,168,67,.25),transparent)}
+.nv{max-width:1280px;margin:0 auto;height:60px;display:flex;align-items:center;justify-content:space-between;gap:14px}
+.brand{font-family:"Instrument Serif",serif;font-size:23px;font-style:italic;background:linear-gradient(180deg,#fff9e6,#f0c874 50%,#d4a843);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;white-space:nowrap;cursor:pointer;user-select:none;-webkit-user-select:none}
+.tabs{display:flex;gap:2px;padding:3px;background:rgba(8,12,22,.55);border:1px solid rgba(255,255,255,.06);border-radius:999px}
+.tab{padding:6px 16px;border:none;background:none;color:rgba(245,237,224,.6);font-family:"Geist",sans-serif;font-size:12px;letter-spacing:.02em;border-radius:999px;cursor:pointer;transition:all .25s;white-space:nowrap;touch-action:manipulation}
+.tab.on{color:#050810;background:linear-gradient(180deg,#fff9e6,#f0c874)}
+.nm{display:flex;gap:20px;font-size:10.5px;color:rgba(245,237,224,.5);letter-spacing:.08em;text-transform:uppercase}
+.nmv{font-family:"Instrument Serif",serif;font-style:italic;font-size:15px;color:#f0c874;margin-right:4px;text-transform:none}
+@media(max-width:720px){.nm{display:none}}
+@media(max-width:420px){.brand{font-size:19px}.tabs .tab:nth-child(n+4){display:none}}
+.sec{display:none;padding:80px 20px 60px;min-height:100vh}
+.sec.on{display:block}
 </style>
 </head>
 <body>
-
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-leaf">🌿</div>
-  <div class="hero-leaf">🍃</div>
-  <div class="hero-leaf">🌿</div>
-  <div class="hero-leaf">🍂</div>
-  <div class="hero-badge">Семейный архив</div>
-  <h1>АНДРОСОВЫ</h1>
-  <div class="hero-sub">214 лет истории · с 1812 года</div>
-  <div class="stats">
-    <div class="stat"><div class="stat-n">97</div><div class="stat-l">Человек</div></div>
-    <div class="stat"><div class="stat-n">8+</div><div class="stat-l">Поколений</div></div>
-    <div class="stat"><div class="stat-n">12</div><div class="stat-l">Фамилий</div></div>
-    <div class="stat"><div class="stat-n">1812</div><div class="stat-l">Начало</div></div>
-  </div>
+<video id="bgVid" autoplay muted loop playsinline preload="auto"><source src="bg.mp4" type="video/mp4"></video>
+<canvas id="bgc"></canvas>
+<div id="bgOverlay"></div>
+<div id="vignette"></div>
+<main>
+<nav><div class="nv">
+<div class="brand" onclick="brandTap()" ondblclick="openLogin()">Androssoff</div>
+<div class="tabs">
+<button class="tab on" onclick="sh('h',this)">Главная</button>
+<button class="tab" onclick="sh('t',this)">Древо</button>
+<button class="tab" onclick="sh('n',this)">Фамилии</button>
+<button class="tab" onclick="sh('s',this)">Поиск</button>
 </div>
-
-<!-- NAV -->
-<nav class="nav">
-  <button class="nb active" onclick="showSec('tree',this)">🌳 Древо</button>
-  <button class="nb" onclick="showSec('sur',this)">📚 Фамилии</button>
-  <button class="nb" onclick="showSec('src',this)">🔍 Поиск</button>
-  <button class="nb" onclick="showSec('ideas',this)">💡 Идеи</button>
-</nav>
-
-<!-- ════════════ TREE ════════════ -->
-<div id="tree-sec" class="sec active">
-<div class="tree-wrap">
-
-<div class="gen-label">I · Прапрапредки · 1812</div>
-<div class="gen-row">
-  <div class="card" onclick="openM('i556')" id="c-i556">
-    <div class="card-photo-wrap"><div class="card-av" id="cav-i556"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i556')" title="Добавить фото">📷</div></div>
-    <div class="card-body"><div class="c-role">Прапрапрадед</div><div class="c-name">Саломин Федот</div><div class="c-date">1812</div></div>
-  </div>
-  <div class="bridge" style="margin-top:56px"></div>
-  <div class="card" onclick="openM('i555')" id="c-i555">
-    <div class="card-photo-wrap"><div class="card-av" id="cav-i555"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i555')" title="Добавить фото">📷</div></div>
-    <div class="card-body"><div class="c-role">Прапрапрабабушка</div><div class="c-name">Саломина Параскева Ивановна</div></div>
-  </div>
+<div class="nm"><span><span class="nmv">30</span>персон</span><span><span class="nmv">1812</span>начало</span></div>
+</div></nav>
+<style>
+#vh{display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 20px 40px;min-height:100vh}
+#vh.on{display:flex}
+.eb{font-size:10.5px;letter-spacing:.4em;text-transform:uppercase;color:#d4a843;padding:6px 16px;border:1px solid rgba(212,168,67,.22);border-radius:999px;background:rgba(212,168,67,.04);margin-bottom:24px}
+.htt{font-family:"Instrument Serif",serif;font-size:clamp(56px,10vw,120px);line-height:.88;letter-spacing:-.025em;margin-bottom:18px}
+.htt em{font-style:italic;background:linear-gradient(180deg,#fff,#f5ede0 35%,#f0c874 70%,#d4a843);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.htt small{display:block;font-family:"Geist",sans-serif;font-size:.12em;font-weight:300;letter-spacing:.45em;text-transform:uppercase;color:rgba(245,237,224,.42);margin-top:18px}
+.hs{font-family:"Instrument Serif",serif;font-style:italic;font-size:17px;color:rgba(245,237,224,.75);margin-bottom:40px;max-width:480px;line-height:1.5}
+.ct{display:flex;gap:10px;margin-bottom:40px;flex-wrap:wrap;justify-content:center}
+.cb{padding:12px 32px;font-family:"Geist",sans-serif;font-size:13px;letter-spacing:.06em;border-radius:999px;cursor:pointer;transition:all .3s;touch-action:manipulation;border:none}
+.cbp{background:linear-gradient(180deg,#f0c874,#d4a843 60%,#a67d2c);color:#050810;border:1px solid rgba(255,249,230,.4);box-shadow:0 6px 28px rgba(212,168,67,.35)}
+.cbs{background:rgba(255,255,255,.06);color:rgba(245,237,224,.9);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(12px)}
+.hc{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;max-width:760px}
+.hh{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(20px);border-radius:18px;padding:16px 22px;min-width:110px;text-align:center}
+.hhn{font-family:"Instrument Serif",serif;font-size:34px;background:linear-gradient(180deg,#fff8e8,#f0c874 50%,#d4a843);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+.hhl{font-size:10px;color:rgba(245,237,224,.6);letter-spacing:.2em;text-transform:uppercase;margin-top:5px}
+.tfilter{display:inline-flex;padding:3px;background:rgba(8,12,22,.85);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(16px);border-radius:999px;margin-bottom:24px}
+.tfb{padding:7px 14px;border:none;background:none;color:rgba(245,237,224,.6);font-family:"Geist",sans-serif;font-size:11.5px;letter-spacing:.02em;border-radius:999px;cursor:pointer;transition:all .25s;touch-action:manipulation}
+.tfb.on{color:#050810;background:linear-gradient(180deg,#fff9e6,#f0c874)}
+.treeWrap{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:10px 4px 40px}
+.genBlock{margin-bottom:50px;position:relative}
+.genLabel{font-family:"Instrument Serif",serif;font-style:italic;font-size:14px;color:rgba(212,168,67,.65);letter-spacing:.12em;margin-bottom:14px;padding-left:8px;border-left:2px solid rgba(212,168,67,.35);padding-left:12px}
+.genRow{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;min-width:max-content}
+.card{width:145px;background:rgba(10,16,30,.65);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-radius:16px;padding:14px 10px 12px;text-align:center;cursor:pointer;transition:all .3s cubic-bezier(.19,1,.22,1);box-shadow:0 4px 20px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.06);position:relative;flex-shrink:0}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent);border-radius:16px 16px 0 0}
+.card:hover,.card:active{transform:translateY(-4px);border-color:rgba(212,168,67,.4);box-shadow:0 14px 36px rgba(0,0,0,.55),0 0 28px rgba(212,168,67,.2)}
+.card.male{background:linear-gradient(180deg,rgba(47,91,168,.45),rgba(18,38,72,.7));border-color:rgba(107,155,229,.32)}
+.card.female{background:linear-gradient(180deg,rgba(196,90,138,.42),rgba(90,26,56,.7));border-color:rgba(232,160,192,.32)}
+.card.me{background:linear-gradient(180deg,rgba(240,200,116,.35),rgba(166,125,44,.55));border-color:rgba(240,200,116,.55);box-shadow:0 4px 20px rgba(0,0,0,.4),0 0 28px rgba(240,200,116,.3),inset 0 1px 0 rgba(255,255,255,.2)}
+.card.side{opacity:.72}
+.cardPhoto{width:70px;height:70px;border-radius:50%;margin:0 auto 10px;background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.04));border:1.5px solid rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;font-size:30px;overflow:hidden;box-shadow:inset 0 2px 6px rgba(0,0,0,.35),0 2px 8px rgba(0,0,0,.2)}
+.card.me .cardPhoto{border-color:rgba(240,200,116,.65);box-shadow:inset 0 2px 6px rgba(0,0,0,.3),0 0 16px rgba(240,200,116,.35)}
+.cardPhoto img{width:100%;height:100%;object-fit:cover}
+.cardName{font-family:"Instrument Serif",serif;font-size:14px;line-height:1.2;color:#f5ede0;margin-bottom:3px;min-height:32px;display:flex;align-items:center;justify-content:center}
+.card.me .cardName{color:#fff8e8;font-weight:500}
+.cardRole{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(240,200,116,.8);margin-bottom:5px;min-height:11px}
+.cardDates{font-size:10px;color:rgba(245,237,224,.55);font-family:"Geist",sans-serif;min-height:12px}
+.card.me .cardDates{color:rgba(255,248,232,.8)}
+.cardStar{position:absolute;top:7px;right:9px;font-size:15px;color:#fff;filter:drop-shadow(0 0 4px rgba(255,255,255,.5))}
+.ph{max-width:1200px;margin:0 auto 30px;text-align:center}
+.pe{font-size:10.5px;letter-spacing:.4em;text-transform:uppercase;color:rgba(212,168,67,.75);margin-bottom:14px}
+.pt{font-family:"Instrument Serif",serif;font-size:46px;letter-spacing:-.02em;background:linear-gradient(180deg,#fff,#d4c9a8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+.pt em{font-style:italic;color:#f0c874;-webkit-text-fill-color:#f0c874}
+.ps{font-family:"Instrument Serif",serif;font-style:italic;font-size:15px;color:rgba(245,237,224,.65);max-width:480px;margin:0 auto}
+</style>
+<style>
+.sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px;max-width:1200px;margin:0 auto}
+.sc{background:rgba(10,16,30,.55);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-radius:20px;padding:22px;transition:all .4s}
+.sc:hover{background:rgba(25,35,60,.65);transform:translateY(-3px)}
+.si{font-size:24px;margin-bottom:12px}
+.sn{font-family:"Instrument Serif",serif;font-size:21px;color:#f5ede0}
+.sn em{font-style:italic;color:#f0c874}
+.sm{font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:rgba(212,168,67,.75);margin:4px 0 12px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sd{font-family:"Instrument Serif",serif;font-size:14.5px;color:rgba(245,237,224,.75);line-height:1.6}
+.sd em{font-style:italic;color:#f0c874}
+.sw{max-width:720px;margin:0 auto}
+.sin{width:100%;padding:16px 20px;background:rgba(10,16,30,.6);border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(16px);border-radius:14px;color:#f5ede0;font-family:"Geist",sans-serif;font-size:15px;outline:none;margin-bottom:20px}
+.sin::placeholder{color:rgba(245,237,224,.35);font-style:italic;font-family:"Instrument Serif",serif}
+.sri{display:flex;align-items:center;gap:12px;padding:12px 16px;background:rgba(10,16,30,.55);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(12px);border-radius:12px;margin-bottom:8px;cursor:pointer;transition:all .25s;touch-action:manipulation}
+.sri:hover{background:rgba(25,40,75,.6);border-color:rgba(212,168,67,.3);transform:translateX(4px)}
+.sav{width:44px;height:44px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:17px;border:1px solid rgba(255,255,255,.1);overflow:hidden}
+.sav img{width:100%;height:100%;object-fit:cover}
+.snm{font-family:"Instrument Serif",serif;font-size:16px;color:#f5ede0}
+.smt{font-size:11px;color:rgba(245,237,224,.5);margin-top:2px}
+.stg{margin-left:auto;font-size:9px;letter-spacing:.2em;text-transform:uppercase;padding:4px 10px;border-radius:999px;white-space:nowrap;background:rgba(212,168,67,.1);border:1px solid rgba(212,168,67,.22);color:#f0c874}
+.mov{position:fixed;inset:0;z-index:9999;background:rgba(2,4,9,.8);backdrop-filter:blur(16px);display:none;align-items:center;justify-content:center;padding:16px}
+.mov.on{display:flex;animation:fb .3s}
+@keyframes fb{from{opacity:0}to{opacity:1}}
+.mod{background:rgba(10,14,24,.96);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(40px);border-radius:24px;width:100%;max-width:480px;max-height:88vh;overflow-y:auto;box-shadow:0 30px 80px rgba(0,0,0,.7);animation:mp .4s cubic-bezier(.19,1,.22,1);position:relative;z-index:10000}
+@keyframes mp{from{transform:scale(.94) translateY(16px);opacity:0}to{transform:none;opacity:1}}
+.mh{padding:24px 26px 18px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+.mav{width:64px;height:64px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:26px;border:2px solid rgba(255,255,255,.15);overflow:hidden}
+.mav img{width:100%;height:100%;object-fit:cover}
+.mi{flex:1;min-width:0}
+.mn{font-family:"Instrument Serif",serif;font-size:24px;line-height:1.1;margin-bottom:5px;color:#f5ede0}
+.mn em{font-style:italic}
+.mr{font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:#f0c874}
+.mcl{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:50%;width:32px;height:32px;cursor:pointer;color:rgba(245,237,224,.6);font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;touch-action:manipulation}
+.mb{padding:18px 26px 26px;display:flex;flex-direction:column;gap:10px}
+.mf{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06);border-radius:12px}
+.mfi{font-size:15px;color:#f0c874;flex-shrink:0}
+.mfl{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,237,224,.48);margin-bottom:3px}
+.mfv{font-family:"Instrument Serif",serif;font-size:16px;color:#f5ede0}
+.mst{padding:16px 20px;background:linear-gradient(135deg,rgba(212,168,67,.08),rgba(212,168,67,.03));border:1px solid rgba(212,168,67,.18);border-radius:14px;font-family:"Instrument Serif",serif;font-style:italic;font-size:15px;line-height:1.65;color:rgba(245,237,224,.85)}
+.edField{margin-bottom:10px}
+.edField label{display:block;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,237,224,.48);margin-bottom:5px}
+.edField input,.edField textarea,.edField select{width:100%;padding:11px 13px;background:rgba(8,12,22,.7);border:1px solid rgba(255,255,255,.1);border-radius:9px;color:#f5ede0;font-family:"Geist",sans-serif;font-size:13.5px;outline:none}
+.edField textarea{font-family:"Instrument Serif",serif;font-style:italic;font-size:14.5px;min-height:70px;resize:vertical}
+.edField input:focus,.edField textarea:focus,.edField select:focus{border-color:rgba(212,168,67,.45)}
+.edField select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23f0c874' d='M6 9L1 4h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+</style>
+<div id="vh" class="sec on">
+<p class="eb">Familial archive · Anno 1812</p>
+<h1 class="htt"><em>Андросовы</em><small>семейное древо</small></h1>
+<p class="hs">Двести четырнадцать лет тишины и памяти — собранные здесь ради одной маленькой девочки</p>
+<div class="ct">
+<button class="cb cbp" onclick="sh('t',document.querySelectorAll('.tab')[1])">Открыть древо →</button>
+<button class="cb cbs" onclick="sh('n',document.querySelectorAll('.tab')[2])">Фамилии рода</button>
 </div>
-<div class="vline"></div>
-
-<div class="gen-label">II · Прапрадеды</div>
-<div class="gen-row">
-  <div class="card" onclick="openM('i550')" id="c-i550"><div class="card-photo-wrap"><div class="card-av" id="cav-i550"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i550')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Прапрадед</div><div class="c-name">Саломин Федот Герасимович</div><div class="c-story-hint">† ум. 27.03.1913 от воспаления лёгких</div></div></div>
-  <div class="bridge" style="margin-top:56px"></div>
-  <div class="card" onclick="openM('i551')" id="c-i551"><div class="card-photo-wrap"><div class="card-av" id="cav-i551"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i551')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Прапрабабушка</div><div class="c-name">Саломина Анна Тимофеевна</div></div></div>
-  <div style="width:20px"></div>
-  <div class="card" onclick="openM('i557')" id="c-i557"><div class="card-photo-wrap"><div class="card-av" id="cav-i557"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i557')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Прапрадед (Ромашкины)</div><div class="c-name">Ромашкин Михаил</div></div></div>
-  <div class="bridge" style="margin-top:56px"></div>
-  <div class="card" onclick="openM('i558')" id="c-i558"><div class="card-photo-wrap"><div class="card-av" id="cav-i558"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i558')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Прапрабабушка</div><div class="c-name">Ромашкина Евдокия</div></div></div>
-  <div style="width:20px"></div>
-  <div class="card" onclick="openM('i518')" id="c-i518"><div class="card-photo-wrap"><div class="card-av" id="cav-i518"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i518')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Прадед (Щербаковы)</div><div class="c-name">Щербаков Алексей Михайлович</div><div class="c-date">02.06.1912</div></div></div>
-  <div class="bridge" style="margin-top:56px"></div>
-  <div class="card" onclick="openM('i517')" id="c-i517"><div class="card-photo-wrap"><div class="card-av" id="cav-i517"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i517')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Прабабушка</div><div class="c-name">Щербакова Ольга Михайловна</div><div class="c-maiden">(Саломина)</div><div class="c-date">1912 – 1988</div></div></div>
-  <div style="width:20px"></div>
-  <div class="card" onclick="openM('i528')" id="c-i528"><div class="card-photo-wrap"><div class="card-av" id="cav-i528"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i528')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Прадед (Коротеевы)</div><div class="c-name">Коротеев Николай Иванович</div></div></div>
-  <div class="bridge" style="margin-top:56px"></div>
-  <div class="card" onclick="openM('i529')" id="c-i529"><div class="card-photo-wrap"><div class="card-av" id="cav-i529"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i529')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Прабабушка</div><div class="c-name">Коротеева Александра Михайловна</div><div class="c-maiden">(Ромашкина)</div><div class="c-story-hint">Крепостные в Тамбовской губернии</div></div></div>
-  <div style="width:20px"></div>
-  <div class="card" onclick="openM('i531')" id="c-i531"><div class="card-photo-wrap"><div class="card-av" id="cav-i531"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i531')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Прадед (Андросовы)</div><div class="c-name">Андросов Леонид Семёнович</div></div></div>
-  <div class="bridge" style="margin-top:56px"></div>
-  <div class="card" onclick="openM('i530')" id="c-i530"><div class="card-photo-wrap"><div class="card-av" id="cav-i530"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i530')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Прабабушка</div><div class="c-name">Андросова Александра</div><div class="c-maiden">(Украинская)</div></div></div>
-</div>
-<div class="vline"></div>
-
-<div class="gen-label">III · Дедушки и бабушки</div>
-<div class="gen-row">
-  <div class="card" onclick="openM('i57')" id="c-i57"><div class="card-photo-wrap"><div class="card-av" id="cav-i57"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i57')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Дедушка</div><div class="c-name">Хвостов Евгений Антонович</div><div class="c-date">21.06.1935</div></div></div>
-  <div class="bridge" style="margin-top:56px"></div>
-  <div class="card" onclick="openM('i56')" id="c-i56"><div class="card-photo-wrap"><div class="card-av" id="cav-i56"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i56')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Бабушка</div><div class="c-name">Хвостова Таисия Алексеевна</div><div class="c-maiden">(Щербакова)</div></div></div>
-  <div style="width:28px"></div>
-  <div class="card" onclick="openM('i58')" id="c-i58"><div class="card-photo-wrap"><div class="card-av" id="cav-i58"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i58')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Дедушка</div><div class="c-name">Андросов Валерий Леонидович</div></div></div>
-  <div class="bridge" style="margin-top:56px"></div>
-  <div class="card" onclick="openM('i55')" id="c-i55"><div class="card-photo-wrap"><div class="card-av" id="cav-i55"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i55')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Бабушка</div><div class="c-name">Андросова Ванда Николаевна</div><div class="c-maiden">(Коротеева)</div></div></div>
-  <div style="width:28px"></div>
-  <div class="card" onclick="openM('i540')" id="c-i540"><div class="card-photo-wrap"><div class="card-av" id="cav-i540"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i540')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Прадед (Блинниковы)</div><div class="c-name">Блинников Константин Тимофеевич</div><div class="c-date">1916–1998 · Ветеран ВОВ</div></div></div>
-  <div class="bridge" style="margin-top:56px"></div>
-  <div class="card" onclick="openM('i539')" id="c-i539"><div class="card-photo-wrap"><div class="card-av" id="cav-i539"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i539')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Прабабушка</div><div class="c-name">Блинникова Анна Васильевна</div><div class="c-maiden">(Кудюркина)</div></div></div>
-</div>
-<div class="vline"></div>
-
-<div class="gen-label">IV · Родители и их братья / сёстры</div>
-<div class="gen-row">
-  <div class="card" onclick="openM('i510')" id="c-i510"><div class="card-photo-wrap"><div class="card-av" id="cav-i510"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i510')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Тётя</div><div class="c-name">Блинникова Татьяна Валерьевна</div><div class="c-maiden">(Андросова)</div><div class="c-date">04.03.1967</div></div></div>
-  <div style="width:10px"></div>
-  <div class="card" onclick="openM('i533')" id="c-i533"><div class="card-photo-wrap"><div class="card-av" id="cav-i533"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i533')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Дядя</div><div class="c-name">Андросов Леонид Валерьевич</div></div></div>
-  <div style="width:10px"></div>
-  <div class="card" onclick="openM('i52')" id="c-i52"><div class="card-photo-wrap"><div class="card-av" id="cav-i52"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i52')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Отец</div><div class="c-name">Андросов Анатолий Валерьевич</div><div class="c-date">24.04.1958</div></div></div>
-  <div class="bridge" style="margin-top:56px"></div>
-  <div class="card" onclick="openM('i53')" id="c-i53"><div class="card-photo-wrap"><div class="card-av" id="cav-i53"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i53')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Мать</div><div class="c-name">Андросова Ольга Евгеньевна</div><div class="c-maiden">(Хвостова)</div></div></div>
-  <div style="width:10px"></div>
-  <div class="card" onclick="openM('i537')" id="c-i537"><div class="card-photo-wrap"><div class="card-av" id="cav-i537"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i537')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Двоюродный дед</div><div class="c-name">Блинников Олег Константинович</div><div class="c-date">1943 – 2024</div></div></div>
-</div>
-<div class="vline"></div>
-
-<div class="gen-label">V · Моё поколение</div>
-<div class="gen-row">
-  <div class="card" onclick="openM('i515')" id="c-i515"><div class="card-photo-wrap"><div class="card-av" id="cav-i515"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i515')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Сестра</div><div class="c-name">Андросова Юля Анатольевна</div></div></div>
-  <div style="width:10px"></div>
-  <div class="card" onclick="openM('i54')" id="c-i54"><div class="card-photo-wrap"><div class="card-av" id="cav-i54"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i54')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Сестра</div><div class="c-name">Андросова Ангелина Анатольевна</div><div class="c-date">03.06.1985 · Сочи</div></div></div>
-  <div style="width:10px"></div>
-  <div class="card me" onclick="openM('i51')" id="c-i51"><div class="card-photo-wrap"><div class="card-av" id="cav-i51"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i51')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Я</div><div class="c-name">Андросов Герман Анатольевич</div><div class="c-date">27.08.1987</div></div></div>
-  <div class="bridge" style="margin-top:56px"></div>
-  <div class="card" onclick="openM('i541')" id="c-i541"><div class="card-photo-wrap"><div class="card-av" id="cav-i541"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i541')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Жена</div><div class="c-name">Андросова Лилия Сергеевна</div><div class="c-maiden">(Шевякова)</div><div class="c-date">06.02.1997</div></div></div>
-  <div style="width:10px"></div>
-  <div class="card" onclick="openM('i513')" id="c-i513"><div class="card-photo-wrap"><div class="card-av" id="cav-i513"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i513')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Двоюродная сестра</div><div class="c-name">Чальцева Ксенья Евгеньевна</div><div class="c-date">17.01.1990</div></div></div>
-  <div style="width:10px"></div>
-  <div class="card" onclick="openM('i511')" id="c-i511"><div class="card-photo-wrap"><div class="card-av" id="cav-i511"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i511')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Двоюродный брат</div><div class="c-name">Блинников Денис Евгеньевич</div><div class="c-date">28.11.1996</div></div></div>
-</div>
-<div class="vline"></div>
-
-<div class="gen-label">VI · Дети и племянники</div>
-<div class="gen-row">
-  <div class="card" onclick="openM('i516')" id="c-i516"><div class="card-photo-wrap"><div class="card-av" id="cav-i516"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i516')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Племянница</div><div class="c-name">Андросова Злата Ильинишна</div><div class="c-date">25.03.2012</div></div></div>
-  <div style="width:14px"></div>
-  <div class="card" onclick="openM('i542')" id="c-i542"><div class="card-photo-wrap"><div class="card-av" id="cav-i542"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i542')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Дочь 💛</div><div class="c-name">Андросова Оливия Германовна</div><div class="c-date">05.04.2026</div></div></div>
-  <div style="width:14px"></div>
-  <div class="card" onclick="openM('i572')" id="c-i572"><div class="card-photo-wrap"><div class="card-av" id="cav-i572"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i572')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Двоюродная племянница</div><div class="c-name">Чальцева Ксения Романовна</div></div></div>
-  <div style="width:10px"></div>
-  <div class="card" onclick="openM('i573')" id="c-i573"><div class="card-photo-wrap"><div class="card-av" id="cav-i573"></div><div class="card-add-photo" onclick="quickAddPhoto(event,'i573')" title="Добавить фото">📷</div></div><div class="card-body"><div class="c-role">Двоюродный племянник</div><div class="c-name">Чальцев Егор Романович</div></div></div>
-</div>
-
-</div><!-- /tree-wrap -->
-</div><!-- /tree-sec -->
-
-<!-- ════════════ SURNAMES ════════════ -->
-<div id="sur-sec" class="sec">
-<div style="max-width:1060px;margin:0 auto;padding:60px 20px">
-  <div class="sec-h">Фамилии в роду</div>
-  <div class="sec-div"></div>
-  <div class="sg">
-    <div class="sc"><div class="sc-n">🌳 Андросовы</div><div class="sc-c">Главная линия · 8 поколений</div><div class="sc-d">Центральная ветвь от Ольги и Семёна → Леонид Семёнович → Валерий → Анатолий → Герман → Оливия.</div></div>
-    <div class="sc"><div class="sc-n">⚜️ Саломины</div><div class="sc-c">Древнейшая ветвь · с 1812</div><div class="sc-d">Федот (1812) — самый ранний предок. Георгий Федотович был репрессирован в 1958 и реабилитирован. Ведёт к Щербаковым.</div></div>
-    <div class="sc"><div class="sc-n">🌿 Хвостовы</div><div class="sc-c">По материнской линии</div><div class="sc-d">Дед Евгений Антонович (р. 1935). Прадед Алексей Михайлович. Антон Хвостов — прапрадед.</div></div>
-    <div class="sc"><div class="sc-n">🏡 Коротеевы</div><div class="sc-c">По линии бабушки Ванды</div><div class="sc-d">Предки — крепостные в Тамбовской губернии, село Никольское. Прабабушка Александра (Ромашкина по рождению).</div></div>
-    <div class="sc"><div class="sc-n">🗡️ Щербаковы</div><div class="sc-c">Через Хвостовых и Саломиных</div><div class="sc-d">Ольга Михайловна (Саломина) — прабабушка. Анатолий Алексеевич погиб в шахте в 20 лет.</div></div>
-    <div class="sc"><div class="sc-n">🌾 Ромашкины</div><div class="sc-c">Через Коротеевых</div><div class="sc-d">Михаил и Евдокия — прапрадеды. Их дети: Александра (Коротеева), Фёдор, Константин. Ветвь к Одессе.</div></div>
-    <div class="sc"><div class="sc-n">🎖️ Блинниковы</div><div class="sc-c">По линии тёти Татьяны</div><div class="sc-d">Константин Тимофеевич — ветеран ВОВ (р. 1916, Оренбург), контужен в бою. Евгений (1967–2001) — муж тёти.</div></div>
-    <div class="sc"><div class="sc-n">💍 Шевяковы</div><div class="sc-c">Жена · современная ветвь</div><div class="sc-d">Лилия Сергеевна (р. 06.02.1997) — жена Германа. Мать Оливии Германовны (р. 05.04.2026).</div></div>
-    <div class="sc"><div class="sc-n">👑 Королевы</div><div class="sc-c">Через Щербаковых</div><div class="sc-d">Ирина Михайловна (Щербакова). Дети: Никита, Роман. Внуки: Эвелина, Егор, Ульяна.</div></div>
-    <div class="sc"><div class="sc-n">🇩🇪 Грис</div><div class="sc-c">Через Коротеевых · Казахстан</div><div class="sc-d">Клара Николаевна (Коротеева) вышла за Эдуарда Гриса (Karaganda). Три поколения: Юрий → Андрей → Лев.</div></div>
-    <div class="sc"><div class="sc-n">🌻 Чальцевы</div><div class="sc-c">Через Блинниковых</div><div class="sc-d">Ксенья Евгеньевна (Блинникова) вышла за Романа. Дети: Ксения и Егор.</div></div>
-    <div class="sc"><div class="sc-n">🌍 Украинские</div><div class="sc-c">Прабабушкина ветвь</div><div class="sc-d">Прабабушка Александра (Украинская) — жена Леонида Семёновича. Дала начало главной ветви.</div></div>
-  </div>
+<div class="hc">
+<div class="hh"><div class="hhn">30</div><div class="hhl">Персон</div></div>
+<div class="hh"><div class="hhn">8</div><div class="hhl">Поколений</div></div>
+<div class="hh"><div class="hhn">12</div><div class="hhl">Фамилий</div></div>
+<div class="hh"><div class="hhn">214</div><div class="hhl">Лет</div></div>
 </div>
 </div>
 
-<!-- ════════════ SEARCH ════════════ -->
-<div id="src-sec" class="sec">
-<div style="max-width:820px;margin:0 auto;padding:60px 20px">
-  <div class="sec-h">Поиск по дереву</div>
-  <div class="sec-div"></div>
-  <div class="sbar">
-    <input class="sinp" id="si" type="text" placeholder="Имя, фамилия, год рождения..." oninput="doSearch(this.value)">
-  </div>
-  <div id="sr"></div>
-  <div style="margin-top:56px">
-    <div class="sec-h" style="font-size:22px">Где искать новых родственников</div>
-    <div class="sec-div"></div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px">
-      <div class="ic"><div class="ic-t">ВКонтакте</div><div class="ic-d">Ищи: Андросов, Хвостов, Коротеев, Саломин, Щербаков, Ромашкин. Фильтруй по городу.</div><a href="https://vk.com/search?c%5Bsection%5D=people&q=Андросов" target="_blank" class="ic-tag">Открыть →</a></div>
-      <div class="ic"><div class="ic-t">FamilySearch</div><div class="ic-d">Бесплатная база архивов. Метрические книги XIX–XX вв. Тамбовская губерния — ключ к Коротеевым.</div><a href="https://www.familysearch.org" target="_blank" class="ic-tag">Искать →</a></div>
-      <div class="ic"><div class="ic-t">Госархив России</div><div class="ic-d">Ревизские сказки 1811–1858 — Саломин Федот как раз попадает! Тамбовский архив даст Ромашкиных.</div><a href="https://archives.ru" target="_blank" class="ic-tag">Архивы →</a></div>
-      <div class="ic"><div class="ic-t">MyHeritage + GEDCOM</div><div class="ic-d">У тебя уже есть .ged файл! Загрузи — система найдёт совпадения автоматически среди миллионов деревьев.</div><a href="https://www.myheritage.com" target="_blank" class="ic-tag">Загрузить →</a></div>
-    </div>
-  </div>
+<div id="vt" class="sec">
+<div style="max-width:1200px;margin:0 auto">
+<div class="ph"><div class="pe">Family tree</div><h2 class="pt">Семейное <em>древо</em></h2></div>
+<div style="text-align:center"><div class="tfilter">
+<button class="tfb on" id="fltAll" onclick="setFilter('all')">Все</button>
+<button class="tfb" id="fltDir" onclick="setFilter('direct')">Прямые</button>
+</div></div>
+<div class="treeWrap" id="treeWrap"></div>
 </div>
 </div>
 
-<!-- ════════════ IDEAS ════════════ -->
-<div id="ideas-sec" class="sec">
-<div style="max-width:1060px;margin:0 auto;padding:60px 20px">
-  <div class="sec-h">Идеи для семейного проекта</div>
-  <div class="sec-div"></div>
-  <div class="ig">
-    <div class="ic"><div class="ic-ico">🧬</div><div class="ic-t">ДНК-тест</div><div class="ic-d">MyHeritage DNA или 23andMe. С корнями с 1812 — особенно интересно. Найдёшь дальних родственников автоматически.</div><div class="ic-tag">~5 000 руб.</div></div>
-    <div class="ic"><div class="ic-ico">📖</div><div class="ic-t">Семейная книга</div><div class="ic-d">Hardcover с деревом, историями, фотографиями. 97 человек + история с 1812. Сервисы Ridero, Blurb. Оливии — когда вырастет.</div><div class="ic-tag">Печатная память</div></div>
-    <div class="ic"><div class="ic-ico">🖼️</div><div class="ic-t">Постер A0</div><div class="ic-d">Формат A0 на стену дома. Саломин Федот 1812 → Оливия 2026 — 214 лет на одном листе.</div><div class="ic-tag">На стену</div></div>
-    <div class="ic"><div class="ic-ico">🎙️</div><div class="ic-t">Интервью со старшими</div><div class="ic-d">Запиши дедушку Евгения Антоновича (р. 1935). Вопросы о детстве, войне. Это бесценно для Оливии.</div><div class="ic-tag">Приоритет №1</div></div>
-    <div class="ic"><div class="ic-ico">☦️</div><div class="ic-t">Георгий Федотович</div><div class="ic-d">Репрессирован 13.12.1958, реабилитирован. Запрос в ФСБ даст его дело — история о выживании семьи.</div><div class="ic-tag">Особая история</div></div>
-    <div class="ic"><div class="ic-ico">🏛️</div><div class="ic-t">Архивный запрос</div><div class="ic-d">Тамбовский архив → крепостные Ромашкины-Коротеевы в с. Никольское. Прямая зацепка на XIX век!</div><div class="ic-tag">Бесплатно</div></div>
-    <div class="ic"><div class="ic-ico">📷</div><div class="ic-t">Фото для дерева</div><div class="ic-d">Добавь фото прямо сейчас — нажми 📷 на любой карточке. Старые семейные фотографии дают дереву жизнь.</div><div class="ic-tag">Уже работает!</div></div>
-    <div class="ic"><div class="ic-ico">🌐</div><div class="ic-t">GitHub Pages</div><div class="ic-d">Этот сайт — один файл. Создай репозиторий, загрузи index.html, включи Pages. Постоянный URL навсегда.</div><div class="ic-tag">Следующий шаг</div></div>
-    <div class="ic"><div class="ic-ico">📍</div><div class="ic-t">Карта предков</div><div class="ic-d">Тамбовская губерния, Зюзино Москва, Оренбург, Сочи, Краснодар, Казахстан — история семьи по карте.</div><div class="ic-tag">Можем добавить</div></div>
-  </div>
+<div id="vn" class="sec">
+<div class="ph"><div class="pe">Branches of the bloodline</div><h2 class="pt">Фамилии <em>рода</em></h2><p class="ps">Двенадцать фамилий, сплетённых в одну историю за два столетия</p></div>
+<div class="sg">
+<div class="sc"><div class="si">🌳</div><div class="sn"><em>Андросовы</em></div><div class="sm">Главная ветвь · 8 поколений</div><div class="sd">Центральная линия. <em>Семён → Леонид → Валерий → Анатолий → Герман → Оливия.</em></div></div>
+<div class="sc"><div class="si">⚜️</div><div class="sn"><em>Саломины</em></div><div class="sm">Древнейшая ветвь · с 1812</div><div class="sd">Федот (1812) — самый ранний предок. Георгий Федотович репрессирован 13.12.1958, реабилитирован.</div></div>
+<div class="sc"><div class="si">🌿</div><div class="sn"><em>Хвостовы</em></div><div class="sm">По материнской линии</div><div class="sd">Дед Евгений Антонович (р. 1935). Прадед Алексей Михайлович. Бабушка Таисия Алексеевна.</div></div>
+<div class="sc"><div class="si">🏡</div><div class="sn"><em>Коротеевы</em></div><div class="sm">Крепостные · Тамбовская губерния</div><div class="sd">Предки — крепостные в селе Никольское. Прабабушка Александра (Ромашкина).</div></div>
+<div class="sc"><div class="si">🗡️</div><div class="sn"><em>Щербаковы</em></div><div class="sm">Через Хвостовых</div><div class="sd">Ольга Михайловна (Саломина) — прабабушка, Зюзино. Анатолий погиб в шахте в 20 лет.</div></div>
+<div class="sc"><div class="si">🌾</div><div class="sn"><em>Ромашкины</em></div><div class="sm">Через Коротеевых</div><div class="sd">Михаил и Евдокия — прапрадеды. Ветвь уходит в Одессу и Европу.</div></div>
+<div class="sc"><div class="si">🎖️</div><div class="sn"><em>Блинниковы</em></div><div class="sm">Ветеран ВОВ</div><div class="sd">Константин Тимофеевич (1916–1998) — ветеран ВОВ, контужен. Оренбург.</div></div>
+<div class="sc"><div class="si">💍</div><div class="sn"><em>Шевяковы</em></div><div class="sm">Жена · современная ветвь</div><div class="sd">Лилия Сергеевна (р. 06.02.1997) — жена Германа. Мать Оливии (05.04.2026).</div></div>
+<div class="sc"><div class="si">🇰🇿</div><div class="sn"><em>Грис</em></div><div class="sm">Через Коротеевых · Казахстан</div><div class="sd">Клара Николаевна (Коротеева) + Эдуард Грис из Караганды.</div></div>
+<div class="sc"><div class="si">👑</div><div class="sn"><em>Королевы</em></div><div class="sm">Через Щербаковых</div><div class="sd">Ирина Михайловна (Щербакова). Внуки: Эвелина, Егор, Ульяна.</div></div>
+<div class="sc"><div class="si">🌻</div><div class="sn"><em>Чальцевы</em></div><div class="sm">Через Блинниковых</div><div class="sd">Ксения Евгеньевна + Роман. Дети: Ксения и Егор.</div></div>
+<div class="sc"><div class="si">🌍</div><div class="sn"><em>Украинские</em></div><div class="sm">Прабабушка</div><div class="sd">Александра (Украинская) — жена Леонида Семёновича.</div></div>
 </div>
 </div>
 
-<!-- ════════════ ADMIN ════════════ -->
-<div id="admin-sec" class="sec">
-<div style="max-width:960px;margin:0 auto;padding:60px 20px">
-  <div class="admin-login" id="admin-login">
-    <div class="al-t">⚙ Администрация</div>
-    <input class="ainp" id="al-u" type="text" placeholder="Логин">
-    <input class="ainp" id="al-p" type="password" placeholder="Пароль">
-    <button class="abtn" onclick="doLogin()">Войти</button>
-    <div class="al-err" id="al-err">Неверный логин или пароль</div>
-  </div>
-  <div class="admin-panel" id="admin-panel">
-    <div class="ap-hdr">
-      <div class="ap-title">Редактор карточек</div>
-      <button class="ap-logout" onclick="doLogout()">Выйти</button>
-    </div>
-    <p style="color:var(--text3);font-size:13px;margin-bottom:20px">Нажмите карточку для редактирования. Изменения сохраняются в браузере.</p>
-    <div class="admin-grid" id="admin-grid"></div>
-  </div>
+<div id="vs" class="sec">
+<div class="ph"><div class="pe">Archive index</div><h2 class="pt">Поиск <em>по роду</em></h2></div>
+<div class="sw"><input class="sin" id="si" type="text" placeholder="Имя, фамилия, год, место..." oninput="ds(this.value)"><div id="sr"></div></div>
 </div>
-</div>
-
-<!-- ════════════ MODAL: VIEW PERSON ════════════ -->
-<div class="overlay" id="overlay" onclick="closeMOnBg(event)">
-  <div class="modal" id="modal">
-    <button class="mcl" onclick="closeM()">✕</button>
-
-    <div class="modal-photo" id="m-photo">
-      <div class="modal-av" id="m-av-wrap"></div>
-      <div class="modal-photo-overlay"></div>
-      <div class="modal-photo-btns">
-        <button class="modal-photo-btn" id="m-edit-btn" onclick="openEditFromModal()">✏️ Редактировать</button>
-        <button class="modal-photo-btn" id="m-rel-btn" onclick="openAddRel()">+ Добавить родственника</button>
-      </div>
-      <div class="modal-name-block">
-        <div class="m-role" id="m-role"></div>
-        <div class="m-name" id="m-name"></div>
-      </div>
-    </div>
-
-    <div class="modal-tabs">
-      <button class="modal-tab active" onclick="switchTab('facts',this)">Факты</button>
-      <button class="modal-tab" onclick="switchTab('photos',this)">Фотографии</button>
-      <button class="modal-tab" onclick="switchTab('relatives',this)">Родственники</button>
-    </div>
-
-    <div class="modal-body">
-      <div class="tab-pane active" id="tab-facts">
-        <div id="facts-content"></div>
-      </div>
-      <div class="tab-pane" id="tab-photos">
-        <div class="photos-grid" id="photos-grid"></div>
-      </div>
-      <div class="tab-pane" id="tab-relatives">
-        <div class="rel-list" id="rel-list"></div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<!-- ════════════ MODAL: EDIT ════════════ -->
-<div class="edit-overlay" id="edit-overlay" onclick="closeEditOnBg(event)">
-  <div class="edit-modal">
-    <div class="em-header">
-      <div class="em-title" id="em-title">Редактировать</div>
-      <button class="em-close" onclick="closeEdit()">✕</button>
-    </div>
-    <div class="em-body">
-
-      <div class="sex-toggle">
-        <button class="sex-btn active" id="sex-m" onclick="setSex('M')">👨 Мужчина</button>
-        <button class="sex-btn" id="sex-f" onclick="setSex('F')">👩 Женщина</button>
-      </div>
-
-      <div class="em-preview-wrap">
-        <div class="em-preview" id="em-preview"></div>
-        <div style="font-size:11px;color:var(--text4);letter-spacing:1px;text-transform:uppercase;font-weight:600">Стиль аватара</div>
-        <div class="av-picker" id="av-picker" style="justify-content:center;margin-top:8px"></div>
-      </div>
-
-      <div style="margin-bottom:16px">
-        <label style="display:block;font-size:11px;font-weight:600;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px">Фотография</label>
-        <div class="photo-upload-area" onclick="document.getElementById('photo-file-input').click()">
-          <div class="icon">📷</div>
-          <p>Нажмите чтобы загрузить фото</p>
-          <p style="font-size:11px;color:var(--text4);margin-top:4px;font-weight:400">JPG, PNG, WEBP · до 5 МБ</p>
-        </div>
-        <input type="file" id="photo-file-input" accept="image/*" style="display:none" onchange="handlePhotoUpload(event)">
-      </div>
-
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
-        <div class="fg">
-          <label>Фамилия</label>
-          <input id="em-surname" type="text" placeholder="Иванов">
-          <button class="clear-btn" onclick="document.getElementById('em-surname').value=''">✕</button>
-        </div>
-        <div class="fg">
-          <label>Имя</label>
-          <input id="em-firstname" type="text" placeholder="Иван">
-          <button class="clear-btn" onclick="document.getElementById('em-firstname').value=''">✕</button>
-        </div>
-      </div>
-      <div class="fg">
-        <label>Отчество</label>
-        <input id="em-patronymic" type="text" placeholder="Иванович">
-        <button class="clear-btn" onclick="document.getElementById('em-patronymic').value=''">✕</button>
-      </div>
-      <div class="fg">
-        <label>Девичья фамилия</label>
-        <input id="em-maiden" type="text" placeholder="Петрова">
-        <button class="clear-btn" onclick="document.getElementById('em-maiden').value=''">✕</button>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
-        <div class="fg">
-          <label>Дата рождения</label>
-          <input id="em-bdate" type="text" placeholder="28.08.1987">
-        </div>
-        <div class="fg">
-          <label>Дата смерти</label>
-          <input id="em-ddate" type="text" placeholder="если применимо">
-        </div>
-      </div>
-      <div class="fg">
-        <label>Место рождения</label>
-        <input id="em-place" type="text" placeholder="Город, регион">
-        <button class="clear-btn" onclick="document.getElementById('em-place').value=''">✕</button>
-      </div>
-      <div class="fg">
-        <label>Роль в семье</label>
-        <input id="em-role" type="text" placeholder="Дедушка / Бабушка / Отец...">
-      </div>
-      <div class="fg">
-        <label>История и воспоминания</label>
-        <textarea id="em-story" placeholder="Расскажи что-нибудь об этом человеке..."></textarea>
-      </div>
-    </div>
-    <div class="em-footer">
-      <button class="btn btn-primary" onclick="saveEdit()">💾 Сохранить изменения</button>
-      <button class="btn btn-secondary" onclick="resetPerson()">↩ Сброс</button>
-      <button class="btn btn-danger" onclick="closeEdit()">Отмена</button>
-    </div>
-  </div>
-</div>
-
-<!-- ════════════ MODAL: ADD RELATIVE ════════════ -->
-<div class="add-rel-overlay" id="add-rel-overlay" onclick="closeAddRelOnBg(event)">
-  <div class="add-rel-modal">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
-      <div class="add-rel-title" id="add-rel-title">Добавить родственника</div>
-      <button class="em-close" onclick="closeAddRel()">✕</button>
-    </div>
-    <div class="add-rel-sub">Выберите тип родственника:</div>
-    <div class="rel-type-list">
-      <button class="rel-type-btn" onclick="selectRelType('father')"><span class="rel-type-icon">👨</span><span><span class="rel-type-name">Отец</span> <span class="rel-type-of" id="rel-of-name"></span></span></button>
-      <button class="rel-type-btn" onclick="selectRelType('mother')"><span class="rel-type-icon">👩</span><span><span class="rel-type-name">Мать</span></span></button>
-      <button class="rel-type-btn" onclick="selectRelType('sister')"><span class="rel-type-icon">👧</span><span><span class="rel-type-name">Сестра</span></span></button>
-      <button class="rel-type-btn" onclick="selectRelType('brother')"><span class="rel-type-icon">👦</span><span><span class="rel-type-name">Брат</span></span></button>
-      <button class="rel-type-btn" onclick="selectRelType('son')"><span class="rel-type-icon">👶</span><span><span class="rel-type-name">Сын</span></span></button>
-      <button class="rel-type-btn" onclick="selectRelType('daughter')"><span class="rel-type-icon">👶</span><span><span class="rel-type-name">Дочь</span></span></button>
-      <button class="rel-type-btn" onclick="selectRelType('spouse')"><span class="rel-type-icon">💑</span><span><span class="rel-type-name">Муж / Жена / Партнёр</span></span></button>
-    </div>
-    <div class="add-rel-footer">
-      <button class="btn btn-secondary" onclick="closeAddRel()">Отмена</button>
-    </div>
-  </div>
-</div>
-
-<!-- PHOTO LIGHTBOX -->
-<div class="lightbox" id="lightbox" onclick="closeLightbox()">
-  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
-  <img id="lb-img" src="" alt="">
-</div>
-
-<!-- TOAST -->
-<div class="toast" id="toast"></div>
-
-<!-- ADMIN DOT -->
-<div class="admin-dot" onclick="showAdminSection()"></div>
-
-<footer>🌳 &nbsp; Семейное древо Андросовых &nbsp; · &nbsp; с любовью для Оливии Германовны &nbsp; · &nbsp; 2026</footer>
-
+</main>
+<div class="mov" id="mov" onclick="if(event.target.id==='mov')event.target.classList.remove('on')">
+<div class="mod" onclick="event.stopPropagation()">
+<div class="mh"><div class="mav" id="mav">♂</div><div class="mi"><div class="mn" id="mn"></div><div class="mr" id="mr"></div></div><button class="mcl" onclick="document.getElementById('mov').classList.remove('on')">✕</button></div>
+<div class="mb" id="mb"></div>
+</div></div>
+<div class="mov" id="loginMov" onclick="if(event.target.id==='loginMov')event.target.classList.remove('on')">
+<div class="mod" style="max-width:370px" onclick="event.stopPropagation()">
+<div class="mh"><div class="mi"><div class="mn"><em>Админка</em></div><div class="mr">Вход</div></div><button class="mcl" onclick="document.getElementById('loginMov').classList.remove('on')">✕</button></div>
+<div class="mb">
+<div class="edField"><label>Логин</label><input id="loginU" autocomplete="off"></div>
+<div class="edField"><label>Пароль</label><input id="loginP" type="password" autocomplete="off" onkeydown="if(event.key==='Enter')doLogin()"></div>
+<div id="loginErr" style="color:#f47070;font-size:12px;margin-bottom:10px;display:none">Неверный логин или пароль</div>
+<button class="cb cbp" style="width:100%" onclick="doLogin()">Войти</button>
+</div></div></div>
+<div class="mov" id="adminMov" onclick="if(event.target.id==='adminMov')event.target.classList.remove('on')">
+<div class="mod" style="max-width:540px" onclick="event.stopPropagation()">
+<div class="mh"><div class="mi"><div class="mn"><em>Список</em> персон</div><div class="mr">Нажми для редактирования</div></div><button class="mcl" onclick="document.getElementById('adminMov').classList.remove('on')">✕</button></div>
+<div class="mb" id="adminList" style="max-height:70vh;overflow-y:auto"></div>
+</div></div>
+<div class="mov" id="editMov" onclick="if(event.target.id==='editMov')event.target.classList.remove('on')">
+<div class="mod" onclick="event.stopPropagation()">
+<div class="mh"><div class="mi"><div class="mn" id="editTitle"><em>Редактирование</em></div><div class="mr">Админ-режим</div></div><button class="mcl" onclick="document.getElementById('editMov').classList.remove('on')">✕</button></div>
+<div class="mb" id="editBody"></div>
+</div></div>
 <script>
-// ══════════════════════════════════════════════════════
-// DATA — 97 человек (полный GEDCOM)
-// ══════════════════════════════════════════════════════
-const BASE = {
-  i51:{id:'i51',role:'Я',name:'Андросов Герман Анатольевич',surname:'Андросов',firstname:'Герман',patronymic:'Анатольевич',bdate:'27.08.1987',sex:'M',story:'Составитель этого семейного архива. Муж Лилии, папа Оливии.',avStyle:0},
-  i52:{id:'i52',role:'Отец',name:'Андросов Анатолий Валерьевич',surname:'Андросов',firstname:'Анатолий',patronymic:'Валерьевич',bdate:'24.04.1958',sex:'M',avStyle:0},
-  i53:{id:'i53',role:'Мать',name:'Андросова Ольга Евгеньевна',surname:'Андросова',firstname:'Ольга',patronymic:'Евгеньевна',maiden:'Хвостова',sex:'F',avStyle:2},
-  i54:{id:'i54',role:'Сестра',name:'Андросова Ангелина Анатольевна',surname:'Андросова',firstname:'Ангелина',patronymic:'Анатольевна',bdate:'03.06.1985',place:'Краснодарский Край, г. Сочи',sex:'F',avStyle:2},
-  i55:{id:'i55',role:'Бабушка',name:'Андросова Ванда Николаевна',surname:'Андросова',firstname:'Ванда',patronymic:'Николаевна',maiden:'Коротеева',sex:'F',avStyle:3},
-  i56:{id:'i56',role:'Бабушка',name:'Хвостова Таисия Алексеевна',surname:'Хвостова',firstname:'Таисия',patronymic:'Алексеевна',maiden:'Щербакова',sex:'F',avStyle:3},
-  i57:{id:'i57',role:'Дедушка',name:'Хвостов Евгений Антонович',surname:'Хвостов',firstname:'Евгений',patronymic:'Антонович',bdate:'21.06.1935',sex:'M',avStyle:3},
-  i58:{id:'i58',role:'Дедушка',name:'Андросов Валерий Леонидович',surname:'Андросов',firstname:'Валерий',patronymic:'Леонидович',sex:'M',avStyle:3},
-  i59:{id:'i59',role:'',name:'Андросова Зоя',surname:'Андросова',firstname:'Зоя',sex:'F',avStyle:3},
-  i510:{id:'i510',role:'Тётя',name:'Блинникова Татьяна Валерьевна',surname:'Блинникова',firstname:'Татьяна',patronymic:'Валерьевна',maiden:'Андросова',bdate:'04.03.1967',sex:'F',avStyle:2},
-  i511:{id:'i511',role:'Двоюродный брат',name:'Блинников Денис Евгеньевич',surname:'Блинников',firstname:'Денис',patronymic:'Евгеньевич',bdate:'28.11.1996',sex:'M',avStyle:0},
-  i512:{id:'i512',role:'Муж тёти',name:'Блинников Евгений Олегович',surname:'Блинников',firstname:'Евгений',patronymic:'Олегович',bdate:'24.08.1967',ddate:'26.06.2001',sex:'M',story:'Муж тёти Татьяны. Умер 26.06.2001.',avStyle:5},
-  i513:{id:'i513',role:'Двоюродная сестра',name:'Чальцева Ксенья Евгеньевна',surname:'Чальцева',firstname:'Ксенья',patronymic:'Евгеньевна',maiden:'Блинникова',bdate:'17.01.1990',sex:'F',avStyle:2},
-  i514:{id:'i514',role:'',name:'Андросова Наташа Петровна',surname:'Андросова',firstname:'Наташа',patronymic:'Петровна',maiden:'Афонина',sex:'F',avStyle:2},
-  i515:{id:'i515',role:'Сестра',name:'Андросова Юля Анатольевна',surname:'Андросова',firstname:'Юля',patronymic:'Анатольевна',sex:'F',avStyle:2},
-  i516:{id:'i516',role:'Племянница',name:'Андросова Злата Ильинишна',surname:'Андросова',firstname:'Злата',patronymic:'Ильинишна',bdate:'25.03.2012',sex:'F',avStyle:4},
-  i517:{id:'i517',role:'Прабабушка',name:'Щербакова Ольга Михайловна',surname:'Щербакова',firstname:'Ольга',patronymic:'Михайловна',maiden:'Саломина',bdate:'02.06.1912',ddate:'01.03.1988',place:'Зюзино, Москва',sex:'F',story:'Урождённая Саломина — прямая связь с Федотом Саломиным 1812. Умерла от атеросклероза. Похоронена в пос. Яблоновский, Адыгея.',avStyle:3},
-  i518:{id:'i518',role:'Прадед',name:'Щербаков Алексей Михайлович',surname:'Щербаков',firstname:'Алексей',patronymic:'Михайлович',bdate:'02.06.1912',sex:'M',avStyle:3},
-  i519:{id:'i519',role:'Прапрадед',name:'Хвостов Антон',surname:'Хвостов',firstname:'Антон',sex:'M',avStyle:3},
-  i520:{id:'i520',role:'Прапрабабушка',name:'Хвостова Клавдия Леонтьевна',surname:'Хвостова',firstname:'Клавдия',patronymic:'Леонтьевна',bdate:'апрель 1911',sex:'F',avStyle:3},
-  i521:{id:'i521',role:'Двоюродный дед',name:'Щербаков Михаил Алексеевич',surname:'Щербаков',firstname:'Михаил',patronymic:'Алексеевич',bdate:'20.06.1941',sex:'M',avStyle:3},
-  i522:{id:'i522',role:'Двоюродный дядя',name:'Щербаков Дмитрий Михайлович',surname:'Щербаков',firstname:'Дмитрий',patronymic:'Михайлович',sex:'M',avStyle:0},
-  i523:{id:'i523',role:'Двоюродная тётя',name:'Королева Ирина Михайловна',surname:'Королева',firstname:'Ирина',patronymic:'Михайловна',maiden:'Щербакова',sex:'F',avStyle:2},
-  i524:{id:'i524',role:'Троюродный брат',name:'Королев Никита',surname:'Королев',firstname:'Никита',sex:'M',avStyle:0},
-  i525:{id:'i525',role:'Троюродный брат',name:'Королев Роман',surname:'Королев',firstname:'Роман',sex:'M',avStyle:0},
-  i526:{id:'i526',role:'Троюродный племянник',name:'Королев Егор',surname:'Королев',firstname:'Егор',sex:'M',avStyle:4},
-  i527:{id:'i527',role:'',name:'Щербакова Антонина',surname:'Щербакова',firstname:'Антонина',sex:'F',avStyle:3},
-  i528:{id:'i528',role:'Прадед',name:'Коротеев Николай Иванович',surname:'Коротеев',firstname:'Николай',patronymic:'Иванович',sex:'M',avStyle:3},
-  i529:{id:'i529',role:'Прабабушка',name:'Коротеева Александра Михайловна',surname:'Коротеева',firstname:'Александра',patronymic:'Михайловна',maiden:'Ромашкина',sex:'F',story:'Урождённая Ромашкина. Предки были крепостными в Тамбовской губернии, село Никольское.',avStyle:3},
-  i530:{id:'i530',role:'Прабабушка',name:'Андросова Александра',surname:'Андросова',firstname:'Александра',maiden:'Украинская',sex:'F',avStyle:3},
-  i531:{id:'i531',role:'Прадед',name:'Андросов Леонид Семёнович',surname:'Андросов',firstname:'Леонид',patronymic:'Семёнович',sex:'M',avStyle:3},
-  i532:{id:'i532',role:'Прапрабабушка',name:'Андросова Ольга',surname:'Андросова',firstname:'Ольга',sex:'F',avStyle:3},
-  i533:{id:'i533',role:'Дядя',name:'Андросов Леонид Валерьевич',surname:'Андросов',firstname:'Леонид',patronymic:'Валерьевич',sex:'M',avStyle:0},
-  i534:{id:'i534',role:'Двоюродная сестра',name:'Катя Леонидовна Андросова',surname:'Андросова',firstname:'Катя',patronymic:'Леонидовна',sex:'F',avStyle:2},
-  i535:{id:'i535',role:'Двоюродный брат',name:'Андросов Валерий Леонидович (мл.)',surname:'Андросов',firstname:'Валерий',patronymic:'Леонидович',sex:'M',avStyle:0},
-  i536:{id:'i536',role:'Прапрадед',name:'Андросов Семён',surname:'Андросов',firstname:'Семён',sex:'M',avStyle:3},
-  i537:{id:'i537',role:'Двоюродный дед',name:'Блинников Олег Константинович',surname:'Блинников',firstname:'Олег',patronymic:'Константинович',bdate:'04.12.1943',ddate:'12.09.2024',place:'Оренбург',sex:'M',story:'Жил в Сочи. Умер 12.09.2024.',avStyle:3},
-  i538:{id:'i538',role:'Двоюродная бабушка',name:'Блинникова Земфира/Ирина Васильевна',surname:'Блинникова',firstname:'Земфира/Ирина',patronymic:'Васильевна',maiden:'Хатинова',bdate:'04.05.1939',sex:'F',avStyle:3},
-  i539:{id:'i539',role:'Прапрабабушка',name:'Блинникова Анна Васильевна',surname:'Блинникова',firstname:'Анна',patronymic:'Васильевна',maiden:'Кудюркина',bdate:'13.02.1921',ddate:'02.06.1993',sex:'F',avStyle:3},
-  i540:{id:'i540',role:'Прапрадед',name:'Блинников Константин Тимофеевич',surname:'Блинников',firstname:'Константин',patronymic:'Тимофеевич',bdate:'11.06.1916',ddate:'02.04.1998',place:'Оренбург',sex:'M',story:'Воевал в ВОВ / внутренние войска / охранял вагоны / один раз обстреляли вагон и контузили. Герой.',avStyle:3},
-  i541:{id:'i541',role:'Жена',name:'Андросова Лилия Сергеевна',surname:'Андросова',firstname:'Лилия',patronymic:'Сергеевна',maiden:'Шевякова',bdate:'06.02.1997',sex:'F',avStyle:2},
-  i542:{id:'i542',role:'Дочь',name:'Андросова Оливия Германовна',surname:'Андросова',firstname:'Оливия',patronymic:'Германовна',bdate:'05.04.2026',sex:'F',story:'Наша любимая дочь. Ради неё создаётся этот архив.',avStyle:4},
-  i543:{id:'i543',role:'Прадед',name:'Саломин Михаил Федотович',surname:'Саломин',firstname:'Михаил',patronymic:'Федотович',sex:'M',avStyle:3},
-  i544:{id:'i544',role:'Прабабушка',name:'Саломина Анастасия Сергеевна',surname:'Саломина',firstname:'Анастасия',patronymic:'Сергеевна',sex:'F',avStyle:3},
-  i545:{id:'i545',role:'Умер в детстве',name:'Саломин Иоанн Михайлович',surname:'Саломин',firstname:'Иоанн',patronymic:'Михайлович',ddate:'1912',sex:'M',avStyle:4},
-  i546:{id:'i546',role:'Двоюродный прадед',name:'Саломин Александр Михайлович',surname:'Саломин',firstname:'Александр',patronymic:'Михайлович',bdate:'1901',sex:'M',avStyle:3},
-  i547:{id:'i547',role:'Двоюродная прабабушка',name:'Саломина Наталья Михайловна',surname:'Саломина',firstname:'Наталья',patronymic:'Михайловна',bdate:'1903',sex:'F',avStyle:3},
-  i548:{id:'i548',role:'Двоюродный прадед',name:'Саломин Виктор Михайлович',surname:'Саломин',firstname:'Виктор',patronymic:'Михайлович',bdate:'1906',sex:'M',avStyle:3},
-  i549:{id:'i549',role:'Двоюродный прадед',name:'Саломин Дмитрий Михайлович',surname:'Саломин',firstname:'Дмитрий',patronymic:'Михайлович',bdate:'1907',sex:'M',avStyle:3},
-  i550:{id:'i550',role:'Прапрадед',name:'Саломин Федот Герасимович',surname:'Саломин',firstname:'Федот',patronymic:'Герасимович',sex:'M',story:'Умер 27.03.1913 от воспаления лёгких.',avStyle:3},
-  i551:{id:'i551',role:'Прапрабабушка',name:'Саломина Анна Тимофеевна',surname:'Саломина',firstname:'Анна',patronymic:'Тимофеевна',sex:'F',avStyle:3},
-  i552:{id:'i552',role:'Двоюродный дед',name:'Саломин Георгий Федотович',surname:'Саломин',firstname:'Георгий',patronymic:'Федотович',sex:'M',story:'Был репрессирован 13.12.1958, реабилитирован. Служил на Кубани.',avStyle:3},
-  i553:{id:'i553',role:'Двоюродный дед',name:'Саломин Федот Федотович',surname:'Саломин',firstname:'Федот',patronymic:'Федотович',sex:'M',avStyle:3},
-  i554:{id:'i554',role:'Двоюродный дед',name:'Саломин Иван Федотович',surname:'Саломин',firstname:'Иван',patronymic:'Федотович',sex:'M',avStyle:3},
-  i555:{id:'i555',role:'Прапрапрабабушка',name:'Саломина Параскева Ивановна',surname:'Саломина',firstname:'Параскева',patronymic:'Ивановна',sex:'F',avStyle:3},
-  i556:{id:'i556',role:'Прапрапрадед',name:'Саломин Федот',surname:'Саломин',firstname:'Федот',bdate:'1812',sex:'M',story:'Самый ранний известный предок семьи. Жил в эпоху наполеоновских войн.',avStyle:3},
-  i557:{id:'i557',role:'Прапрадед',name:'Ромашкин Михаил',surname:'Ромашкин',firstname:'Михаил',sex:'M',avStyle:3},
-  i558:{id:'i558',role:'Прапрабабушка',name:'Ромашкина Евдокия',surname:'Ромашкина',firstname:'Евдокия',sex:'F',avStyle:3},
-  i559:{id:'i559',role:'Двоюродный прадед',name:'Ромашкин Фёдор',surname:'Ромашкин',firstname:'Фёдор',sex:'M',avStyle:3},
-  i560:{id:'i560',role:'Двоюродный прадед',name:'Ромашкин Константин',surname:'Ромашкин',firstname:'Константин',sex:'M',avStyle:3},
-  i561:{id:'i561',role:'Двоюродный дед',name:'Коротеев Анатолий Николаевич',surname:'Коротеев',firstname:'Анатолий',patronymic:'Николаевич',sex:'M',avStyle:3},
-  i562:{id:'i562',role:'Двоюродный дед',name:'Коротеев Александр Николаевич',surname:'Коротеев',firstname:'Александр',patronymic:'Николаевич',sex:'M',avStyle:0},
-  i563:{id:'i563',role:'Двоюродная бабушка',name:'Коротеева Светлана Николаевна',surname:'Коротеева',firstname:'Светлана',patronymic:'Николаевна',sex:'F',avStyle:3},
-  i564:{id:'i564',role:'Двоюродный дед',name:'Коротеев Юрий Николаевич',surname:'Коротеев',firstname:'Юрий',patronymic:'Николаевич',sex:'M',avStyle:3},
-  i565:{id:'i565',role:'Двоюродная бабушка',name:'Грис Клара Николаевна',surname:'Грис',firstname:'Клара',patronymic:'Николаевна',maiden:'Коротеева',sex:'F',avStyle:3},
-  i566:{id:'i566',role:'Муж',name:'Грис Эдуард',surname:'Грис',firstname:'Эдуард',place:'Karaganda',sex:'M',avStyle:0},
-  i567:{id:'i567',role:'Двоюродный дядя',name:'Грис Юрий Эдуардович',surname:'Грис',firstname:'Юрий',patronymic:'Эдуардович',sex:'M',avStyle:0},
-  i568:{id:'i568',role:'Троюродный брат',name:'Грис Андрей Юрьевич',surname:'Грис',firstname:'Андрей',patronymic:'Юрьевич',sex:'M',avStyle:0},
-  i569:{id:'i569',role:'',name:'Грис Светлана',surname:'Грис',firstname:'Светлана',sex:'F',avStyle:2},
-  i570:{id:'i570',role:'Троюродный племянник',name:'Грис Лев Андреевич',surname:'Грис',firstname:'Лев',patronymic:'Андреевич',sex:'M',avStyle:4},
-  i571:{id:'i571',role:'Муж',name:'Чальцев Роман',surname:'Чальцев',firstname:'Роман',sex:'M',avStyle:0},
-  i572:{id:'i572',role:'Двоюродная племянница',name:'Чальцева Ксения Романовна',surname:'Чальцева',firstname:'Ксения',patronymic:'Романовна',sex:'F',avStyle:4},
-  i573:{id:'i573',role:'Двоюродный племянник',name:'Чальцев Егор Романович',surname:'Чальцев',firstname:'Егор',patronymic:'Романович',sex:'M',avStyle:4},
-  i574:{id:'i574',role:'',name:'Блинникова Мария',surname:'Блинникова',firstname:'Мария',sex:'F',avStyle:2},
-  i575:{id:'i575',role:'Муж Юли',name:'Казаченко Илья',surname:'Казаченко',firstname:'Илья',sex:'M',avStyle:0},
-  i576:{id:'i576',role:'Двоюродный дед',name:'Хвостов Юрий Антонович',surname:'Хвостов',firstname:'Юрий',patronymic:'Антонович',sex:'M',avStyle:3},
-  i577:{id:'i577',role:'Троюродная племянница',name:'Королева Эвелина Никитична',surname:'Королева',firstname:'Эвелина',patronymic:'Никитична',sex:'F',avStyle:4},
-  i578:{id:'i578',role:'Троюродная племянница',name:'Королева Ульяна Романовна',surname:'Королева',firstname:'Ульяна',patronymic:'Романовна',sex:'F',avStyle:4},
-  i579:{id:'i579',role:'',name:'Королева Екатерина',surname:'Королева',firstname:'Екатерина',sex:'F',avStyle:2},
-  i580:{id:'i580',role:'',name:'Королева Ирина',surname:'Королева',firstname:'Ирина',sex:'F',avStyle:2},
-  i581:{id:'i581',role:'Двоюродный дед',name:'Щербаков Анатолий Алексеевич',surname:'Щербаков',firstname:'Анатолий',patronymic:'Алексеевич',sex:'M',story:'Погиб в шахте в 20 лет в Армии.',avStyle:0},
-  i582:{id:'i582',role:'Прапрадед',name:'Щербаков Михаил',surname:'Щербаков',firstname:'Михаил',sex:'M',avStyle:3},
-  i583:{id:'i583',role:'Прапрабабушка',name:'Щербакова Анна',surname:'Щербакова',firstname:'Анна',sex:'F',avStyle:3},
-  i584:{id:'i584',role:'Прапрадед',name:'Коротеев Иван',surname:'Коротеев',firstname:'Иван',sex:'M',avStyle:3},
-  i585:{id:'i585',role:'Прапрабабушка',name:'Коротеева ?',surname:'Коротеева',firstname:'?',sex:'F',avStyle:3},
-  i586:{id:'i586',role:'Двоюродный прадед',name:'Ромашкин Валерий Константинович',surname:'Ромашкин',firstname:'Валерий',patronymic:'Константинович',sex:'M',avStyle:3},
-  i587:{id:'i587',role:'Троюродная тётя',name:'Италия Елена Валерьевна',surname:'Италия',firstname:'Елена',patronymic:'Валерьевна',maiden:'Ромашкина',sex:'F',avStyle:2},
-  i588:{id:'i588',role:'Троюродный дядя',name:'Ромашкин Сергей Валериевич',surname:'Ромашкин',firstname:'Сергей',patronymic:'Валериевич',sex:'M',avStyle:0},
-  i589:{id:'i589',role:'',name:'Италия ?',surname:'Италия',firstname:'?',sex:'F',avStyle:2},
-  i590:{id:'i590',role:'Троюродный дед',name:'Ромашкин Владимир Фёдорович',surname:'Ромашкин',firstname:'Владимир',patronymic:'Фёдорович',sex:'M',avStyle:3},
-  i591:{id:'i591',role:'',name:'Ромашкина Елена',surname:'Ромашкина',firstname:'Елена',sex:'F',avStyle:3},
-  i592:{id:'i592',role:'',name:'Ромашкин Саша Владимирович',surname:'Ромашкин',firstname:'Саша',patronymic:'Владимирович',sex:'M',avStyle:0},
-  i593:{id:'i593',role:'',name:'Ромашкина Света ?',surname:'Ромашкина',firstname:'Света',sex:'F',story:'Живёт в Одессе.',avStyle:2},
-  i594:{id:'i594',role:'',name:'Ромашкина Елена Александровна',surname:'Ромашкина',firstname:'Елена',patronymic:'Александровна',sex:'F',avStyle:2},
-  i595:{id:'i595',role:'',name:'Кочубей ?',surname:'Кочубей',firstname:'?',sex:'M',avStyle:0},
-  i596:{id:'i596',role:'',name:'Ромашкина ?',surname:'Ромашкина',firstname:'?',sex:'F',avStyle:2},
-  i597:{id:'i597',role:'',name:'Ромашкина ?',surname:'Ромашкина',firstname:'?',sex:'F',avStyle:2},
-};
+(function(){
+  var v=document.getElementById("bgVid");
+  var c=document.getElementById("bgc");
+  v.addEventListener("error",function(){v.style.display="none";c.style.display="block";startFallback()});
+  v.addEventListener("loadeddata",function(){c.style.display="none"});
+  function startFallback(){
+    var bc=c.getContext("2d");var W=0,H=0,T=0;
+    var orbs=[
+      {x:.2,y:.25,r:.45,c:"28,56,120",s:.00022,px:.15,py:.1,ph:0},
+      {x:.82,y:.2,r:.38,c:"14,30,72",s:.00034,px:.11,py:.14,ph:1.8},
+      {x:.5,y:.82,r:.52,c:"22,40,90",s:.0002,px:.18,py:.08,ph:3.5},
+      {x:.08,y:.7,r:.32,c:"18,32,80",s:.00042,px:.08,py:.18,ph:1},
+      {x:.92,y:.58,r:.36,c:"10,22,58",s:.00028,px:.12,py:.12,ph:4.5}
+    ];
+    function rs(){W=window.innerWidth;H=window.innerHeight;c.width=W;c.height=H}
+    rs();window.addEventListener("resize",rs);
+    function frame(){
+      T++;bc.fillStyle="#030508";bc.fillRect(0,0,W,H);bc.globalCompositeOperation="lighter";
+      for(var i=0;i<orbs.length;i++){
+        var o=orbs[i];
+        var ox=Math.sin(T*o.s+o.ph)*o.px;var oy=Math.cos(T*o.s*.82+o.ph)*o.py;
+        var gx=(o.x+ox)*W,gy=(o.y+oy)*H,gr=o.r*Math.max(W,H);
+        var g=bc.createRadialGradient(gx,gy,0,gx,gy,gr);
+        g.addColorStop(0,"rgba("+o.c+",.55)");g.addColorStop(.45,"rgba("+o.c+",.22)");g.addColorStop(1,"rgba(0,0,0,0)");
+        bc.fillStyle=g;bc.fillRect(0,0,W,H);
+      }
+      bc.globalCompositeOperation="source-over";requestAnimationFrame(frame);
+    }
+    frame();
+  }
+  c.style.display="none";
+  setTimeout(function(){if(v.readyState<2){v.style.display="none";c.style.display="block";startFallback()}},3000);
+})();
 
-// family connections for "relatives" tab
-const FAMILY = {
-  i51:['i52','i53','i541','i542','i54','i515'],
-  i52:['i51','i53','i54','i515','i58','i55'],
-  i53:['i51','i52','i54','i515','i57','i56'],
-  i541:['i51','i542'],
-  i542:['i51','i541'],
-  i57:['i56','i53'],
-  i58:['i55','i52','i533','i510'],
-  i55:['i58','i52'],
-  i56:['i57','i53'],
-  i540:['i539','i537'],
-  i510:['i512','i533','i52'],
-  i511:['i512','i510'],
-  i513:['i571','i572','i573'],
-};
-
-let overrides = JSON.parse(localStorage.getItem('androsov_ov3')||'{}');
-let photos    = JSON.parse(localStorage.getItem('androsov_ph3')||'{}');
-
-function getPerson(id){
-  return Object.assign({}, BASE[id]||{id,name:'Неизвестно',sex:'M',avStyle:0}, overrides[id]||{});
-}
-
-function getPhoto(id){ return photos[id]||null; }
-
-// ══════════════════════════════════════════════
-// AVATAR GENERATOR — warm portrait style
-// ══════════════════════════════════════════════
-function hue(id){ let h=0; for(let c of id) h=(h*31+c.charCodeAt(0))%360; return h; }
-
-const AV = [
-  // 0 classic male
-  id=>{ const h=hue(id),s=35,f=`hsl(${h},${s}%,68%)`,hair=`hsl(${(h+180)%360},40%,28%)`;
-    return `<rect width="100" height="100" fill="hsl(${h},20%,88%)"/>
-    <circle cx="50" cy="36" r="21" fill="${f}"/>
-    <ellipse cx="50" cy="88" rx="30" ry="22" fill="${f}"/>
-    <ellipse cx="50" cy="18" rx="21" ry="13" fill="${hair}"/>
-    <circle cx="43" cy="34" r="3.2" fill="#241408"/><circle cx="57" cy="34" r="3.2" fill="#241408"/>
-    <circle cx="44" cy="33" r="1" fill="rgba(255,255,255,.5)"/><circle cx="58" cy="33" r="1" fill="rgba(255,255,255,.5)"/>
-    <path d="M44 43 q6 4 12 0" stroke="hsl(${h},30%,52%)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-    <ellipse cx="36" cy="44" rx="4" ry="2.5" fill="${f}" opacity=".6"/><ellipse cx="64" cy="44" rx="4" ry="2.5" fill="${f}" opacity=".6"/>`;
-  },
-  // 1 bearded
-  id=>{ const h=hue(id),f=`hsl(${h},35%,65%)`,hair=`hsl(${(h+190)%360},40%,22%)`;
-    return `<rect width="100" height="100" fill="hsl(${h},18%,85%)"/>
-    <circle cx="50" cy="36" r="21" fill="${f}"/>
-    <ellipse cx="50" cy="88" rx="30" ry="22" fill="${f}"/>
-    <ellipse cx="50" cy="18" rx="21" ry="12" fill="${hair}"/>
-    <ellipse cx="50" cy="50" rx="15" ry="10" fill="${hair}" opacity=".75"/>
-    <circle cx="43" cy="34" r="3" fill="#1a0a05"/><circle cx="57" cy="34" r="3" fill="#1a0a05"/>
-    <circle cx="44" cy="33" r="1" fill="rgba(255,255,255,.4)"/><circle cx="58" cy="33" r="1" fill="rgba(255,255,255,.4)"/>
-    <path d="M43 43 q7 2 14 0" stroke="hsl(${h},28%,48%)" stroke-width="1.2" fill="none"/>`;
-  },
-  // 2 female
-  id=>{ const h=hue(id),f=`hsl(${h},42%,76%)`,hair=`hsl(${(h+140)%360},48%,40%)`;
-    return `<rect width="100" height="100" fill="hsl(${h},28%,92%)"/>
-    <circle cx="50" cy="36" r="21" fill="${f}"/>
-    <ellipse cx="50" cy="88" rx="30" ry="22" fill="${f}"/>
-    <path d="M29 28 q21-20 42 0 q0-24-21-24q-21 0-21 24z" fill="${hair}"/>
-    <path d="M29 28 q-7 24 -3 48" stroke="${hair}" stroke-width="9" fill="none" stroke-linecap="round"/>
-    <path d="M71 28 q7 24 3 48" stroke="${hair}" stroke-width="9" fill="none" stroke-linecap="round"/>
-    <circle cx="43" cy="34" r="3" fill="#2a1020"/><circle cx="57" cy="34" r="3" fill="#2a1020"/>
-    <circle cx="44" cy="33" r="1" fill="rgba(255,255,255,.5)"/><circle cx="58" cy="33" r="1" fill="rgba(255,255,255,.5)"/>
-    <path d="M44 43 q6 5 12 0" stroke="#d06880" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-    <circle cx="42" cy="39" r="1.5" fill="hsl(${h},60%,78%)" opacity=".7"/><circle cx="58" cy="39" r="1.5" fill="hsl(${h},60%,78%)" opacity=".7"/>`;
-  },
-  // 3 elder
-  id=>{ const h=hue(id),isFem=getPerson(id).sex==='F',f=`hsl(${h},22%,72%)`,hair='hsl(0,0%,80%)';
-    return `<rect width="100" height="100" fill="hsl(${h},14%,90%)"/>
-    <circle cx="50" cy="36" r="21" fill="${f}"/>
-    <ellipse cx="50" cy="88" rx="30" ry="22" fill="${f}"/>
-    ${isFem?`<path d="M29 28 q21-18 42 0 q0-22-21-22q-21 0-21 22z" fill="${hair}"/><path d="M29 28 q-6 22-2 44" stroke="${hair}" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M71 28 q6 22 2 44" stroke="${hair}" stroke-width="8" fill="none" stroke-linecap="round"/>`:
-    `<ellipse cx="50" cy="19" rx="21" ry="11" fill="${hair}"/>`}
-    <circle cx="43" cy="34" r="2.8" fill="#302818"/><circle cx="57" cy="34" r="2.8" fill="#302818"/>
-    <circle cx="44" cy="33" r=".9" fill="rgba(255,255,255,.4)"/><circle cx="58" cy="33" r=".9" fill="rgba(255,255,255,.4)"/>
-    <path d="M43 44 q7 3 14 0" stroke="hsl(${h},20%,54%)" stroke-width="1.2" fill="none"/>
-    <path d="M37 34 q-3-5-5 0M63 34 q3-5 5 0" stroke="${f}" stroke-width=".7" fill="none" opacity=".4"/>`;
-  },
-  // 4 baby
-  id=>{ const h=hue(id),f=`hsl(${h},55%,84%)`;
-    return `<rect width="100" height="100" fill="hsl(${h},35%,94%)"/>
-    <circle cx="50" cy="44" r="28" fill="${f}"/>
-    <ellipse cx="50" cy="92" rx="22" ry="14" fill="${f}"/>
-    <circle cx="42" cy="41" r="4.5" fill="#3a2010"/><circle cx="58" cy="41" r="4.5" fill="#3a2010"/>
-    <circle cx="43" cy="40" r="1.8" fill="rgba(255,255,255,.6)"/><circle cx="59" cy="40" r="1.8" fill="rgba(255,255,255,.6)"/>
-    <ellipse cx="50" cy="56" rx="6" ry="4" fill="#f0a0b0" opacity=".65"/>
-    <path d="M44 51 q6 5 12 0" stroke="#e08090" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-    <ellipse cx="35" cy="48" rx="5" ry="4" fill="${f}" opacity=".7"/><ellipse cx="65" cy="48" rx="5" ry="4" fill="${f}" opacity=".7"/>`;
-  },
-  // 5 mustache
-  id=>{ const h=hue(id),f=`hsl(${h},35%,66%)`,hair=`hsl(${(h+200)%360},42%,24%)`;
-    return `<rect width="100" height="100" fill="hsl(${h},16%,86%)"/>
-    <circle cx="50" cy="36" r="21" fill="${f}"/>
-    <ellipse cx="50" cy="88" rx="30" ry="22" fill="${f}"/>
-    <ellipse cx="50" cy="19" rx="21" ry="13" fill="${hair}"/>
-    <path d="M39 43 q5-6 11 0 q6-6 11 0" fill="${hair}" opacity=".88"/>
-    <circle cx="43" cy="34" r="3" fill="#180808"/><circle cx="57" cy="34" r="3" fill="#180808"/>
-    <circle cx="44" cy="33" r="1" fill="rgba(255,255,255,.4)"/><circle cx="58" cy="33" r="1" fill="rgba(255,255,255,.4)"/>
-    <path d="M43 48 q7 2 14 0" stroke="hsl(${h},28%,46%)" stroke-width="1.2" fill="none"/>`;
-  },
+var PP=[
+{id:"i556",n:"Саломин Федот",r:"Пра(4)дед",s:"M",b:"1812",st:"Самый ранний известный предок.",gn:-6,dr:1},
+{id:"i555",n:"Саломина Параскева Ивановна",r:"Пра(4)бабушка",s:"F",gn:-6,dr:1},
+{id:"i550",n:"Саломин Федот Герасимович",r:"Прапрадед",s:"M",st:"Умер 27.03.1913 от воспаления лёгких.",gn:-5,dr:1},
+{id:"i551",n:"Саломина Анна Тимофеевна",r:"Прапрабабушка",s:"F",gn:-5,dr:1},
+{id:"i557",n:"Ромашкин Михаил",r:"Прапрадед",s:"M",gn:-5,dr:1},
+{id:"i558",n:"Ромашкина Евдокия",r:"Прапрабабушка",s:"F",gn:-5,dr:1},
+{id:"i518",n:"Щербаков Алексей Михайлович",r:"Прадед",s:"M",b:"02.06.1912",gn:-4,dr:1},
+{id:"i517",n:"Щербакова Ольга Михайловна",r:"Прабабушка",s:"F",b:"02.06.1912",d:"01.03.1988",pl:"Зюзино, Москва",st:"Урождённая Саломина — прямая связь с Федотом 1812.",gn:-4,dr:1},
+{id:"i528",n:"Коротеев Николай Иванович",r:"Прадед",s:"M",gn:-4,dr:1},
+{id:"i529",n:"Коротеева Александра Михайловна",r:"Прабабушка",s:"F",st:"Урождённая Ромашкина. Предки — крепостные.",gn:-4,dr:1},
+{id:"i531",n:"Андросов Леонид Семёнович",r:"Прадед",s:"M",gn:-4,dr:1},
+{id:"i530",n:"Андросова Александра",r:"Прабабушка",s:"F",gn:-4,dr:1},
+{id:"i540",n:"Блинников Константин Тимофеевич",r:"Прапрадед",s:"M",b:"11.06.1916",d:"02.04.1998",pl:"Оренбург",st:"Ветеран ВОВ. Контужен.",gn:-4,dr:0},
+{id:"i57",n:"Хвостов Евгений Антонович",r:"Дедушка",s:"M",b:"21.06.1935",gn:-3,dr:1},
+{id:"i56",n:"Хвостова Таисия Алексеевна",r:"Бабушка",s:"F",gn:-3,dr:1},
+{id:"i58",n:"Андросов Валерий Леонидович",r:"Дедушка",s:"M",gn:-3,dr:1},
+{id:"i55",n:"Андросова Ванда Николаевна",r:"Бабушка",s:"F",gn:-3,dr:1},
+{id:"i537",n:"Блинников Олег Константинович",r:"Двоюр. дед",s:"M",b:"04.12.1943",d:"12.09.2024",st:"Жил в Сочи.",gn:-3,dr:0},
+{id:"i52",n:"Андросов Анатолий Валерьевич",r:"Отец",s:"M",b:"24.04.1958",gn:-2,dr:1},
+{id:"i53",n:"Андросова Ольга Евгеньевна",r:"Мать",s:"F",gn:-2,dr:1},
+{id:"i510",n:"Блинникова Татьяна Валерьевна",r:"Тётя",s:"F",b:"04.03.1967",gn:-2,dr:0},
+{id:"i533",n:"Андросов Леонид Валерьевич",r:"Дядя",s:"M",gn:-2,dr:0},
+{id:"i51",n:"Андросов Герман Анатольевич",r:"Я ★",s:"M",b:"27.08.1987",st:"Составитель архива. Муж Лилии, папа Оливии.",gn:-1,dr:1,me:1},
+{id:"i541",n:"Андросова Лилия Сергеевна",r:"Жена",s:"F",b:"06.02.1997",gn:-1,dr:1},
+{id:"i54",n:"Андросова Ангелина Анатольевна",r:"Сестра",s:"F",b:"03.06.1985",pl:"Сочи",gn:-1,dr:0},
+{id:"i515",n:"Андросова Юля Анатольевна",r:"Сестра",s:"F",gn:-1,dr:0},
+{id:"i511",n:"Блинников Денис Евгеньевич",r:"Двоюр. брат",s:"M",b:"28.11.1996",gn:-1,dr:0},
+{id:"i513",n:"Чальцева Ксенья Евгеньевна",r:"Двоюр. сестра",s:"F",b:"17.01.1990",gn:-1,dr:0},
+{id:"i542",n:"Андросова Оливия Германовна",r:"Дочь 💛",s:"F",b:"05.04.2026",st:"Наша любимая дочь. Для неё создаётся этот архив.",gn:0,dr:1},
+{id:"i516",n:"Андросова Злата Ильинишна",r:"Племянница",s:"F",b:"25.03.2012",gn:0,dr:0}
 ];
 
-function makeAV(id){ const p=getPerson(id); const fn=AV[p.avStyle||0]||AV[0]; return `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">${fn(id)}</svg>`; }
+var overrides={},photos={};
+try{overrides=JSON.parse(localStorage.getItem("adrOv")||"{}")}catch(e){}
+try{photos=JSON.parse(localStorage.getItem("adrPh")||"{}")}catch(e){}
 
-function avEl(id){
-  const ph=getPhoto(id);
-  if(ph) return `<img src="${ph}" alt="" style="width:100%;height:100%;object-fit:cover">`;
-  return makeAV(id);
-}
-
-function injectAvatars(){
-  Object.keys(BASE).forEach(id=>{
-    const el=document.getElementById('cav-'+id);
-    if(el) el.innerHTML=avEl(id);
-  });
-}
-
-// ══════════════════════════════════════════════
-// MODAL — VIEW
-// ══════════════════════════════════════════════
-let currentId=null;
-
-function openM(id){
-  currentId=id;
-  const p=getPerson(id);
-  const ph=getPhoto(id);
-
-  // photo / avatar header
-  const wrap=document.getElementById('m-av-wrap');
-  if(ph){
-    wrap.innerHTML=`<img src="${ph}" alt="" style="width:100%;height:100%;object-fit:cover">`;
-  } else {
-    wrap.innerHTML=makeAV(id);
+function getPerson(id){
+  for(var i=0;i<PP.length;i++) if(PP[i].id===id){
+    var b=PP[i];
+    if(overrides[id]){var m={};for(var k in b)m[k]=b[k];for(var k in overrides[id])m[k]=overrides[id][k];return m}
+    return b;
   }
-  wrap.className=ph?'':'modal-av';
+  return null;
+}
+function esc(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
 
-  document.getElementById('m-role').textContent=p.role||'';
-  document.getElementById('m-name').textContent=p.name||'';
+var currentFilter="all";
 
-  // facts
-  const fc=document.getElementById('facts-content');
-  const facts=[];
-  if(p.bdate) facts.push({icon:'🎂',label:'Дата рождения',val:p.bdate});
-  if(p.ddate) facts.push({icon:'✝️',label:'Дата смерти',val:p.ddate});
-  if(p.place) facts.push({icon:'📍',label:'Место рождения',val:p.place});
-  if(p.maiden) facts.push({icon:'💍',label:'Девичья фамилия',val:p.maiden});
-  if(p.patronymic) facts.push({icon:'👤',label:'Отчество',val:p.patronymic});
-
-  let fhtml = facts.map(f=>`
-    <div class="fact-row">
-      <div class="fact-icon">${f.icon}</div>
-      <div><div class="fact-label">${f.label}</div><div class="fact-val">${f.val}</div></div>
-    </div>`).join('');
-
-  // empty prompts
-  if(!p.bdate) fhtml+=`<div class="fact-row"><div class="fact-icon">🎂</div><div><div class="fact-label">Дата рождения</div><div class="fact-empty" onclick="openEditFromModal()">+ Указать дату рождения ${p.firstname||''}</div></div></div>`;
-  if(!p.place) fhtml+=`<div class="fact-row"><div class="fact-icon">📍</div><div><div class="fact-label">Место рождения</div><div class="fact-empty" onclick="openEditFromModal()">+ Где родился(лась) ${p.firstname||''}</div></div></div>`;
-
-  if(p.story) fhtml+=`<div class="story-block">${p.story}</div>`;
-  fc.innerHTML=fhtml||'<p style="color:var(--text4);padding:20px 0;font-size:13px">Нажмите "Редактировать" чтобы добавить информацию.</p>';
-
-  // photos tab
-  const pg=document.getElementById('photos-grid');
-  let phtml='';
-  const allPhotos=JSON.parse(localStorage.getItem('androsov_extra_'+id)||'[]');
-  if(getPhoto(id)) phtml+=`<div class="photo-thumb" onclick="openLightbox('${getPhoto(id)}')"><img src="${getPhoto(id)}" alt=""></div>`;
-  allPhotos.forEach(src=>{ phtml+=`<div class="photo-thumb" onclick="openLightbox('${src}')"><img src="${src}" alt=""></div>`; });
-  phtml+=`<div class="photo-add-btn" onclick="triggerPhotoUploadForModal()"><span>📷</span><span>Добавить фото</span></div>`;
-  pg.innerHTML=phtml;
-
-  // relatives tab
-  const rl=document.getElementById('rel-list');
-  const rels=FAMILY[id]||[];
-  rl.innerHTML=rels.map(rid=>{
-    const rp=getPerson(rid);
-    return `<div class="rel-item" onclick="closeM();setTimeout(()=>openM('${rid}'),200)">
-      <div class="rel-av">${avEl(rid)}</div>
-      <div><div class="rel-name">${rp.name}</div><div class="rel-role">${rp.role||''}</div></div>
-    </div>`;
-  }).join('')||'<p style="color:var(--text4);font-size:13px;padding:12px 0">Нет связанных родственников</p>';
-
-  // switch to facts tab
-  switchTab('facts',document.querySelector('.modal-tab'));
-  document.getElementById('overlay').classList.add('open');
+function renderTree(){
+  var wrap=document.getElementById("treeWrap");
+  if(!wrap) return;
+  var people=[];
+  for(var i=0;i<PP.length;i++){
+    var p=getPerson(PP[i].id);
+    if(currentFilter==="direct"&&!p.dr) continue;
+    people.push(p);
+  }
+  var byGen={};
+  for(var i=0;i<people.length;i++){
+    var g=people[i].gn==null?0:people[i].gn;
+    if(!byGen[g]) byGen[g]=[];
+    byGen[g].push(people[i]);
+  }
+  var gks=[];
+  for(var k in byGen) gks.push(parseInt(k,10));
+  gks.sort(function(a,b){return a-b});
+  var genNames={"-6":"VIII поколение · 1812","-5":"VII поколение","-4":"VI поколение","-3":"V поколение","-2":"IV поколение","-1":"III поколение · сейчас","0":"II поколение · дети"};
+  var html="";
+  for(var gi=0;gi<gks.length;gi++){
+    var g=gks[gi];
+    var row=byGen[g];
+    html+='<div class="genBlock">';
+    html+='<div class="genLabel">'+(genNames[g]||("Поколение "+g))+'</div>';
+    html+='<div class="genRow">';
+    for(var j=0;j<row.length;j++){
+      var p=row[j];
+      var cls="card";
+      if(p.me) cls+=" me";
+      else if(p.s==="F") cls+=" female";
+      else cls+=" male";
+      if(!p.dr) cls+=" side";
+      var ph=photos[p.id];
+      var phContent=ph?'<img src="'+ph+'" alt="">':(p.s==="F"?"♀":"♂");
+      var dates="";
+      if(p.b) dates+=p.b.slice(-4);
+      if(p.d) dates+=(dates?" — ":"")+p.d.slice(-4);
+      if(!dates) dates="&nbsp;";
+      html+='<div class="'+cls+'" data-id="'+p.id+'" onclick="omById(this.getAttribute(\'data-id\'))">';
+      if(p.me) html+='<div class="cardStar">★</div>';
+      html+='<div class="cardPhoto">'+phContent+'</div>';
+      html+='<div class="cardName">'+esc(p.n.split(" ").slice(0,2).join(" "))+'</div>';
+      html+='<div class="cardRole">'+esc(p.r||"")+'</div>';
+      html+='<div class="cardDates">'+dates+'</div>';
+      html+='</div>';
+    }
+    html+='</div></div>';
+  }
+  wrap.innerHTML=html;
 }
 
-function switchTab(name,btn){
-  document.querySelectorAll('.tab-pane').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.modal-tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById('tab-'+name).classList.add('active');
-  btn.classList.add('active');
+function setFilter(f){
+  currentFilter=f;
+  document.getElementById("fltAll").classList.toggle("on",f==="all");
+  document.getElementById("fltDir").classList.toggle("on",f==="direct");
+  renderTree();
 }
 
-function closeM(){ document.getElementById('overlay').classList.remove('open'); }
-function closeMOnBg(e){ if(e.target.id==='overlay') closeM(); }
+function om(p){
+  var mnEl=document.getElementById("mn");
+  var parts=p.n.split(" ");
+  mnEl.innerHTML="<em>"+esc(parts[0])+"</em>"+(parts.length>1?" "+esc(parts.slice(1).join(" ")):"");
+  document.getElementById("mr").textContent=p.r||"";
+  var av=document.getElementById("mav");
+  var ph=photos[p.id];
+  if(ph){av.innerHTML='<img src="'+ph+'" alt="">'}
+  else{av.innerHTML=p.s==="F"?"♀":"♂"}
+  av.style.background=p.me?"linear-gradient(180deg,#fff2c8,#d4a843)":p.s==="F"?"linear-gradient(180deg,#ebb5d0,#c45a8a)":"linear-gradient(180deg,#6b9be5,#2f5ba8)";
+  av.style.borderColor=p.me?"rgba(240,200,116,.5)":p.s==="F"?"rgba(216,123,160,.5)":"rgba(100,155,230,.5)";
+  var b="";
+  if(p.b) b+='<div class="mf"><span class="mfi">★</span><div><div class="mfl">Дата рождения</div><div class="mfv">'+esc(p.b)+'</div></div></div>';
+  if(p.d) b+='<div class="mf"><span class="mfi">†</span><div><div class="mfl">Дата смерти</div><div class="mfv">'+esc(p.d)+'</div></div></div>';
+  if(p.pl) b+='<div class="mf"><span class="mfi">◈</span><div><div class="mfl">Место</div><div class="mfv">'+esc(p.pl)+'</div></div></div>';
+  if(p.st) b+='<div class="mst">'+esc(p.st)+'</div>';
+  if(!b) b='<div class="mf"><span class="mfi">◈</span><div><div class="mfl">Данные</div><div class="mfv" style="font-style:italic;opacity:.65">Нет дополнительной информации</div></div></div>';
+  document.getElementById("mb").innerHTML=b;
+  document.getElementById("mov").classList.add("on");
+}
+function omById(id){var p=getPerson(id);if(p) om(p)}
 
-document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'){ closeM(); closeEdit(); closeAddRel(); closeLightbox(); }
+document.addEventListener("keydown",function(e){
+  if(e.key==="Escape"){var mm=["mov","loginMov","adminMov","editMov"];for(var i=0;i<mm.length;i++) document.getElementById(mm[i]).classList.remove("on")}
 });
 
-// ══════════════════════════════════════════════
-// EDIT MODAL
-// ══════════════════════════════════════════════
-let editId=null;
-
-function openEditFromModal(){
-  if(currentId) openEdit(currentId);
-}
-
-function openEdit(id){
-  editId=id;
-  const p=getPerson(id);
-  document.getElementById('em-title').textContent=p.name||'Редактировать';
-  document.getElementById('em-surname').value=p.surname||'';
-  document.getElementById('em-firstname').value=p.firstname||'';
-  document.getElementById('em-patronymic').value=p.patronymic||'';
-  document.getElementById('em-maiden').value=p.maiden||'';
-  document.getElementById('em-bdate').value=p.bdate||'';
-  document.getElementById('em-ddate').value=p.ddate||'';
-  document.getElementById('em-place').value=p.place||'';
-  document.getElementById('em-role').value=p.role||'';
-  document.getElementById('em-story').value=p.story||'';
-
-  setSex(p.sex||'M',false);
-  buildAvPicker(p.avStyle||0);
-  refreshEmPreview();
-  document.getElementById('edit-overlay').classList.add('open');
-}
-
-function setSex(s,refresh=true){
-  document.getElementById('sex-m').className='sex-btn'+(s==='M'?' active':'');
-  document.getElementById('sex-f').className='sex-btn'+(s==='F'?' active':'');
-  if(!overrides[editId]) overrides[editId]={};
-  overrides[editId].sex=s;
-  if(refresh) refreshEmPreview();
-}
-
-function buildAvPicker(current){
-  const labels=['Классик','Бородач','Дама','Пожилой','Малыш','Усач'];
-  const ids=['i51','i57','i53','i56','i542','i512'];
-  const p=document.getElementById('av-picker');
-  p.innerHTML=labels.map((l,i)=>{
-    const demoId=ids[i];
-    const tmp={...getPerson(editId), avStyle:i};
-    const svg=AV[i](editId);
-    return `<button class="av-pick-btn${i===current?' active':''}" onclick="setAvStyle(${i})" title="${l}">
-      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">${svg}</svg>
-    </button>`;
-  }).join('');
-}
-
-function setAvStyle(s){
-  if(!overrides[editId]) overrides[editId]={};
-  overrides[editId].avStyle=s;
-  document.querySelectorAll('.av-pick-btn').forEach((b,i)=>b.classList.toggle('active',i===s));
-  refreshEmPreview();
-}
-
-function refreshEmPreview(){
-  if(!editId) return;
-  const p=getPerson(editId);
-  const ph=getPhoto(editId);
-  const prev=document.getElementById('em-preview');
-  prev.innerHTML=ph?`<img src="${ph}" alt="">`:makeAV(editId);
-}
-
-function handlePhotoUpload(e){
-  const file=e.target.files[0];
-  if(!file||!editId) return;
-  const reader=new FileReader();
-  reader.onload=ev=>{
-    photos[editId]=ev.target.result;
-    localStorage.setItem('androsov_ph3',JSON.stringify(photos));
-    refreshEmPreview();
-    showToast('Фото загружено!');
-  };
-  reader.readAsDataURL(file);
-}
-
-function triggerPhotoUploadForModal(){
-  // create temp input
-  const inp=document.createElement('input');
-  inp.type='file'; inp.accept='image/*';
-  inp.onchange=e=>{
-    const file=e.target.files[0]; if(!file||!currentId) return;
-    const reader=new FileReader();
-    reader.onload=ev=>{
-      const extra=JSON.parse(localStorage.getItem('androsov_extra_'+currentId)||'[]');
-      extra.push(ev.target.result);
-      localStorage.setItem('androsov_extra_'+currentId,JSON.stringify(extra));
-      openM(currentId);
-      showToast('Фото добавлено!');
-    };
-    reader.readAsDataURL(file);
-  };
-  inp.click();
-}
-
-function quickAddPhoto(e,id){
-  e.stopPropagation();
-  const inp=document.createElement('input');
-  inp.type='file'; inp.accept='image/*';
-  inp.onchange=ev=>{
-    const file=ev.target.files[0]; if(!file) return;
-    const reader=new FileReader();
-    reader.onload=el=>{
-      photos[id]=el.target.result;
-      localStorage.setItem('androsov_ph3',JSON.stringify(photos));
-      const avEl2=document.getElementById('cav-'+id);
-      if(avEl2) avEl2.innerHTML=avEl(id);
-      showToast('Фото добавлено!');
-    };
-    reader.readAsDataURL(file);
-  };
-  inp.click();
-}
-
-function saveEdit(){
-  if(!editId) return;
-  if(!overrides[editId]) overrides[editId]={};
-  const ov=overrides[editId];
-  const sn=document.getElementById('em-surname').value.trim();
-  const fn=document.getElementById('em-firstname').value.trim();
-  const pt=document.getElementById('em-patronymic').value.trim();
-  ov.surname=sn; ov.firstname=fn; ov.patronymic=pt;
-  ov.name=[sn,fn,pt].filter(Boolean).join(' ')||getPerson(editId).name;
-  ov.maiden=document.getElementById('em-maiden').value.trim();
-  ov.bdate=document.getElementById('em-bdate').value.trim();
-  ov.ddate=document.getElementById('em-ddate').value.trim();
-  ov.place=document.getElementById('em-place').value.trim();
-  ov.role=document.getElementById('em-role').value.trim();
-  ov.story=document.getElementById('em-story').value.trim();
-  localStorage.setItem('androsov_ov3',JSON.stringify(overrides));
-  // refresh card
-  const cav=document.getElementById('cav-'+editId);
-  if(cav) cav.innerHTML=avEl(editId);
-  const card=document.getElementById('c-'+editId);
-  if(card){
-    const nm=card.querySelector('.c-name'); if(nm) nm.textContent=getPerson(editId).name;
-    const dt=card.querySelector('.c-date'); if(dt) dt.textContent=getPerson(editId).bdate||'';
+function ds(q){
+  var el=document.getElementById("sr");
+  if(!q.trim()){el.innerHTML="";return}
+  var lo=q.toLowerCase();
+  var f=[];
+  for(var i=0;i<PP.length;i++){
+    var p=getPerson(PP[i].id);
+    if(p.n.toLowerCase().indexOf(lo)>-1||(p.r&&p.r.toLowerCase().indexOf(lo)>-1)||(p.b&&p.b.indexOf(q)>-1)||(p.pl&&p.pl.toLowerCase().indexOf(lo)>-1)||(p.st&&p.st.toLowerCase().indexOf(lo)>-1)) f.push(p);
   }
-  if(adminLoggedIn) buildAdminGrid();
-  closeEdit();
-  if(currentId===editId) openM(editId);
-  showToast('Сохранено ✓');
-}
-
-function resetPerson(){
-  if(!editId||!confirm('Сбросить к исходным данным?')) return;
-  delete overrides[editId];
-  localStorage.setItem('androsov_ov3',JSON.stringify(overrides));
-  const cav=document.getElementById('cav-'+editId);
-  if(cav) cav.innerHTML=avEl(editId);
-  openEdit(editId);
-  showToast('Сброшено');
-}
-
-function closeEdit(){ document.getElementById('edit-overlay').classList.remove('open'); editId=null; }
-function closeEditOnBg(e){ if(e.target.id==='edit-overlay') closeEdit(); }
-
-// ══════════════════════════════════════════════
-// ADD RELATIVE
-// ══════════════════════════════════════════════
-function openAddRel(){
-  if(!currentId) return;
-  const p=getPerson(currentId);
-  document.getElementById('add-rel-title').textContent=`Добавить к ${p.firstname||p.name}`;
-  document.getElementById('add-rel-overlay').classList.add('open');
-}
-
-function selectRelType(type){
-  // Opens edit modal for a new person of that relation type
-  closeAddRel();
-  showToast('Функция: добавить '+type+' — откройте редактор и сохраните нового человека');
-}
-
-function closeAddRel(){ document.getElementById('add-rel-overlay').classList.remove('open'); }
-function closeAddRelOnBg(e){ if(e.target.id==='add-rel-overlay') closeAddRel(); }
-
-// ══════════════════════════════════════════════
-// NAVIGATION
-// ══════════════════════════════════════════════
-function showSec(n,btn){
-  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
-  document.getElementById(n+'-sec').classList.add('active');
-  if(btn) btn.classList.add('active');
-}
-
-// ══════════════════════════════════════════════
-// SEARCH
-// ══════════════════════════════════════════════
-function doSearch(q){
-  const el=document.getElementById('sr');
-  if(!q.trim()){el.innerHTML='';return;}
-  const lo=q.toLowerCase();
-  const found=Object.keys(BASE).filter(id=>{
-    const p=getPerson(id);
-    return p.name.toLowerCase().includes(lo)||(p.bdate&&p.bdate.includes(q))||(p.role&&p.role.toLowerCase().includes(lo))||(p.story&&p.story.toLowerCase().includes(lo))||(p.place&&p.place.toLowerCase().includes(lo));
-  });
-  if(!found.length){el.innerHTML='<p style="color:var(--text4);padding:20px 0;font-size:14px">Никого не найдено.</p>';return;}
-  el.innerHTML=found.map(id=>{
-    const p=getPerson(id);
-    return `<div class="sr-item" onclick="openM('${id}')">
-      <div class="sr-av">${avEl(id)}</div>
-      <div><div class="sr-name">${p.name}</div><div class="sr-meta">${p.role||''}${p.bdate?' · '+p.bdate:''}</div></div>
-    </div>`;
-  }).join('');
-}
-
-// ══════════════════════════════════════════════
-// ADMIN
-// ══════════════════════════════════════════════
-let adminLoggedIn=false;
-
-function showAdminSection(){
-  const nav=document.querySelector('.nav');
-  if(!document.getElementById('admin-nb')){
-    const btn=document.createElement('button');
-    btn.className='nb';btn.id='admin-nb';btn.textContent='⚙';
-    btn.onclick=e=>{ showSec('admin',null); document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); };
-    nav.appendChild(btn);
+  if(!f.length){el.innerHTML='<p style="text-align:center;color:rgba(245,237,224,.4);padding:40px 20px;font-family:\'Instrument Serif\',serif;font-style:italic;font-size:16px">Никого не найдено</p>';return}
+  var out="";
+  for(var i=0;i<f.length;i++){
+    var p=f[i];
+    var bg=p.me?"linear-gradient(180deg,#fff2c8,#d4a843)":p.s==="F"?"linear-gradient(180deg,#ebb5d0,#c45a8a)":"linear-gradient(180deg,#6b9be5,#2f5ba8)";
+    var ph=photos[p.id];
+    var avC=ph?'<img src="'+ph+'" alt="">':(p.s==="F"?"♀":"♂");
+    out+='<div class="sri" data-id="'+p.id+'" onclick="omById(this.getAttribute(\'data-id\'))"><div class="sav" style="background:'+bg+'">'+avC+'</div><div><div class="snm">'+esc(p.n)+'</div><div class="smt">'+esc(p.r||"")+(p.b?" · ★ "+p.b:"")+(p.pl?" · "+esc(p.pl):"")+'</div></div><div class="stg">'+(p.dr?"Прямой":"Боковой")+'</div></div>';
   }
-  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
-  document.getElementById('admin-sec').classList.add('active');
-  document.getElementById('admin-nb').classList.add('active');
+  el.innerHTML=out;
 }
 
+function sh(id,btn){
+  var secs=document.querySelectorAll(".sec");
+  for(var i=0;i<secs.length;i++) secs[i].classList.remove("on");
+  var ts=document.querySelectorAll(".tab");
+  for(var i=0;i<ts.length;i++) ts[i].classList.remove("on");
+  var v=document.getElementById("v"+id);
+  if(v) v.classList.add("on");
+  if(btn) btn.classList.add("on");
+  window.scrollTo(0,0);
+  if(id==="t") renderTree();
+}
+
+var brandClicks=0,brandTimer=null;
+function brandTap(){
+  brandClicks++;
+  if(brandTimer) clearTimeout(brandTimer);
+  brandTimer=setTimeout(function(){brandClicks=0},500);
+  if(brandClicks>=2){brandClicks=0;openLogin()}
+}
+function openLogin(){
+  if(sessionStorage.getItem("adrAdmin")==="1"){openAdmin();return}
+  document.getElementById("loginU").value="";
+  document.getElementById("loginP").value="";
+  document.getElementById("loginErr").style.display="none";
+  document.getElementById("loginMov").classList.add("on");
+}
 function doLogin(){
-  const u=document.getElementById('al-u').value;
-  const p=document.getElementById('al-p').value;
-  if(u==='admin'&&p==='admin1234'){
-    adminLoggedIn=true;
-    document.getElementById('admin-login').style.display='none';
-    document.getElementById('admin-panel').style.display='block';
-    buildAdminGrid();
+  var u=document.getElementById("loginU").value.trim();
+  var p=document.getElementById("loginP").value;
+  if(u==="admin"&&p==="admin1234"){
+    sessionStorage.setItem("adrAdmin","1");
+    document.getElementById("loginMov").classList.remove("on");
+    openAdmin();
   } else {
-    document.getElementById('al-err').style.display='block';
+    document.getElementById("loginErr").style.display="block";
   }
 }
-
-function doLogout(){
-  adminLoggedIn=false;
-  document.getElementById('admin-login').style.display='block';
-  document.getElementById('admin-panel').style.display='none';
-  document.getElementById('al-u').value='';
-  document.getElementById('al-p').value='';
+function openAdmin(){
+  var list=document.getElementById("adminList");
+  var out="";
+  for(var i=0;i<PP.length;i++){
+    var p=getPerson(PP[i].id);
+    var bg=p.me?"linear-gradient(180deg,#fff2c8,#d4a843)":p.s==="F"?"linear-gradient(180deg,#ebb5d0,#c45a8a)":"linear-gradient(180deg,#6b9be5,#2f5ba8)";
+    var ph=photos[p.id];
+    var avC=ph?'<img src="'+ph+'" alt="">':(p.s==="F"?"♀":"♂");
+    out+='<div class="sri" data-id="'+p.id+'" onclick="editPerson(this.getAttribute(\'data-id\'))"><div class="sav" style="background:'+bg+'">'+avC+'</div><div><div class="snm">'+esc(p.n)+'</div><div class="smt">'+esc(p.r||"")+(p.b?" · ★ "+p.b:"")+'</div></div><div class="stg">'+(p.dr?"Прямой":"Боковой")+'</div></div>';
+  }
+  list.innerHTML=out;
+  document.getElementById("adminMov").classList.add("on");
+}
+var editingId=null;
+function editPerson(id){
+  editingId=id;
+  var p=getPerson(id);
+  document.getElementById("adminMov").classList.remove("on");
+  document.getElementById("editTitle").innerHTML="<em>"+esc(p.n.split(" ")[0])+"</em> "+esc(p.n.split(" ").slice(1).join(" "));
+  var ph=photos[id]||"";
+  var body='<div style="display:flex;gap:12px;align-items:center;margin-bottom:16px">';
+  body+='<div id="phPrev" style="width:70px;height:70px;border-radius:50%;border:2px solid rgba(240,200,116,.45);overflow:hidden;flex-shrink:0;background:'+(p.me?"linear-gradient(180deg,#fff2c8,#d4a843)":p.s==="F"?"linear-gradient(180deg,#ebb5d0,#c45a8a)":"linear-gradient(180deg,#6b9be5,#2f5ba8)")+';display:flex;align-items:center;justify-content:center;font-size:28px">';
+  body+=ph?'<img src="'+ph+'" style="width:100%;height:100%;object-fit:cover">':(p.s==="F"?"♀":"♂");
+  body+='</div><div style="flex:1"><label class="cb cbs" style="padding:9px 16px;font-size:12px;display:inline-block;cursor:pointer">Загрузить фото<input type="file" accept="image/*" onchange="loadPhoto(event)" style="display:none"></label>';
+  if(ph) body+=' <button class="cb" style="padding:9px 12px;font-size:12px;background:rgba(200,60,60,.15);border:1px solid rgba(200,60,60,.3);color:#f47070" onclick="removePhoto()">Удалить</button>';
+  body+='</div></div>';
+  body+='<div class="edField"><label>Имя (фамилия имя отчество)</label><input id="edN" value="'+esc(p.n)+'"></div>';
+  body+='<div class="edField"><label>Роль в семье</label><input id="edR" value="'+esc(p.r||"")+'"></div>';
+  body+='<div style="display:flex;gap:10px"><div class="edField" style="flex:1"><label>Пол</label><select id="edS"><option value="M"'+(p.s==="M"?" selected":"")+'>Мужской</option><option value="F"'+(p.s==="F"?" selected":"")+'>Женский</option></select></div><div class="edField" style="flex:1"><label>Линия</label><select id="edDR"><option value="1"'+(p.dr?" selected":"")+'>Прямая</option><option value="0"'+(!p.dr?" selected":"")+'>Боковая</option></select></div></div>';
+  body+='<div style="display:flex;gap:10px"><div class="edField" style="flex:1"><label>Родился</label><input id="edB" value="'+esc(p.b||"")+'" placeholder="дд.мм.гггг"></div><div class="edField" style="flex:1"><label>Умер</label><input id="edD" value="'+esc(p.d||"")+'" placeholder="дд.мм.гггг"></div></div>';
+  body+='<div class="edField"><label>Место</label><input id="edPL" value="'+esc(p.pl||"")+'"></div>';
+  body+='<div class="edField"><label>История / воспоминания</label><textarea id="edST">'+esc(p.st||"")+'</textarea></div>';
+  body+='<div style="display:flex;gap:8px;margin-top:12px"><button class="cb cbp" style="flex:1" onclick="savePerson()">Сохранить</button><button class="cb cbs" onclick="resetPerson()">Сброс</button><button class="cb cbs" onclick="document.getElementById(\'editMov\').classList.remove(\'on\');openAdmin()">Назад</button></div>';
+  document.getElementById("editBody").innerHTML=body;
+  document.getElementById("editMov").classList.add("on");
+}
+function loadPhoto(e){
+  var f=e.target.files[0];if(!f) return;
+  var rd=new FileReader();
+  rd.onload=function(ev){
+    var img=new Image();
+    img.onload=function(){
+      var MAX=400;var w=img.width,h=img.height;
+      if(w>MAX){h=Math.round(h*MAX/w);w=MAX}
+      var cv=document.createElement("canvas");cv.width=w;cv.height=h;
+      cv.getContext("2d").drawImage(img,0,0,w,h);
+      var src=cv.toDataURL("image/jpeg",.8);
+      photos[editingId]=src;
+      try{localStorage.setItem("adrPh",JSON.stringify(photos))}catch(_){alert("Недостаточно места")}
+      document.getElementById("phPrev").innerHTML='<img src="'+src+'" style="width:100%;height:100%;object-fit:cover">';
+    };
+    img.src=ev.target.result;
+  };
+  rd.readAsDataURL(f);
+}
+function removePhoto(){
+  delete photos[editingId];
+  try{localStorage.setItem("adrPh",JSON.stringify(photos))}catch(_){}
+  editPerson(editingId);
+}
+function savePerson(){
+  var o=overrides[editingId]||{};
+  o.n=document.getElementById("edN").value.trim();
+  o.r=document.getElementById("edR").value.trim();
+  o.s=document.getElementById("edS").value;
+  o.dr=document.getElementById("edDR").value==="1"?1:0;
+  o.b=document.getElementById("edB").value.trim();
+  o.d=document.getElementById("edD").value.trim();
+  o.pl=document.getElementById("edPL").value.trim();
+  o.st=document.getElementById("edST").value.trim();
+  overrides[editingId]=o;
+  try{localStorage.setItem("adrOv",JSON.stringify(overrides))}catch(_){alert("Ошибка сохранения")}
+  document.getElementById("editMov").classList.remove("on");
+  openAdmin();
+  if(document.getElementById("vt").classList.contains("on")) renderTree();
+}
+function resetPerson(){
+  if(!confirm("Сбросить все изменения этой персоны?")) return;
+  delete overrides[editingId];
+  try{localStorage.setItem("adrOv",JSON.stringify(overrides))}catch(_){}
+  document.getElementById("editMov").classList.remove("on");
+  openAdmin();
+  if(document.getElementById("vt").classList.contains("on")) renderTree();
 }
 
-function buildAdminGrid(){
-  const g=document.getElementById('admin-grid');
-  g.innerHTML=Object.keys(BASE).map(id=>{
-    const p=getPerson(id);
-    return `<div class="admin-card" onclick="openEdit('${id}')">
-      <div class="ac-av">${avEl(id)}</div>
-      <div>
-        <div class="ac-name">${p.name}</div>
-        <div class="ac-role">${p.role||''}</div>
-        <div class="ac-edit">✏️ Редактировать</div>
-      </div>
-    </div>`;
-  }).join('');
-}
-
-// ══════════════════════════════════════════════
-// LIGHTBOX
-// ══════════════════════════════════════════════
-function openLightbox(src){
-  document.getElementById('lb-img').src=src;
-  document.getElementById('lightbox').classList.add('open');
-}
-function closeLightbox(){ document.getElementById('lightbox').classList.remove('open'); }
-
-// ══════════════════════════════════════════════
-// TOAST
-// ══════════════════════════════════════════════
-function showToast(msg){
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2400);
-}
-
-// ══════════════════════════════════════════════
-// INIT
-// ══════════════════════════════════════════════
-document.addEventListener('DOMContentLoaded',()=>{
-  injectAvatars();
-  // card hover add-photo buttons already in html
-});
+renderTree();
 </script>
 </body>
 </html>
