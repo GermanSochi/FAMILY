@@ -927,40 +927,46 @@ function drawFrame(){
     const prog=Math.max(0,Math.min(1,(nodeRevealProgress-child.revealDelay*.8)*3));
     if(prog<=0) return;
     const cx_=child.x+NW/2,cy_=child.y;
-    [link.fa,link.mo].filter(Boolean).forEach(pid=>{
+    [[link.fa,"fa"],[link.mo,"mo"]].filter(([pid])=>pid).forEach(([pid,side])=>{
       const par=nodeById[pid];
       if(!par) return;
       const lv=Math.min(child.kdist??99,par.kdist??99);
+      const isMo=side==="mo";
+      // Отец — синий, Мать — розовый
+      const c0=isMo?[248,178,208]:[178,208,248];
+      const c1=isMo?[255,200,225]:[200,225,255];
+      const d0=isMo?[188,120,158]:[120,158,188];
+      const d1=isMo?[225,145,185]:[145,185,225];
       const px_=par.x+NW/2,py_=par.y+NH;
       const mid=(py_+cy_)/2+8*Math.sin(aT*1.2+child.x*.005);
       cx2.save();
       cx2.setLineDash([]);
       if(lv<=2){
-        cx2.globalAlpha=prog*.82;
-        cx2.shadowColor="rgba(210,220,248,.2)";cx2.shadowBlur=6;
+        cx2.globalAlpha=prog*.85;
+        cx2.shadowColor=isMo?"rgba(252,188,215,.25)":"rgba(188,215,252,.25)";cx2.shadowBlur=7;
         const lg=cx2.createLinearGradient(px_,py_,cx_,cy_);
-        lg.addColorStop(0,"rgba(198,215,248,.35)");
-        lg.addColorStop(.5,"rgba(220,228,250,.9)");
-        lg.addColorStop(1,"rgba(198,215,248,.35)");
-        cx2.strokeStyle=lg;cx2.lineWidth=1.8;
+        lg.addColorStop(0,`rgba(${c0},.38)`);
+        lg.addColorStop(.5,`rgba(${c1},.92)`);
+        lg.addColorStop(1,`rgba(${c0},.38)`);
+        cx2.strokeStyle=lg;cx2.lineWidth=1.9;
       } else if(lv<=4){
-        cx2.globalAlpha=prog*.52;
+        cx2.globalAlpha=prog*.55;
         cx2.shadowBlur=0;
         const lg=cx2.createLinearGradient(px_,py_,cx_,cy_);
-        lg.addColorStop(0,"rgba(138,168,212,.28)");
-        lg.addColorStop(.5,"rgba(155,185,228,.68)");
-        lg.addColorStop(1,"rgba(138,168,212,.28)");
+        lg.addColorStop(0,`rgba(${d0},.3)`);
+        lg.addColorStop(.5,`rgba(${d1},.72)`);
+        lg.addColorStop(1,`rgba(${d0},.3)`);
         cx2.strokeStyle=lg;cx2.lineWidth=1.1;
       } else if(lv<=7){
-        cx2.globalAlpha=prog*.3;
+        cx2.globalAlpha=prog*.32;
         cx2.shadowBlur=0;
-        cx2.strokeStyle="rgba(92,118,158,.55)";
-        cx2.lineWidth=0.6;
+        cx2.strokeStyle=isMo?"rgba(148,80,112,.6)":"rgba(80,112,158,.6)";
+        cx2.lineWidth=0.65;
         cx2.setLineDash([4,4]);
       } else {
-        cx2.globalAlpha=prog*.15;
+        cx2.globalAlpha=prog*.16;
         cx2.shadowBlur=0;
-        cx2.strokeStyle="rgba(64,82,110,.4)";
+        cx2.strokeStyle=isMo?"rgba(95,55,78,.42)":"rgba(55,78,105,.42)";
         cx2.lineWidth=0.5;
         cx2.setLineDash([3,6]);
       }
