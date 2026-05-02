@@ -825,6 +825,7 @@ function drawFrame(){
   });
 
   // Draw nodes
+  const _sGn=selfId?(PP.find(p=>p.id===selfId)?.gn??0):0;
   nodes.forEach(n=>{
     const prog=Math.max(0,Math.min(1,(nodeRevealProgress-n.revealDelay*.8)*4));
     if(prog<=0) return;
@@ -839,7 +840,7 @@ function drawFrame(){
     if(prog<1){
       cx2.translate(x+w/2,y+h/2);cx2.scale(prog*sc,prog*sc);cx2.translate(-(x+w/2),-(y+h/2));
     }
-    cx2.globalAlpha=prog*(n.me||n.dr?1:.87);
+    cx2.globalAlpha=prog*(n.me?1:Math.max(.5,1-Math.abs(n.gn-_sGn)/14));
 
     // Glow
     if(isH||n.me){
