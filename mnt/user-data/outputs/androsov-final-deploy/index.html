@@ -671,33 +671,80 @@ function descMap(id){
 function getRel(fromId,toId,fAnc,fDesc){
   if(!fromId||fromId===toId)return null;
   const tp=PP.find(p=>p.id===toId),F=tp&&tp.s==="F";
+  const fp=PP.find(p=>p.id===fromId),fromF=fp&&fp.s==="F";
   const fa=fAnc||ancMap(fromId),fd=fDesc||descMap(fromId);
+
+  // Прямые предки
   if(fa[toId]!=null){const g=fa[toId];
     if(g===1)return F?"Мать":"Отец";
     if(g===2)return F?"Бабушка":"Дедушка";
     if(g===3)return F?"Прабабушка":"Прадед";
     if(g===4)return F?"Прапрабабушка":"Прапрадед";
     return F?`Пра(${g-2})бабушка`:`Пра(${g-2})дед`;}
+
+  // Прямые потомки
   if(fd[toId]!=null){const g=fd[toId];
     if(g===1)return F?"Дочь":"Сын";
     if(g===2)return F?"Внучка":"Внук";
     if(g===3)return F?"Правнучка":"Правнук";
-    return "Потомок";}
-  if((SPOUSES[fromId]||[]).includes(toId))return F?"Жена":"Муж";
+    if(g===4)return F?"Праправнучка":"Праправнук";
+    return F?"Потомок":"Потомок";}
+
+  // Супруг(а)
+  const mySp=SPOUSES[fromId]||[];
+  if(mySp.includes(toId))return F?"Жена":"Муж";
+
+  // Свойство (через супруга)
+  for(const spId of mySp){
+    const spAnc=ancMap(spId),spDesc=descMap(spId);
+    // Родители супруга
+    if(spAnc[toId]!=null&&spAnc[toId]===1)
+      return fromF?(F?"Свекровь":"Свёкор"):(F?"Тёща":"Тесть");
+    // Братья/сёстры супруга
+    const ta2=ancMap(toId);let bf2=99,bt2=99;
+    Object.entries(spAnc).forEach(([a,fg])=>{if(ta2[a]!=null&&fg+ta2[a]<bf2+bt2){bf2=fg;bt2=ta2[a];}});
+    if(bf2===1&&bt2===1){
+      if(fromF)return F?"Золовка":"Деверь";
+      return F?"Свояченица":"Шурин";}
+    // Дети супруга (не кровные — пасынок/падчерица)
+    if(spDesc[toId]===1)return F?"Падчерица":"Пасынок";
+  }
+  // Зять / Невестка (супруг/а ребёнка)
+  for(const chId of(CHILDREN[fromId]||[])){
+    if((SPOUSES[chId]||[]).includes(toId))return F?"Невестка":"Зять";}
+
+  // Боковые через общего предка
   const ta=ancMap(toId);let bf=99,bt=99;
   Object.entries(fa).forEach(([a,fg])=>{if(ta[a]!=null&&fg+ta[a]<bf+bt){bf=fg;bt=ta[a];}});
   if(bf<99){
-    if(bf===1&&bt===1)return F?"Сестра":"Брат";
-    if(bf===1&&bt===2)return F?"Племянница":"Племянник";
+    if(bf===1&&bt===1){
+      // Полнородный или неполнородный?
+      const fl=LINKS[fromId]||{},tl=LINKS[toId]||{};
+      const sameFa=fl.fa&&fl.fa===tl.fa,sameMo=fl.mo&&fl.mo===tl.mo;
+      if(sameFa&&sameMo)return F?"Родная сестра":"Родной брат";
+      if(sameFa)return F?"Единокровная сестра":"Единокровный брат";
+      if(sameMo)return F?"Единоутробная сестра":"Единоутробный брат";
+      return F?"Сестра":"Брат";}
     if(bf===2&&bt===1)return F?"Тётя":"Дядя";
+    if(bf===1&&bt===2)return F?"Племянница":"Племянник";
     if(bf===2&&bt===2)return F?"Двоюр. сестра":"Двоюр. брат";
-    if(bf===1&&bt===3)return F?"Внуч. племянница":"Внуч. племянник";
     if(bf===3&&bt===1)return F?"Двоюр. бабушка":"Двоюр. дед";
-    if(bf===2&&bt===3)return F?"Двоюр. тётя":"Двоюр. дядя";
-    if(bf===3&&bt===2)return F?"Двоюр. племянница":"Двоюр. племянник";
+    if(bf===1&&bt===3)return F?"Внучатая племянница":"Внучатый племянник";
+    if(bf===3&&bt===2)return F?"Двоюр. тётя":"Двоюр. дядя";
+    if(bf===2&&bt===3)return F?"Двоюр. племянница":"Двоюр. племянник";
     if(bf===3&&bt===3)return F?"Троюр. сестра":"Троюр. брат";
-    return F?"Родственница":"Родственник";}
-  return F?"Родственница":"Родственник";
+    if(bf===4&&bt===1)return F?"Троюр. бабушка":"Троюр. дед";
+    if(bf===1&&bt===4)return F?"Внучатая племянница 2-й ст.":"Внучатый племянник 2-й ст.";
+    if(bf===4&&bt===2)return F?"Троюр. тётя":"Троюр. дядя";
+    if(bf===2&&bt===4)return F?"Троюр. племянница":"Троюр. племянник";
+    if(bf===4&&bt===4)return F?"Четвероюр. сестра":"Четвероюр. брат";
+    // Общий случай: кузены разной степени
+    const deg=Math.min(bf,bt)-1;
+    const rm=Math.abs(bf-bt);
+    if(rm===0)return F?`${deg+1}-юр. сестра`:`${deg+1}-юр. брат`;
+    return F?"Дальняя родственница":"Дальний родственник";}
+
+  return F?"Дальняя родственница":"Дальний родственник";
 }
 
 // Init selfId from localStorage, apply me flag
