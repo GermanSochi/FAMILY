@@ -103,8 +103,11 @@ main{position:fixed;inset:0;top:58px;z-index:10}
 .hcl{font-size:10px;color:var(--ts);letter-spacing:2px;text-transform:uppercase;margin-top:3px}
 @keyframes riseIn{to{transform:translateY(0);opacity:1}}
 /* ── TREE ── */
-#vt{position:relative}
+#vt{position:absolute;inset:0}
 .ttb{position:absolute;top:14px;right:14px;z-index:20;display:flex;gap:6px}
+.tfilterbar{position:absolute;top:14px;left:50%;transform:translateX(-50%);z-index:20;display:flex;gap:3px;padding:3px;background:rgba(5,10,20,.75);border:1px solid rgba(255,255,255,.08);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-radius:999px}
+.tfbtn{padding:6px 16px;border:none;background:none;color:rgba(240,237,232,.55);font-family:"DM Sans",sans-serif;font-size:12px;border-radius:999px;cursor:pointer;transition:all .22s;white-space:nowrap}
+.tfbtn.on{background:linear-gradient(135deg,rgba(212,168,67,.28),rgba(212,168,67,.12));color:var(--gold2);border:1px solid rgba(212,168,67,.3)}
 .tbtn{
   width:38px;height:38px;
   background:rgba(8,14,26,.65);border:1px solid var(--glass-b);
@@ -114,7 +117,7 @@ main{position:fixed;inset:0;top:58px;z-index:10}
   box-shadow:inset 0 1px 0 rgba(255,255,255,.06);
 }
 .tbtn:hover{background:rgba(30,50,90,.7);color:var(--gold2);border-color:rgba(212,168,67,.3);box-shadow:0 0 14px rgba(212,168,67,.12)}
-#tc{position:absolute;inset:0;cursor:grab;touch-action:none;user-select:none}
+#tc{position:fixed;top:58px;left:0;right:0;bottom:0;z-index:5;cursor:grab;touch-action:none;-webkit-user-select:none;user-select:none;display:none}
 #tc.grab{cursor:grabbing}
 .tleg{
   position:absolute;bottom:18px;left:18px;
@@ -126,14 +129,47 @@ main{position:fixed;inset:0;top:58px;z-index:10}
 .lr{display:flex;align-items:center;gap:8px;color:var(--ts);font-size:11px;letter-spacing:.2px}
 .ld{width:12px;height:12px;border-radius:50%}
 .thint{
-  position:absolute;top:14px;left:50%;transform:translateX(-50%);
+  position:absolute;top:60px;left:50%;transform:translateX(-50%);
   background:rgba(5,10,20,.78);color:rgba(240,237,232,.7);
-  padding:7px 16px;border-radius:22px;font-size:12px;letter-spacing:.4px;
+  padding:7px 16px;border-radius:22px;font-size:12px;letter-spacing:.4px;white-space:nowrap;
   pointer-events:none;z-index:10;
   animation:hintFade 4.5s ease forwards;
   border:1px solid rgba(255,255,255,.08);
 }
 @keyframes hintFade{0%,60%{opacity:1}100%{opacity:0;visibility:hidden}}
+/* ── WHO MODAL ── */
+#wmodal{position:fixed;inset:0;z-index:150;background:rgba(3,7,15,.9);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  display:none;align-items:center;justify-content:center}
+#wmodal.open{display:flex}
+.wbox{
+  background:rgba(12,18,38,.97);border:1px solid rgba(212,168,67,.25);
+  border-radius:20px;padding:36px 32px;width:min(440px,92vw);
+  max-height:82vh;overflow-y:auto
+}
+.wbox::-webkit-scrollbar{width:4px}
+.wbox::-webkit-scrollbar-thumb{background:rgba(212,168,67,.2);border-radius:2px}
+.wtitle{
+  font-family:"Cormorant Garamond",serif;font-size:28px;color:#f0c96b;
+  text-align:center;font-weight:600;margin-bottom:6px
+}
+.wsub{color:rgba(240,237,232,.45);text-align:center;font-size:13px;margin-bottom:26px;letter-spacing:.3px}
+#wplist{display:flex;flex-direction:column;gap:7px}
+.wpbtn{
+  width:100%;padding:12px 16px;background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);color:rgba(240,237,232,.85);
+  border-radius:10px;cursor:pointer;font-family:"DM Sans",sans-serif;font-size:13px;
+  text-align:left;display:flex;justify-content:space-between;align-items:center;
+  transition:background .18s,border-color .18s
+}
+.wpbtn:hover{background:rgba(212,168,67,.12);border-color:rgba(212,168,67,.3)}
+.wguest{
+  width:100%;margin-top:18px;padding:12px;background:transparent;
+  border:1px solid rgba(255,255,255,.08);color:rgba(240,237,232,.35);
+  border-radius:10px;cursor:pointer;font-family:"DM Sans",sans-serif;
+  font-size:12px;letter-spacing:.3px;transition:color .18s
+}
+.wguest:hover{color:rgba(240,237,232,.6)}
 /* ── SURNAMES ── */
 #vn{overflow-y:auto;padding:24px max(16px,env(safe-area-inset-left)) 40px}
 #vn::-webkit-scrollbar{width:4px}
@@ -302,8 +338,22 @@ main{position:fixed;inset:0;top:58px;z-index:10}
     <button class="tbtn" onclick="zf()" title="Вписать">⊡</button>
     <button class="tbtn" onclick="zc()" title="Центр">⊙</button>
   </div>
+  <div class="tfilterbar">
+    <button class="tfbtn" id="tfAll" onclick="setTF('all')">Все 97</button>
+    <button class="tfbtn on" id="tfDir" onclick="setTF('direct')">Прямые</button>
+    <button class="tfbtn" onclick="showWhoModal()" title="Сменить себя">★ Я</button>
+  </div>
   <div class="thint">Перетащите для навигации · Щипок или колёсико — масштаб</div>
   <canvas id="tc"></canvas>
+  <!-- Who are you modal -->
+  <div id="wmodal">
+    <div class="wbox">
+      <p class="wtitle">Кто ты в этом дереве?</p>
+      <p class="wsub">Выбери себя — дерево построится от тебя</p>
+      <div id="wplist"></div>
+      <button type="button" class="wguest" onclick="selectSelf(null)">Я гость · просто смотрю</button>
+    </div>
+  </div>
   <div class="tleg">
     <div class="lr"><div class="ld" style="background:#3b6bca;box-shadow:0 0 7px rgba(59,107,202,.6)"></div>Мужчина · прямой предок</div>
     <div class="lr"><div class="ld" style="background:#5b8edb;box-shadow:0 0 5px rgba(91,142,219,.4)"></div>Мужчина · боковая ветвь</div>
@@ -449,49 +499,277 @@ const PP=[
   {id:"i537",n:"Блинников Олег Константинович",r:"Двоюродный дед",s:"M",b:"04.12.1943",d:"12.09.2024",st:"Жил в Сочи. Умер 12.09.2024.",gn:-3,dr:0},
   {id:"i52",n:"Андросов Анатолий Валерьевич",r:"Отец",s:"M",b:"24.04.1958",gn:-2,dr:1},
   {id:"i53",n:"Андросова Ольга Евгеньевна",r:"Мать",s:"F",gn:-2,dr:1},
-  {id:"i510",n:"Блинникова Татьяна Валерьевна",r:"Тётя",s:"F",b:"04.03.1967",gn:-2,dr:0},
-  {id:"i533",n:"Андросов Леонид Валерьевич",r:"Дядя",s:"M",gn:-2,dr:0},
+  {id:"i510",n:"Блинникова Татьяна Валерьевна",r:"Тётя",s:"F",b:"04.03.1967",gn:-2,dr:1},
+  {id:"i533",n:"Андросов Леонид Валерьевич",r:"Дядя",s:"M",gn:-2,dr:1},
   {id:"i51",n:"Андросов Герман Анатольевич",r:"Я ★",s:"M",b:"27.08.1987",st:"Составитель этого семейного архива. Муж Лилии, папа Оливии.",gn:-1,dr:1,me:1},
   {id:"i541",n:"Андросова Лилия Сергеевна",r:"Жена",s:"F",b:"06.02.1997",gn:-1,dr:1},
-  {id:"i54",n:"Андросова Ангелина Анатольевна",r:"Сестра",s:"F",b:"03.06.1985",pl:"Сочи",gn:-1,dr:0},
-  {id:"i515",n:"Андросова Юля Анатольевна",r:"Сестра",s:"F",gn:-1,dr:0},
+  {id:"i54",n:"Андросова Ангелина Анатольевна",r:"Сестра",s:"F",b:"03.06.1985",pl:"Сочи",gn:-1,dr:1},
+  {id:"i515",n:"Андросова Юля Анатольевна",r:"Сестра",s:"F",gn:-1,dr:1},
   {id:"i511",n:"Блинников Денис Евгеньевич",r:"Двоюродный брат",s:"M",b:"28.11.1996",gn:-1,dr:0},
   {id:"i513",n:"Чальцева Ксенья Евгеньевна",r:"Двоюродная сестра",s:"F",b:"17.01.1990",gn:-1,dr:0},
   {id:"i542",n:"Андросова Оливия Германовна",r:"Дочь 💛",s:"F",b:"05.04.2026",st:"Наша любимая дочь. Для неё создаётся этот архив.",gn:0,dr:1},
-  {id:"i516",n:"Андросова Злата Ильинишна",r:"Племянница",s:"F",b:"25.03.2012",gn:0,dr:0},
+  {id:"i516",n:"Андросова Злата Ильинишна",r:"Племянница",s:"F",b:"25.03.2012",gn:0,dr:1},
+
+  /* ── поколение -5 (прапрапрадеды) ── */
+  {id:"i536",n:"Андросов Семён",r:"Прапрадед",s:"M",gn:-5,dr:1},
+  {id:"i532",n:"Андросова Ольга",r:"Прапрабабушка",s:"F",gn:-5,dr:1},
+  {id:"i543",n:"Саломин Михаил Федотович",r:"Прапрадед",s:"M",gn:-5,dr:1},
+  {id:"i544",n:"Саломина Анастасия Сергеевна",r:"Прапрабабушка",s:"F",gn:-5,dr:1},
+  {id:"i552",n:"Саломин Георгий Федотович",r:"Двоюр. прапрадед",s:"M",st:"Репрессирован 13.12.1958, реабилитирован. Служил на Кубани.",gn:-5,dr:0},
+  {id:"i553",n:"Саломин Федот Федотович",r:"Двоюр. прапрадед",s:"M",gn:-5,dr:0},
+  {id:"i554",n:"Саломин Иван Федотович",r:"Двоюр. прапрадед",s:"M",gn:-5,dr:0},
+  {id:"i582",n:"Щербаков Михаил",r:"Прапрадед",s:"M",gn:-5,dr:1},
+  {id:"i583",n:"Щербакова Анна",r:"Прапрабабушка",s:"F",gn:-5,dr:1},
+  {id:"i584",n:"Коротеев Иван",r:"Прапрадед",s:"M",gn:-5,dr:1},
+  {id:"i585",n:"Коротеева ?",r:"Прапрабабушка",s:"F",gn:-5,dr:1},
+
+  /* ── поколение -4 (прадеды) ── */
+  {id:"i519",n:"Хвостов Антон",r:"Прадед",s:"M",gn:-4,dr:1},
+  {id:"i520",n:"Хвостова Клавдия Леонтьевна",r:"Прабабушка",s:"F",gn:-4,dr:1},
+  {id:"i539",n:"Блинникова Анна Васильевна",r:"Прабабушка (двоюр.)",s:"F",b:"13.02.1921",d:"02.06.1993",gn:-4,dr:0},
+  {id:"i545",n:"Саломин Иоанн",r:"Прадед (умер младенцем)",s:"M",d:"1912",gn:-4,dr:0},
+  {id:"i546",n:"Саломин Александр Михайлович",r:"Двоюр. прадед",s:"M",b:"1901",gn:-4,dr:0},
+  {id:"i547",n:"Саломина Наталья Михайловна",r:"Двоюр. прабабушка",s:"F",b:"1903",gn:-4,dr:0},
+  {id:"i548",n:"Саломин Виктор Михайлович",r:"Двоюр. прадед",s:"M",b:"1906",gn:-4,dr:0},
+  {id:"i549",n:"Саломин Дмитрий Михайлович",r:"Двоюр. прадед",s:"M",b:"1907",gn:-4,dr:0},
+  {id:"i559",n:"Ромашкин Фёдор",r:"Двоюр. прадед",s:"M",gn:-4,dr:0},
+  {id:"i560",n:"Ромашкин Константин",r:"Двоюр. прадед",s:"M",gn:-4,dr:0},
+
+  /* ── поколение -3 (деды/двоюр.) ── */
+  {id:"i59",n:"Андросова Зоя",r:"2-я жена деда",s:"F",gn:-3,dr:0},
+  {id:"i521",n:"Щербаков Михаил Алексеевич",r:"Двоюр. прадед",s:"M",b:"20.06.1941",gn:-3,dr:0},
+  {id:"i527",n:"Щербакова Антонина",r:"Двоюр. прабабушка",s:"F",gn:-3,dr:0},
+  {id:"i538",n:"Блинникова Земфира Васильевна",r:"Жена двоюр. деда",s:"F",b:"04.05.1939",gn:-3,dr:0},
+  {id:"i561",n:"Коротеев Анатолий Николаевич",r:"Двоюр. дед",s:"M",gn:-3,dr:0},
+  {id:"i562",n:"Коротеев Александр Николаевич",r:"Двоюр. дед",s:"M",gn:-3,dr:0},
+  {id:"i563",n:"Коротеева Светлана Николаевна",r:"Двоюр. бабушка",s:"F",gn:-3,dr:0},
+  {id:"i564",n:"Коротеев Юрий Николаевич",r:"Двоюр. дед",s:"M",gn:-3,dr:0},
+  {id:"i565",n:"Грис Клара Николаевна",r:"Двоюр. бабушка",s:"F",gn:-3,dr:0},
+  {id:"i566",n:"Грис Эдуард",r:"Двоюр. дед (Казахстан)",s:"M",pl:"Карагандa",gn:-3,dr:0},
+  {id:"i576",n:"Хвостов Юрий Антонович",r:"Двоюр. дед",s:"M",gn:-3,dr:0},
+  {id:"i581",n:"Щербаков Анатолий Алексеевич",r:"Двоюр. дядя",s:"M",st:"Погиб в шахте в 20 лет.",gn:-3,dr:0},
+  {id:"i586",n:"Ромашкин Валерий Константинович",r:"Двоюр. дед",s:"M",gn:-3,dr:0},
+  {id:"i590",n:"Ромашкин Владимир Фёдорович",r:"Двоюр. дед",s:"M",gn:-3,dr:0},
+  {id:"i591",n:"Ромашкина Елена",r:"Двоюр. бабушка",s:"F",gn:-3,dr:0},
+
+  /* ── поколение -2 (родители/тёти-дяди) ── */
+  {id:"i512",n:"Блинников Евгений Олегович",r:"Муж тёти (ум.)",s:"M",b:"24.08.1967",d:"26.06.2001",gn:-2,dr:0},
+  {id:"i514",n:"Андросова Наташа Петровна",r:"Мачеха",s:"F",gn:-2,dr:1},
+  {id:"i522",n:"Щербаков Дмитрий Михайлович",r:"Дальн. родственник",s:"M",gn:-2,dr:0},
+  {id:"i523",n:"Королева Ирина Михайловна",r:"Дальн. родственница",s:"F",gn:-2,dr:0},
+  {id:"i567",n:"Грис Юрий Эдуардович",r:"Двоюр. дядя",s:"M",gn:-2,dr:0},
+  {id:"i587",n:"Ромашкина Елена Валерьевна",r:"Двоюр. тётя",s:"F",gn:-2,dr:0},
+  {id:"i588",n:"Ромашкин Сергей Валерьевич",r:"Двоюр. дядя",s:"M",gn:-2,dr:0},
+  {id:"i592",n:"Ромашкин Саша Владимирович",r:"Двоюр. дядя",s:"M",gn:-2,dr:0},
+  {id:"i593",n:"Ромашкина Света",r:"Двоюр. тётя",s:"F",pl:"Одесса",gn:-2,dr:0},
+
+  /* ── поколение -1 (двоюр. братья-сёстры и их супруги) ── */
+  {id:"i524",n:"Королев Никита",r:"Дальн. родственник",s:"M",gn:-1,dr:0},
+  {id:"i525",n:"Королев Роман",r:"Дальн. родственник",s:"M",gn:-1,dr:0},
+  {id:"i534",n:"Андросова Катя Леонидовна",r:"Двоюр. сестра",s:"F",gn:-1,dr:0},
+  {id:"i535",n:"Андросов Валерий Леонидович (мл.)",r:"Двоюр. брат",s:"M",gn:-1,dr:0},
+  {id:"i568",n:"Грис Андрей Юрьевич",r:"Двоюр. брат",s:"M",gn:-1,dr:0},
+  {id:"i569",n:"Грис Светлана",r:"Двоюр. невестка",s:"F",gn:-1,dr:0},
+  {id:"i571",n:"Чальцев Роман",r:"Муж двоюр. сестры",s:"M",gn:-1,dr:0},
+  {id:"i574",n:"Блинникова Мария",r:"Жена двоюр. брата",s:"F",gn:-1,dr:0},
+  {id:"i575",n:"Казаченко Илья",r:"Муж сестры",s:"M",gn:-1,dr:1},
+  {id:"i579",n:"Королева Екатерина",r:"Дальн. родственница",s:"F",gn:-1,dr:0},
+  {id:"i580",n:"Королева Ирина",r:"Дальн. родственница",s:"F",gn:-1,dr:0},
+  {id:"i589",n:"Ромашкина-Италия ?",r:"Дальн. родственница",s:"F",gn:-1,dr:0},
+  {id:"i594",n:"Ромашкина Елена Александровна",r:"Двоюр. племянница",s:"F",gn:-1,dr:0},
+  {id:"i595",n:"Кочубей ?",r:"Дальн. родственник",s:"M",gn:-1,dr:0},
+
+  /* ── поколение 0 (дети, внучатые племянники) ── */
+  {id:"i526",n:"Королев Егор",r:"Дальн. родственник",s:"M",gn:0,dr:0},
+  {id:"i570",n:"Грис Лев Андреевич",r:"Двоюр. племянник",s:"M",gn:0,dr:0},
+  {id:"i572",n:"Чальцева Ксения Романовна",r:"Двоюр. племянница",s:"F",gn:0,dr:0},
+  {id:"i573",n:"Чальцев Егор Романович",r:"Двоюр. племянник",s:"M",gn:0,dr:0},
+  {id:"i577",n:"Королева Эвелина Никитична",r:"Дальн. родственница",s:"F",gn:0,dr:0},
+  {id:"i578",n:"Королева Ульяна Романовна",r:"Дальн. родственница",s:"F",gn:0,dr:0},
+  {id:"i596",n:"Кочубей ? (дочь)",r:"Дальн. родственница",s:"F",gn:0,dr:0},
+  {id:"i597",n:"Кочубей ? (дочь)",r:"Дальн. родственница",s:"F",gn:0,dr:0},
 ];
 
 /* ════════ TREE ENGINE ════════ */
 const cv2=document.getElementById("tc"),cx2=cv2.getContext("2d",{alpha:false});
 let TW=0,TH=0,TX=0,TY=0,TS=1,drag=false,dsx=0,dsy=0,dtx=0,dty=0,ldist=0,hov=null,aT=0,raf2;
 let nodes=[],bounds={};
-let nodeRevealProgress=0; // 0→1 for branch-by-branch reveal
+let nodeRevealProgress=0;
+let treeFilter="direct"; // "all" | "direct"
 
 const NW=88,NH=50,HG=14,VG=82;
 
+// Real parent-child links from GEDCOM (child_id → {fa, mo})
+const LINKS={
+  "i542":{fa:"i51", mo:"i541"},  // Оливия ← Герман + Лилия      (F1)
+  "i51": {fa:"i52", mo:"i53"},   // Герман ← Анатолий + Ольга     (F2)
+  "i54": {fa:"i52", mo:"i53"},   // Ангелина ← Анатолий + Ольга   (F2)
+  "i515":{fa:"i52", mo:"i514"},  // Юля ← Анатолий + Наташа       (F3)
+  "i52": {fa:"i58", mo:"i55"},   // Анатолий ← Валерий + Ванда    (F4)
+  "i53": {fa:"i57", mo:"i56"},   // Ольга ← Евгений + Таисия      (F5)
+  "i510":{fa:"i58", mo:"i59"},   // Татьяна ← Валерий + Зоя       (F6)
+  "i533":{fa:"i58", mo:"i59"},   //            Валерий + Зоя       (F6)
+  "i511":{fa:"i512",mo:"i510"},  // Денис ← Евгений Блинников + Татьяна (F7)
+  "i513":{fa:"i512",mo:"i510"},  // Ксения ← Евгений Блинников + Татьяна (F7)
+  "i516":{fa:"i575",mo:"i515"},  // Злата ← ... + Юля             (F10)
+  "i521":{fa:"i518",mo:"i517"},  // Михаил Щ. ← Алексей + Ольга   (F11)
+  "i56": {fa:"i518",mo:"i517"},  // Таисия ← Алексей + Ольга      (F11)
+  "i581":{fa:"i518",mo:"i517"},  //            Алексей + Ольга     (F11)
+  "i57": {fa:"i519",mo:"i520"},  // Евгений ← Антон + Клавдия     (F12)
+  "i576":{fa:"i519",mo:"i520"},  //            Антон + Клавдия     (F12)
+  "i55": {fa:"i528",mo:"i529"},  // Ванда ← Николай + Александра   (F17)
+  "i561":{fa:"i528",mo:"i529"},  "i562":{fa:"i528",mo:"i529"},
+  "i563":{fa:"i528",mo:"i529"},  "i564":{fa:"i528",mo:"i529"},
+  "i565":{fa:"i528",mo:"i529"},  //            Николай + Александра (F17)
+  "i58": {fa:"i531",mo:"i530"},  // Валерий ← Леонид + Александра  (F18)
+  "i531":{mo:"i532"},            // Леонид ← (?) + Ольга Андросова (F20)
+  "i512":{fa:"i537",mo:"i538"},  // Евгений Бл. ← ... (F22)
+  "i537":{fa:"i540",mo:"i539"},  //                                 (F23)
+  "i517":{fa:"i543",mo:"i544"},  // Ольга Щ. ← Михаил Сал. + жена (F24)
+  "i546":{fa:"i543",mo:"i544"},  "i547":{fa:"i543",mo:"i544"},
+  "i548":{fa:"i543",mo:"i544"},  "i549":{fa:"i543",mo:"i544"},
+  "i545":{fa:"i543",mo:"i544"},  //            Михаил Сал. + жена  (F24)
+  "i543":{fa:"i550",mo:"i551"},  // Михаил Сал. ← Федот Г. + Анна (F25)
+  "i552":{fa:"i550",mo:"i551"},  "i553":{fa:"i550",mo:"i551"},
+  "i554":{fa:"i550",mo:"i551"},  //              Федот Г. + Анна   (F25)
+  "i550":{fa:"i556",mo:"i555"},  // Федот Г. ← Федот + Параскева   (F26)
+  "i529":{fa:"i557",mo:"i558"},  // Александра ← Ромашкин + Евдокия (F27)
+  "i559":{fa:"i557",mo:"i558"},  "i560":{fa:"i557",mo:"i558"},
+  "i518":{fa:"i582",mo:"i583"},  // Алексей Щ. ← Михаил + Анна    (F33)
+  "i528":{fa:"i584",mo:"i585"},  // Николай ← Иван + ?             (F34)
+};
+
+const PHOTOS={
+  "i517":"assets/photo_I517_olga_solomina.jpg",
+  "i56":"assets/photo_group_taya_family.jpg",
+};
+
+// Derived maps from LINKS
+const CHILDREN={},SPOUSES={};
+Object.entries(LINKS).forEach(([c,{fa,mo}])=>{
+  if(fa)(CHILDREN[fa]||(CHILDREN[fa]=[])).push(c);
+  if(mo)(CHILDREN[mo]||(CHILDREN[mo]=[])).push(c);
+  if(fa&&mo){
+    if(!(SPOUSES[fa]||[]).includes(mo))(SPOUSES[fa]||(SPOUSES[fa]=[])).push(mo);
+    if(!(SPOUSES[mo]||[]).includes(fa))(SPOUSES[mo]||(SPOUSES[mo]=[])).push(fa);
+  }
+});
+
+function ancMap(id){
+  const m={},q=[{id,g:0}];
+  while(q.length){const {id:c,g}=q.shift();if(g>8)continue;
+    const l=LINKS[c];if(!l)continue;
+    [l.fa,l.mo].filter(Boolean).forEach(p=>{if(!(p in m)){m[p]=g+1;q.push({id:p,g:g+1});}});}
+  return m;
+}
+function descMap(id){
+  const m={},q=[{id,g:0}];
+  while(q.length){const {id:c,g}=q.shift();if(g>5)continue;
+    (CHILDREN[c]||[]).forEach(ch=>{if(!(ch in m)){m[ch]=g+1;q.push({id:ch,g:g+1});}});}
+  return m;
+}
+function getRel(fromId,toId,fAnc,fDesc){
+  if(!fromId||fromId===toId)return null;
+  const tp=PP.find(p=>p.id===toId),F=tp&&tp.s==="F";
+  const fa=fAnc||ancMap(fromId),fd=fDesc||descMap(fromId);
+  if(fa[toId]!=null){const g=fa[toId];
+    if(g===1)return F?"Мать":"Отец";
+    if(g===2)return F?"Бабушка":"Дедушка";
+    if(g===3)return F?"Прабабушка":"Прадед";
+    if(g===4)return F?"Прапрабабушка":"Прапрадед";
+    return F?`Пра(${g-2})бабушка`:`Пра(${g-2})дед`;}
+  if(fd[toId]!=null){const g=fd[toId];
+    if(g===1)return F?"Дочь":"Сын";
+    if(g===2)return F?"Внучка":"Внук";
+    if(g===3)return F?"Правнучка":"Правнук";
+    return "Потомок";}
+  if((SPOUSES[fromId]||[]).includes(toId))return F?"Жена":"Муж";
+  const ta=ancMap(toId);let bf=99,bt=99;
+  Object.entries(fa).forEach(([a,fg])=>{if(ta[a]!=null&&fg+ta[a]<bf+bt){bf=fg;bt=ta[a];}});
+  if(bf<99){
+    if(bf===1&&bt===1)return F?"Сестра":"Брат";
+    if(bf===1&&bt===2)return F?"Племянница":"Племянник";
+    if(bf===2&&bt===1)return F?"Тётя":"Дядя";
+    if(bf===2&&bt===2)return F?"Двоюр. сестра":"Двоюр. брат";
+    if(bf===1&&bt===3)return F?"Внуч. племянница":"Внуч. племянник";
+    if(bf===3&&bt===1)return F?"Двоюр. бабушка":"Двоюр. дед";
+    if(bf===2&&bt===3)return F?"Двоюр. тётя":"Двоюр. дядя";
+    if(bf===3&&bt===2)return F?"Двоюр. племянница":"Двоюр. племянник";
+    if(bf===3&&bt===3)return F?"Троюр. сестра":"Троюр. брат";
+    return F?"Родственница":"Родственник";}
+  return F?"Родственница":"Родственник";
+}
+
+// Init selfId from localStorage, apply me flag
+let selfId=localStorage.getItem("wself")||"i51";
+PP.forEach(p=>{p.me=p.id===selfId?1:0;});
+
+function showWhoModal(){
+  const yr=b=>b?parseInt(b.replace(/\D/g,"").slice(-4))||0:0;
+  const alive=PP.filter(p=>!p.d&&(yr(p.b)>=1940||(!p.b&&(p.gn||0)>=-2)))
+    .sort((a,b)=>(b.gn||0)-(a.gn||0));  // youngest first
+  const list=document.getElementById("wplist");
+  list.innerHTML="";
+  alive.forEach(p=>{
+    const btn=document.createElement("button");
+    btn.type="button";
+    btn.className="wpbtn";
+    const y=p.b?p.b.replace(/\D/g,"").slice(-4):"";
+    btn.innerHTML=`<span>${p.n}</span><span style="color:rgba(212,168,67,.7);font-size:11px">${p.r||""} ${y?`· ${y}`:""}</span>`;
+    btn.onclick=()=>selectSelf(p.id);
+    list.appendChild(btn);
+  });
+  document.getElementById("wmodal").classList.add("open");
+}
+
+function selectSelf(id){
+  document.getElementById("wmodal").classList.remove("open");
+  PP.forEach(p=>{p.me=0;});
+  if(id){
+    const p=PP.find(q=>q.id===id);
+    if(p){p.me=1;selfId=id;localStorage.setItem("wself",id);}
+  } else {selfId=null;}
+  nodeRevealProgress=0;
+  buildNodes();
+  zf();
+  if(!raf2)drawFrame();
+}
+
 function buildNodes(){
+  const src=treeFilter==="direct"?PP.filter(p=>p.dr):PP;
   const bg={};
-  PP.forEach(p=>{const g=p.gn??0;(bg[g]||(bg[g]=[])).push(p)});
+  src.forEach(p=>{const g=p.gn??0;(bg[g]||(bg[g]=[])).push(p)});
   const gks=Object.keys(bg).map(Number).sort((a,b)=>a-b);
   nodes=[];
+  const fAnc=selfId?ancMap(selfId):null;
+  const fDesc=selfId?descMap(selfId):null;
   gks.forEach((g,gi)=>{
     const ids=bg[g];const rw=ids.length*(NW+HG)-HG;
     const y=gi*(NH+VG)+40;
-    ids.forEach((p,i)=>nodes.push({...p,x:-rw/2+i*(NW+HG),y,w:NW,h:NH,gi,revealDelay:gi*.15+i*.04}));
+    ids.forEach((p,i)=>{
+      const dynR=p.me?"Я ★":(selfId?getRel(selfId,p.id,fAnc,fDesc)||p.r:p.r);
+      nodes.push({...p,x:-rw/2+i*(NW+HG),y,w:NW,h:NH,gi,revealDelay:Math.min(0.7,gi*.08+i*.02),r:dynR});
+    });
   });
   const xs=nodes.map(n=>n.x),ys=nodes.map(n=>n.y);
   bounds={x0:Math.min(...xs)-20,x1:Math.max(...xs)+NW+20,y0:Math.min(...ys)-20,y1:Math.max(...ys)+NH+20};
   bounds.w=bounds.x1-bounds.x0;bounds.h=bounds.y1-bounds.y0;
 }
 
-function resize2(){TW=cv2.width=cv2.offsetWidth;TH=cv2.height=cv2.offsetHeight}
+function setTF(f){
+  treeFilter=f;
+  document.getElementById("tfAll").classList.toggle("on",f==="all");
+  document.getElementById("tfDir").classList.toggle("on",f==="direct");
+  nodeRevealProgress=0;
+  buildNodes();zf();
+}
+
+function resize2(){TW=cv2.width=window.innerWidth;TH=cv2.height=window.innerHeight-58;}
 
 function nc(n){
   if(n.me) return{f:"rgba(212,168,67,.22)",s:"rgba(212,168,67,.95)",g:"rgba(212,168,67,.5)"};
-  if(n.s==="M"&&n.dr) return{f:"rgba(20,50,115,.6)",s:"rgba(59,107,202,.95)",g:"rgba(59,107,202,.4)"};
-  if(n.s==="M") return{f:"rgba(14,36,85,.5)",s:"rgba(91,142,219,.75)",g:"rgba(91,142,219,.28)"};
-  if(n.dr) return{f:"rgba(95,28,65,.6)",s:"rgba(196,90,138,.95)",g:"rgba(196,90,138,.4)"};
-  return{f:"rgba(75,22,52,.48)",s:"rgba(212,122,168,.75)",g:"rgba(212,122,168,.28)"};
+  if(n.s==="M") return{f:"rgba(20,50,115,.6)",s:"rgba(59,107,202,.92)",g:"rgba(59,107,202,.4)"};
+  return{f:"rgba(95,28,65,.6)",s:"rgba(196,90,138,.92)",g:"rgba(196,90,138,.4)"};
 }
 
 function rr(ctx,x,y,w,h,r){
@@ -502,6 +780,8 @@ function rr(ctx,x,y,w,h,r){
 }
 
 function drawFrame(){
+  if(!TW||!TH){resize2();zf();}
+  if(!TW||!TH){raf2=requestAnimationFrame(drawFrame);return;}
   aT+=.016;
   // Reveal animation: progress increases from 0 to 1 over ~3s
   if(nodeRevealProgress<1) nodeRevealProgress=Math.min(1,nodeRevealProgress+.006);
@@ -517,30 +797,28 @@ function drawFrame(){
   for(let x=bounds.x0-20;x<bounds.x1+20;x+=gs){cx2.beginPath();cx2.moveTo(x,bounds.y0);cx2.lineTo(x,bounds.y1);cx2.stroke()}
   for(let y=bounds.y0;y<bounds.y1+20;y+=gs){cx2.beginPath();cx2.moveTo(bounds.x0-20,y);cx2.lineTo(bounds.x1+20,y);cx2.stroke()}
 
-  // Connection lines (animated bezier with gold glow)
-  const byGen={};
-  nodes.forEach(n=>{(byGen[n.gn]||(byGen[n.gn]=[])).push(n)});
-  const gksSorted=Object.keys(byGen).map(Number).sort((a,b)=>a-b);
-  gksSorted.forEach((gk,gi)=>{
-    if(gi===0) return;
-    const cur=byGen[gk],prev=byGen[gksSorted[gi-1]];
-    if(!prev) return;
-    const pm=prev.find(p=>p.dr)||prev[Math.floor(prev.length/2)];
-    if(!pm) return;
-    cur.forEach(child=>{
-      const prog=Math.max(0,Math.min(1,(nodeRevealProgress-pm.revealDelay/.8)*3));
-      if(prog<=0) return;
-      const cx_=child.x+NW/2,cy_=child.y;
-      const px_=pm.x+NW/2,py_=pm.y+NH;
+  // Connection lines — real parent-child from LINKS (GEDCOM-derived)
+  const nodeById={};
+  nodes.forEach(n=>nodeById[n.id]=n);
+  nodes.forEach(child=>{
+    const link=LINKS[child.id];
+    if(!link) return;
+    const prog=Math.max(0,Math.min(1,(nodeRevealProgress-child.revealDelay*.8)*3));
+    if(prog<=0) return;
+    const cx_=child.x+NW/2,cy_=child.y;
+    [link.fa,link.mo].filter(Boolean).forEach(pid=>{
+      const par=nodeById[pid];
+      if(!par) return;
+      const px_=par.x+NW/2,py_=par.y+NH;
       const mid=(py_+cy_)/2+10*Math.sin(aT*1.2+child.x*.005);
       cx2.save();
-      cx2.globalAlpha=prog*.38;
-      cx2.shadowColor="rgba(212,168,67,.22)";cx2.shadowBlur=4;
+      cx2.globalAlpha=prog*.75;
+      cx2.shadowColor="rgba(212,168,67,.55)";cx2.shadowBlur=8;
       const lg=cx2.createLinearGradient(px_,py_,cx_,cy_);
-      lg.addColorStop(0,"rgba(212,168,67,.12)");
-      lg.addColorStop(.5,"rgba(212,168,67,.3)");
-      lg.addColorStop(1,"rgba(212,168,67,.12)");
-      cx2.strokeStyle=lg;cx2.lineWidth=.9;
+      lg.addColorStop(0,"rgba(212,168,67,.45)");
+      lg.addColorStop(.5,"rgba(212,168,67,.85)");
+      lg.addColorStop(1,"rgba(212,168,67,.45)");
+      cx2.strokeStyle=lg;cx2.lineWidth=1.6;
       cx2.beginPath();cx2.moveTo(px_,py_);cx2.bezierCurveTo(px_,mid,cx_,mid,cx_,cy_);cx2.stroke();
       cx2.restore();
     });
@@ -585,30 +863,42 @@ function drawFrame(){
     cx2.lineWidth=.8;
     cx2.beginPath();cx2.moveTo(x+9,y+.6);cx2.lineTo(x+w-9,y+.6);cx2.stroke();
 
-    // Text
+    // Text — 4 lines: surname / first name / role / dates
     const parts=n.n.split(" ");
     const sn=parts[0]||"";
     let fn=(parts[1]||"");if(parts[2])fn+=` ${parts[2].charAt(0)}.`;
 
     cx2.shadowColor="transparent";cx2.shadowBlur=0;
     cx2.textAlign="center";cx2.textBaseline="middle";
+
+    // Line 1: Surname
     cx2.fillStyle=n.me?"rgba(240,200,90,.98)":"rgba(230,234,245,.92)";
-    cx2.font=`500 ${Math.min(10.5,72/Math.max(sn.length,1))}px "DM Sans",sans-serif`;
-    cx2.fillText(sn.substring(0,14),x+w/2,y+h*.29);
+    cx2.font=`600 ${Math.min(10,66/Math.max(sn.length,1))}px "DM Sans",sans-serif`;
+    cx2.fillText(sn.substring(0,13),x+w/2,y+h*.18);
 
-    cx2.fillStyle="rgba(175,185,215,.65)";
+    // Line 2: First name
+    cx2.fillStyle="rgba(190,200,230,.72)";
     cx2.font=`400 9px "DM Sans",sans-serif`;
-    cx2.fillText(fn.substring(0,16),x+w/2,y+h*.51);
+    cx2.fillText(fn.substring(0,15),x+w/2,y+h*.37);
 
-    if(n.b||n.d){
-      cx2.fillStyle="rgba(155,165,195,.44)";
-      cx2.font=`400 8px "DM Sans",sans-serif`;
-      const ds=(n.b?n.b.slice(-4):"?")+(n.d?" — "+n.d.slice(-4):"");
-      cx2.fillText(ds.substring(0,14),x+w/2,y+h*.73);
+    // Line 3: Role (родство) — gold tint
+    if(n.r){
+      cx2.fillStyle=n.me?"rgba(240,200,90,.88)":"rgba(200,170,90,.75)";
+      cx2.font=`500 8px "DM Sans",sans-serif`;
+      cx2.fillText(n.r.substring(0,14),x+w/2,y+h*.57);
     }
+
+    // Line 4: Dates
+    if(n.b||n.d){
+      cx2.fillStyle="rgba(140,150,180,.48)";
+      cx2.font=`400 7.5px "DM Sans",sans-serif`;
+      const ds=(n.b?n.b.slice(-4):"?")+(n.d?" — "+n.d.slice(-4):"");
+      cx2.fillText(ds.substring(0,14),x+w/2,y+h*.77);
+    }
+
     if(n.me){
       cx2.fillStyle="rgba(212,168,67,.9)";cx2.font="9px sans-serif";cx2.textAlign="right";cx2.textBaseline="top";
-      cx2.fillText("★",x+w-6,y+4);
+      cx2.fillText("★",x+w-5,y+3);
     }
     cx2.restore();
   });
@@ -666,19 +956,38 @@ function zi(){TS=Math.min(4,TS*1.2)}
 function zo(){TS=Math.max(.08,TS*.83)}
 function zc(){TX=0;TY=0}
 function zf(){
-  if(!TW||!TH) return;
-  const sx=(TW-60)/bounds.w,sy=(TH-60)/bounds.h;
-  TS=Math.min(sx,sy,.95);TX=0;TY=0;
+  if(!TW||!TH||!bounds.w||!bounds.h) return;
+  const pad=60;
+  const sx=(TW-pad*2)/bounds.w,sy=(TH-pad*2)/bounds.h;
+  TS=Math.min(sx,sy,.88);
+  TX=0;
+  // Place Герман (gn=-1) at 72% from top so ancestors are visible above
+  const gRow=nodes.filter(n=>n.gn===-1);
+  if(gRow.length){
+    const gy=gRow[0].y+NH/2;
+    const bcy=bounds.y0+bounds.h/2;
+    TY=TH*0.22-TS*(gy-bcy);
+  } else {
+    TY=0;
+  }
 }
 
 /* ════════ MODAL ════════ */
 function openM(p){
   document.getElementById("mn").textContent=p.n;
-  document.getElementById("mr").textContent=p.r||"";
+  const dynRole=p.me?"Я ★":(selfId?getRel(selfId,p.id)||p.r:p.r)||"";
+  document.getElementById("mr").textContent=dynRole;
   const av=document.getElementById("mav");
-  av.textContent=p.s==="F"?"👩":"👨";
-  av.style.background=p.me?"rgba(212,168,67,.18)":p.s==="F"?"rgba(196,90,138,.18)":"rgba(59,107,202,.18)";
-  av.style.borderColor=p.me?"rgba(212,168,67,.4)":p.s==="F"?"rgba(196,90,138,.4)":"rgba(59,107,202,.4)";
+  const ph=PHOTOS[p.id];
+  if(ph){
+    av.innerHTML=`<img src="${ph}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`;
+    av.style.background="transparent";
+    av.style.borderColor=p.me?"rgba(212,168,67,.7)":p.s==="F"?"rgba(196,90,138,.6)":"rgba(59,107,202,.6)";
+  } else {
+    av.innerHTML=p.s==="F"?"👩":"👨";
+    av.style.background=p.me?"rgba(212,168,67,.18)":p.s==="F"?"rgba(196,90,138,.18)":"rgba(59,107,202,.18)";
+    av.style.borderColor=p.me?"rgba(212,168,67,.4)":p.s==="F"?"rgba(196,90,138,.4)":"rgba(59,107,202,.4)";
+  }
   let body="";
   if(p.b) body+=`<div class="mf"><span class="mfi">★</span><div><div class="mfl">Дата рождения</div><div class="mfv">${p.b}</div></div></div>`;
   if(p.d) body+=`<div class="mf"><span class="mfi">†</span><div><div class="mfl">Дата смерти</div><div class="mfv">${p.d}</div></div></div>`;
@@ -698,11 +1007,13 @@ function doSearch(q){
   const lo=q.toLowerCase();
   const f=PP.filter(p=>p.n.toLowerCase().includes(lo)||(p.r&&p.r.toLowerCase().includes(lo))||(p.b&&p.b.includes(q))||(p.pl&&p.pl.toLowerCase().includes(lo))||(p.st&&p.st.toLowerCase().includes(lo)));
   if(!f.length){el.innerHTML=`<p style="text-align:center;color:rgba(240,237,232,.3);padding:40px;font-family:'Cormorant Garamond',serif;font-style:italic">Никого не найдено</p>`;return}
-  el.innerHTML=f.map(p=>`<div class="sri" onclick='openM(${JSON.stringify(p)})'>
+  el.innerHTML=f.map(p=>{
+    const sr=p.me?"Я ★":(selfId?getRel(selfId,p.id)||p.r:p.r)||"";
+    return `<div class="sri" onclick='openM(${JSON.stringify(p)})'>
     <div class="sav" style="background:${p.me?"rgba(212,168,67,.16)":p.s==="F"?"rgba(196,90,138,.16)":"rgba(59,107,202,.16)"}">${p.s==="F"?"👩":"👨"}</div>
-    <div><div class="snm">${p.n}</div><div class="smt">${p.r||""}${p.b?" · ★ "+p.b:""}</div></div>
+    <div><div class="snm">${p.n}</div><div class="smt">${sr}${p.b?" · ★ "+p.b:""}</div></div>
     <div class="stg">${p.dr?"Прямой":"Боковой"}</div>
-  </div>`).join("");
+  </div>`;}).join("");
 }
 
 /* ════════ NAV ════════ */
@@ -712,16 +1023,25 @@ function show(id,btn){
   const v=document.getElementById("v"+id);if(v){v.style.display="block";v.style.display="";v.classList.add("on")}
   if(btn) btn.classList.add("on");
   if(id==="t"){
+    cv2.style.display="block";
+    cancelAnimationFrame(raf2);
     resize2();
-    if(nodeRevealProgress===0||nodeRevealProgress===1){nodeRevealProgress=0}
+    nodeRevealProgress=0;
+    buildNodes();
     zf();
-    cancelAnimationFrame(raf2);drawFrame();
+    drawFrame();
+    if(!localStorage.getItem("wself")) showWhoModal();
+  } else {
+    cancelAnimationFrame(raf2);
+    cv2.style.display="none";
   }
 }
 
 /* ════════ INIT ════════ */
 buildNodes();
-window.addEventListener("resize",()=>{if(document.getElementById("vt").classList.contains("on")){resize2()}},{passive:true});
+window.addEventListener("resize",()=>{
+  if(cv2.style.display!=="none"){resize2();zf();}
+},{passive:true});
 </script>
 </body>
 </html>
