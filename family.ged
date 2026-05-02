@@ -1,0 +1,917 @@
+0 HEAD
+1 GEDC
+2 VERS 5.5.1
+2 FORM LINEAGE-LINKED
+1 CHAR UTF-8
+1 LANG Russian
+1 SOUR FAMYTALE
+2 NAME FamyTale
+2 VERS 5.5.1
+0 @I51@ INDI
+1 NAME Герман Анатольевич /Андросов/
+2 GIVN Герман Анатольевич
+2 SURN Андросов
+1 SEX M
+1 BIRT
+2 DATE 27 AUG 1987
+1 FAMS @F1@
+1 FAMC @F2@
+0 @I52@ INDI
+1 NAME Анатолий Валерьевич /Андросов/
+2 GIVN Анатолий Валерьевич
+2 SURN Андросов
+1 SEX M
+1 BIRT
+2 DATE 24 APR 1958
+1 FAMS @F2@
+1 FAMS @F3@
+1 FAMC @F4@
+0 @I53@ INDI
+1 NAME Ольга Евгенивна /Андросова/
+2 GIVN Ольга Евгенивна
+2 SURN Хвостова
+2 _MARNM Андросова
+1 SEX F
+1 FAMS @F2@
+1 FAMC @F5@
+0 @I54@ INDI
+1 NAME Ангелина Анатольевна /Андросова/
+2 GIVN Ангелина Анатольевна
+2 SURN Андросова
+1 SEX F
+1 BIRT
+2 DATE 03 JUN 1985
+2 PLAC Краснодарский Край, г. Сочи
+1 RESI
+2 ADDR Краснодарский Край, Город Краснодар
+1 FAMC @F2@
+0 @I55@ INDI
+1 NAME Ванда Николаевна /Андросова/
+2 GIVN Ванда Николаевна
+2 SURN Коротеева
+2 _MARNM Андросова
+1 SEX F
+1 FAMS @F4@
+1 FAMC @F17@
+0 @I56@ INDI
+1 NAME Таисия Алексеевна /Хвостова/
+2 GIVN Таисия Алексеевна
+2 SURN Щербакова
+2 _MARNM Хвостова
+1 SEX F
+1 FAMS @F5@
+1 FAMC @F11@
+0 @I57@ INDI
+1 NAME Евгений Антонович /Хвостов/
+2 GIVN Евгений Антонович
+2 SURN Хвостов
+1 SEX M
+1 BIRT
+2 DATE 21.06.1935
+1 FAMS @F5@
+1 FAMC @F12@
+0 @I58@ INDI
+1 NAME Валерий Леонидович /Андросов/
+2 GIVN Валерий Леонидович
+2 SURN Андросов
+1 SEX M
+1 FAMS @F4@
+1 FAMS @F6@
+1 FAMC @F18@
+0 @I59@ INDI
+1 NAME Зоя /Андросова/
+2 GIVN Зоя
+2 SURN Андросова
+1 SEX F
+1 FAMS @F6@
+0 @I510@ INDI
+1 NAME Татьяна Валеривна /Блинникова/
+2 GIVN Татьяна Валеривна
+2 SURN Андросова
+2 _MARNM Блинникова
+1 SEX F
+1 BIRT
+2 DATE 04 MAR 1967
+1 FAMS @F7@
+1 FAMC @F6@
+0 @I511@ INDI
+1 NAME Дeнис Евгеньевич /Блинников/
+2 GIVN Дeнис Евгеньевич
+2 SURN Блинников
+1 SEX M
+1 BIRT
+2 DATE 28 NOV 1996
+1 FAMS @F8@
+1 FAMC @F7@
+0 @I512@ INDI
+1 NAME Евгений Олегович /Блинников/
+2 GIVN Евгений Олегович
+2 SURN Блинников
+1 SEX M
+1 BIRT
+2 DATE 24 AUG 1967
+1 DEAT
+2 DATE 26 JUN 2001
+1 FAMS @F7@
+1 FAMC @F22@
+0 @I513@ INDI
+1 NAME Ксенья Евгеньевна /Чальцева/
+2 GIVN Ксенья Евгеньевна
+2 SURN Блинникова
+2 _MARNM Чальцева
+1 SEX F
+1 BIRT
+2 DATE 17 JAN 1990
+1 FAMS @F9@
+1 FAMC @F7@
+0 @I514@ INDI
+1 NAME Наташа Петровна /Андросова/
+2 GIVN Наташа Петровна
+2 SURN Афонина
+2 _MARNM Андросова
+1 SEX F
+1 FAMS @F3@
+0 @I515@ INDI
+1 NAME Юля Анатольевна /Андросова/
+2 GIVN Юля Анатольевна
+2 SURN Андросова
+1 SEX F
+1 FAMS @F10@
+1 FAMC @F3@
+0 @I516@ INDI
+1 NAME Злата Ильинишна /Андросова/
+2 GIVN Злата Ильинишна
+2 SURN Андросова
+1 SEX F
+1 BIRT
+2 DATE 25 MAR 2012
+1 FAMC @F10@
+0 @I517@ INDI
+1 NAME Ольга Михайловна /Щербакова/
+2 GIVN Ольга Михайловна
+2 SURN Соломина
+2 _MARNM Щербакова
+1 SEX F
+1 BIRT
+2 DATE 02 JUN 1912
+2 PLAC Зюзино, Москва
+1 DEAT
+2 DATE 01 MAR 1988
+2 CAUS Атеросклероз
+1 RESI
+2 ADDR Москва молодсть, потом Краснодар
+1 EVEN
+2 TYPE Burial
+2 PLAC пос Яблоновский, Адыгея
+1 FAMS @F11@
+1 FAMC @F24@
+0 @I518@ INDI
+1 NAME Алексей Михайлович /Щербаков/
+2 GIVN Алексей Михайлович
+2 SURN Щербаков
+1 SEX M
+1 BIRT
+2 DATE 01 MAY 2024
+1 FAMS @F11@
+1 FAMC @F33@
+0 @I519@ INDI
+1 NAME Антон /Хвостов/
+2 GIVN Антон
+2 SURN Хвостов
+1 SEX M
+1 FAMS @F12@
+0 @I520@ INDI
+1 NAME Клавдия Леонтиевна /Хвостова/
+2 GIVN Клавдия Леонтиевна
+2 SURN Хвостова
+1 SEX F
+1 FAMS @F12@
+0 @I521@ INDI
+1 NAME Михаил Алесеевич /Щербаков/
+2 GIVN Михаил Алесеевич
+2 SURN Щербаков
+1 SEX M
+1 BIRT
+2 DATE 20 JUN 1941
+1 FAMS @F13@
+1 FAMC @F11@
+0 @I522@ INDI
+1 NAME Дмитрий Михайлович /Щербаков/
+2 GIVN Дмитрий Михайлович
+2 SURN Щербаков
+1 SEX M
+1 FAMC @F13@
+0 @I523@ INDI
+1 NAME Ирина Михайловна /Королева/
+2 GIVN Ирина Михайловна
+2 SURN Щербакова
+2 _MARNM Королева
+1 SEX F
+1 FAMS @F14@
+1 FAMC @F13@
+0 @I524@ INDI
+1 NAME Никита /Королев/
+2 GIVN Никита
+2 SURN Королев
+1 SEX M
+1 FAMS @F15@
+1 FAMC @F14@
+0 @I525@ INDI
+1 NAME Роман /Королев/
+2 GIVN Роман
+2 SURN Королев
+1 SEX M
+1 FAMS @F16@
+1 FAMC @F14@
+0 @I526@ INDI
+1 NAME Егор /Королев/
+2 GIVN Егор
+2 SURN Королев
+1 SEX M
+1 FAMC @F16@
+0 @I527@ INDI
+1 NAME Антонина /Щербакова/
+2 GIVN Антонина
+2 SURN Щербакова
+1 SEX F
+1 FAMS @F13@
+0 @I528@ INDI
+1 NAME Николай Иванович /Коротеев/
+2 GIVN Николай Иванович
+2 SURN Коротеев
+1 SEX M
+1 FAMS @F17@
+1 FAMC @F34@
+0 @I529@ INDI
+1 NAME Александра Михайловна /Коротеева/
+2 GIVN Александра Михайловна
+2 SURN Ромашкина
+2 _MARNM Коротеева
+1 SEX F
+1 EVEN Они были крепостные. Жили в очень маленькой деревне в Тамбовской губернии. Село Никольское
+2 TYPE Comment
+1 FAMS @F17@
+1 FAMC @F27@
+0 @I530@ INDI
+1 NAME Александра /Андросова/
+2 GIVN Александра
+2 SURN Украинская
+2 _MARNM Андросова
+1 SEX F
+1 FAMS @F18@
+0 @I531@ INDI
+1 NAME Леонид Семенович /Андросов/
+2 GIVN Леонид Семенович
+2 SURN Андросов
+1 SEX M
+1 FAMS @F18@
+1 FAMC @F20@
+0 @I532@ INDI
+1 NAME Ольга /Андросова/
+2 GIVN Ольга
+2 SURN Андросова
+1 SEX F
+1 FAMS @F19@
+1 FAMS @F20@
+0 @I533@ INDI
+1 NAME Леонид Валерьевич /Андросов/
+2 GIVN Леонид Валерьевич
+2 SURN Андросов
+1 SEX M
+1 FAMS @F21@
+1 FAMC @F6@
+0 @I534@ INDI
+1 NAME Катя Леонидовна //
+2 GIVN Катя Леонидовна
+2 SURN Андросова
+1 SEX F
+1 FAMC @F21@
+0 @I535@ INDI
+1 NAME Валерий Леонидович /Андросов/
+2 GIVN Валерий Леонидович
+2 SURN Андросов
+1 SEX M
+1 FAMC @F21@
+0 @I536@ INDI
+1 NAME Семен /Андросов/
+2 GIVN Семен
+2 SURN Андросов
+1 SEX M
+1 FAMS @F19@
+0 @I537@ INDI
+1 NAME Олег Константинович /Блинников/
+2 GIVN Олег Константинович
+2 SURN Блинников
+1 SEX M
+1 BIRT
+2 DATE 04 DEC 1943
+2 PLAC Оренбургская Область, г. Оренбург
+1 DEAT
+2 DATE 12 SEP 2024
+1 RESI
+2 ADDR Краснодарский Край, Город Сочи
+1 FAMS @F22@
+1 FAMC @F23@
+0 @I538@ INDI
+1 NAME Земфира/Ирина Васильевна /Блинникова/
+2 GIVN Земфира/Ирина Васильевна
+2 SURN Хатинова
+2 _MARNM Блинникова
+1 SEX F
+1 BIRT
+2 DATE 04 MAY 1939
+1 FAMS @F22@
+0 @I539@ INDI
+1 NAME Анна Васильевна /Блинникова/
+2 GIVN Анна Васильевна
+2 SURN Кудюркина
+2 _MARNM Блинникова
+1 SEX F
+1 BIRT
+2 DATE 13 FEB 1921
+1 DEAT
+2 DATE 02 JUN 1993
+1 FAMS @F23@
+0 @I540@ INDI
+1 NAME Константин Тимофеевич /Блинников/
+2 GIVN Константин Тимофеевич
+2 SURN Блинников
+1 SEX M
+1 BIRT
+2 DATE 11 JUN 1916
+2 PLAC Оренбургская Область, г. Оренбург
+1 DEAT
+2 DATE 02 APR 1998
+1 RESI
+2 ADDR Оренбургская Область, Город Оренбург
+1 EVEN
+2 TYPE Comment
+2 NOTE Воевал в ВОВ/ внутренние войска/ охранял вагоны/ один раз обстреляли вагон и контузили 
+1 FAMS @F23@
+0 @I541@ INDI
+1 NAME Лилия Сергеевна /Андросова/
+2 GIVN Лилия Сергеевна
+2 SURN Шевякова
+2 _MARNM Андросова
+1 SEX F
+1 BIRT
+2 DATE 06 FEB 1997
+1 FAMS @F1@
+0 @I542@ INDI
+1 NAME Оливия Германовна /Андросова/
+2 GIVN Оливия Германовна
+2 SURN Андросова
+1 SEX F
+1 BIRT
+2 DATE 05 APR 2026
+1 FAMC @F1@
+0 @I543@ INDI
+1 NAME Михаил Федотович /Саломин/
+2 GIVN Михаил Федотович
+2 SURN Саломин
+1 SEX M
+1 FAMS @F24@
+1 FAMC @F25@
+0 @I544@ INDI
+1 NAME Анастасия Сергеевна /Саломина/
+2 GIVN Анастасия Сергеевна
+2 SURN Саломина
+1 SEX F
+1 FAMS @F24@
+0 @I545@ INDI
+1 NAME Иоанн (младенец) Михайлович /Саломин/
+2 GIVN Иоанн (младенец) Михайлович
+2 SURN Саломин
+1 SEX M
+1 DEAT
+2 DATE 1912
+1 FAMC @F24@
+0 @I546@ INDI
+1 NAME Александр Михайлович /Саломин/
+2 GIVN Александр Михайлович
+2 SURN Саломин
+1 SEX M
+1 BIRT
+2 DATE 1901
+1 FAMC @F24@
+0 @I547@ INDI
+1 NAME Наталья Михайловна /Саломина/
+2 GIVN Наталья Михайловна
+2 SURN Саломина
+1 SEX F
+1 BIRT
+2 DATE 1903
+1 FAMC @F24@
+0 @I548@ INDI
+1 NAME Виктор Михайлович /Саломин/
+2 GIVN Виктор Михайлович
+2 SURN Саломин
+1 SEX M
+1 BIRT
+2 DATE 1906
+1 FAMC @F24@
+0 @I549@ INDI
+1 NAME Дмитрий Михайлович /Саломин/
+2 GIVN Дмитрий Михайлович
+2 SURN Саломин
+1 SEX M
+1 BIRT
+2 DATE 1907
+1 FAMC @F24@
+0 @I550@ INDI
+1 NAME Федот Герасимович /Саломин/
+2 GIVN Федот Герасимович
+2 SURN Саломин
+1 SEX M
+1 EVEN умер 27.03.1913 от воспаления легких
+2 TYPE Comment
+1 FAMS @F25@
+1 FAMC @F26@
+0 @I551@ INDI
+1 NAME Анна Тимофеевна /Саломина/
+2 GIVN Анна Тимофеевна
+2 SURN Саломина
+1 SEX F
+1 FAMS @F25@
+0 @I552@ INDI
+1 NAME Георгий Федотович /Саломин/
+2 GIVN Георгий Федотович
+2 SURN Саломин
+1 SEX M
+1 EVEN был репрессирован 13.12.1958 реабилитирован
+2 TYPE Comment
+1 EVEN служил на кубани
+2 TYPE Comment
+1 FAMC @F25@
+0 @I553@ INDI
+1 NAME Федот Федотович /Саломин/
+2 GIVN Федот Федотович
+2 SURN Саломин
+1 SEX M
+1 FAMC @F25@
+0 @I554@ INDI
+1 NAME Иван Федотович /Саломин/
+2 GIVN Иван Федотович
+2 SURN Саломин
+1 SEX M
+1 FAMC @F25@
+0 @I555@ INDI
+1 NAME Параскева (Пелагея) Ивановна /Саломина/
+2 GIVN Параскева (Пелагея) Ивановна
+2 SURN Саломина
+1 SEX F
+1 FAMS @F26@
+0 @I556@ INDI
+1 NAME Федот /Саломин/
+2 GIVN Федот
+2 SURN Саломин
+1 SEX M
+1 BIRT
+2 DATE 1812
+1 FAMS @F26@
+0 @I557@ INDI
+1 NAME Михаил /Ромашкин/
+2 GIVN Михаил
+2 SURN Ромашкин
+1 SEX M
+1 FAMS @F27@
+0 @I558@ INDI
+1 NAME Евдокия /Ромашкина/
+2 GIVN Евдокия
+2 SURN Ромашкина
+1 SEX F
+1 FAMS @F27@
+0 @I559@ INDI
+1 NAME Федор /Ромашкин/
+2 GIVN Федор
+2 SURN Ромашкин
+1 SEX M
+1 FAMS @F28@
+1 FAMC @F27@
+0 @I560@ INDI
+1 NAME Константин /Ромашкин/
+2 GIVN Константин
+2 SURN Ромашкин
+1 SEX M
+1 FAMS @F29@
+1 FAMC @F27@
+0 @I561@ INDI
+1 NAME Анатолий Николаевич /Коротеев/
+2 GIVN Анатолий Николаевич
+2 SURN Коротеев
+1 SEX M
+1 FAMC @F17@
+0 @I562@ INDI
+1 NAME Александр Николаевич /Коротеев/
+2 GIVN Александр Николаевич
+2 SURN Коротеев
+1 SEX M
+1 FAMC @F17@
+0 @I563@ INDI
+1 NAME Светлана Николаевна /Коротеева/
+2 GIVN Светлана Николаевна
+2 SURN Коротеева
+1 SEX F
+1 FAMC @F17@
+0 @I564@ INDI
+1 NAME Юрий Николаевич /Коротеев/
+2 GIVN Юрий Николаевич
+2 SURN Коротеев
+1 SEX M
+1 FAMC @F17@
+0 @I565@ INDI
+1 NAME Клара Николаевна /Грис/
+2 GIVN Клара Николаевна
+2 SURN Коротеева
+2 _MARNM Грис
+1 SEX F
+1 FAMS @F30@
+1 FAMC @F17@
+0 @I566@ INDI
+1 NAME Эдуард /Грис/
+2 GIVN Эдуард
+2 SURN Грис
+1 SEX M
+1 RESI
+2 ADDR Краганда
+1 FAMS @F30@
+0 @I567@ INDI
+1 NAME Юрий Эдуардович /Грис/
+2 GIVN Юрий Эдуардович
+2 SURN Грис
+1 SEX M
+1 FAMS @F31@
+1 FAMC @F30@
+0 @I568@ INDI
+1 NAME Андрей Юрьевич /Грис/
+2 GIVN Андрей Юрьевич
+2 SURN Грис
+1 SEX M
+1 FAMS @F32@
+1 FAMC @F31@
+0 @I569@ INDI
+1 NAME Светлана /Грис/
+2 GIVN Светлана
+2 SURN Грис
+1 SEX F
+1 FAMS @F32@
+0 @I570@ INDI
+1 NAME Лев Андреевич /Грис/
+2 GIVN Лев Андреевич
+2 SURN Грис
+1 SEX M
+1 FAMC @F32@
+0 @I571@ INDI
+1 NAME Роман /Чальцев/
+2 GIVN Роман
+2 SURN Чальцев
+1 SEX M
+1 FAMS @F9@
+0 @I572@ INDI
+1 NAME Ксения Романовна /Чальцева/
+2 GIVN Ксения Романовна
+2 SURN Чальцева
+1 SEX F
+1 FAMC @F9@
+0 @I573@ INDI
+1 NAME Егор Романович /Чальцев/
+2 GIVN Егор Романович
+2 SURN Чальцев
+1 SEX M
+1 FAMC @F9@
+0 @I574@ INDI
+1 NAME Мария /Блинникова/
+2 GIVN Мария
+2 SURN Блинникова
+1 SEX F
+1 FAMS @F8@
+0 @I575@ INDI
+1 NAME Илья /Казаченко/
+2 GIVN Илья
+2 SURN Казаченко
+1 SEX M
+1 FAMS @F10@
+0 @I576@ INDI
+1 NAME Юрий Антонович /Хвостов/
+2 GIVN Юрий Антонович
+2 SURN Хвостов
+1 SEX M
+1 FAMC @F12@
+0 @I577@ INDI
+1 NAME Эвелина Никитична /Королева/
+2 GIVN Эвелина Никитична
+2 SURN Королева
+1 SEX F
+1 FAMC @F15@
+0 @I578@ INDI
+1 NAME Ульяна Романовна /Королева/
+2 GIVN Ульяна Романовна
+2 SURN Королева
+1 SEX F
+1 FAMC @F16@
+0 @I579@ INDI
+1 NAME Екатерина /Королева/
+2 GIVN Екатерина
+2 SURN Королева
+1 SEX F
+1 FAMS @F16@
+0 @I580@ INDI
+1 NAME Ирина /Королева/
+2 GIVN Ирина
+2 SURN Королева
+1 SEX F
+1 FAMS @F15@
+0 @I581@ INDI
+1 NAME Анатолий Алексеевич /Щербаков/
+2 GIVN Анатолий Алексеевич
+2 SURN Щербаков
+1 SEX M
+1 EVEN Погиб в шахте в 20 лет в Армии
+2 TYPE Comment
+1 FAMC @F11@
+0 @I582@ INDI
+1 NAME Михаил /Щербаков/
+2 GIVN Михаил
+2 SURN Щербаков
+1 SEX M
+1 FAMS @F33@
+0 @I583@ INDI
+1 NAME Анна /Щербакова/
+2 GIVN Анна
+2 SURN Щербакова
+1 SEX F
+1 FAMS @F33@
+0 @I584@ INDI
+1 NAME Иван /Коротеев/
+2 GIVN Иван
+2 SURN Коротеев
+1 SEX M
+1 FAMS @F34@
+0 @I585@ INDI
+1 NAME ? /Коротеева/
+2 GIVN ?
+2 SURN Коротеева
+1 SEX F
+1 FAMS @F34@
+0 @I586@ INDI
+1 NAME Валерий Константинович /Ромашкин/
+2 GIVN Валерий Константинович
+2 SURN Ромашкин
+1 SEX M
+1 FAMS @F35@
+1 FAMC @F29@
+0 @I587@ INDI
+1 NAME Елена Валерьевна /Италия/
+2 GIVN Елена Валерьевна
+2 SURN Ромашкина
+2 _MARNM Италия
+1 SEX F
+1 FAMS @F36@
+1 FAMC @F35@
+0 @I588@ INDI
+1 NAME Сергей Валериевич /Ромашкин/
+2 GIVN Сергей Валериевич
+2 SURN Ромашкин
+1 SEX M
+1 FAMC @F35@
+0 @I589@ INDI
+1 NAME ? /Италия/
+2 GIVN ?
+2 SURN Италия
+1 SEX F
+1 FAMC @F36@
+0 @I590@ INDI
+1 NAME Владимер Фёдорович /Ромашкин/
+2 GIVN Владимер Фёдорович
+2 SURN Ромашкин
+1 SEX M
+1 FAMS @F37@
+1 FAMC @F28@
+0 @I591@ INDI
+1 NAME Елена /Ромашкина/
+2 GIVN Елена
+2 SURN Ромашкина
+1 SEX F
+1 FAMS @F37@
+0 @I592@ INDI
+1 NAME Саша Владимерович /Ромашкин/
+2 GIVN Саша Владимерович
+2 SURN Ромашкин
+1 SEX M
+1 FAMS @F38@
+1 FAMC @F37@
+0 @I593@ INDI
+1 NAME Света ? /Ромашкина/
+2 GIVN Света ?
+2 SURN Ромашкина
+1 SEX F
+1 EVEN Одесса
+2 TYPE Comment
+1 FAMC @F37@
+0 @I594@ INDI
+1 NAME Елена Александровна /Ромашкина/
+2 GIVN Елена Александровна
+2 SURN Ромашкина
+1 SEX F
+1 FAMS @F39@
+1 FAMC @F38@
+0 @I595@ INDI
+1 NAME ? /Кочубей/
+2 GIVN ?
+2 SURN Кочубей
+1 SEX M
+1 FAMS @F39@
+0 @I596@ INDI
+1 NAME ? /Ромашкина/
+2 GIVN ?
+2 SURN Ромашкина
+1 SEX F
+1 FAMC @F39@
+0 @I597@ INDI
+1 NAME ? /Ромашкина/
+2 GIVN ?
+2 SURN Ромашкина
+1 SEX F
+1 FAMC @F39@
+0 @F1@ FAM
+1 HUSB @I51@
+1 WIFE @I541@
+1 CHIL @I542@
+0 @F2@ FAM
+1 HUSB @I52@
+1 WIFE @I53@
+1 CHIL @I54@
+1 CHIL @I51@
+0 @F3@ FAM
+1 HUSB @I52@
+1 WIFE @I514@
+1 CHIL @I515@
+0 @F4@ FAM
+1 HUSB @I58@
+1 WIFE @I55@
+1 CHIL @I52@
+0 @F5@ FAM
+1 HUSB @I57@
+1 WIFE @I56@
+1 CHIL @I53@
+0 @F6@ FAM
+1 HUSB @I58@
+1 WIFE @I59@
+1 CHIL @I510@
+1 CHIL @I533@
+0 @F7@ FAM
+1 HUSB @I512@
+1 WIFE @I510@
+1 CHIL @I513@
+1 CHIL @I511@
+1 MARR
+0 @F8@ FAM
+1 HUSB @I511@
+1 WIFE @I574@
+0 @F9@ FAM
+1 HUSB @I571@
+1 WIFE @I513@
+1 CHIL @I572@
+1 CHIL @I573@
+0 @F10@ FAM
+1 HUSB @I575@
+1 WIFE @I515@
+1 CHIL @I516@
+0 @F11@ FAM
+1 HUSB @I518@
+1 WIFE @I517@
+1 CHIL @I521@
+1 CHIL @I56@
+1 CHIL @I581@
+0 @F12@ FAM
+1 HUSB @I519@
+1 WIFE @I520@
+1 CHIL @I57@
+1 CHIL @I576@
+0 @F13@ FAM
+1 HUSB @I521@
+1 WIFE @I527@
+1 CHIL @I522@
+1 CHIL @I523@
+0 @F14@ FAM
+1 WIFE @I523@
+1 CHIL @I524@
+1 CHIL @I525@
+0 @F15@ FAM
+1 HUSB @I524@
+1 WIFE @I580@
+1 CHIL @I577@
+0 @F16@ FAM
+1 HUSB @I525@
+1 WIFE @I579@
+1 CHIL @I526@
+1 CHIL @I578@
+0 @F17@ FAM
+1 HUSB @I528@
+1 WIFE @I529@
+1 CHIL @I55@
+1 CHIL @I561@
+1 CHIL @I562@
+1 CHIL @I563@
+1 CHIL @I564@
+1 CHIL @I565@
+0 @F18@ FAM
+1 HUSB @I531@
+1 WIFE @I530@
+1 CHIL @I58@
+0 @F19@ FAM
+1 HUSB @I536@
+1 WIFE @I532@
+1 MARR
+0 @F20@ FAM
+1 WIFE @I532@
+1 CHIL @I531@
+0 @F21@ FAM
+1 HUSB @I533@
+1 CHIL @I534@
+1 CHIL @I535@
+0 @F22@ FAM
+1 HUSB @I537@
+1 WIFE @I538@
+1 CHIL @I512@
+1 MARR
+1 EVEN
+2 TYPE Marriage
+2 DATE 20 MAY 1962
+0 @F23@ FAM
+1 HUSB @I540@
+1 WIFE @I539@
+1 CHIL @I537@
+1 MARR
+0 @F24@ FAM
+1 HUSB @I543@
+1 WIFE @I544@
+1 CHIL @I546@
+1 CHIL @I547@
+1 CHIL @I548@
+1 CHIL @I549@
+1 CHIL @I517@
+1 CHIL @I545@
+0 @F25@ FAM
+1 HUSB @I550@
+1 WIFE @I551@
+1 CHIL @I543@
+1 CHIL @I552@
+1 CHIL @I553@
+1 CHIL @I554@
+0 @F26@ FAM
+1 HUSB @I556@
+1 WIFE @I555@
+1 CHIL @I550@
+0 @F27@ FAM
+1 HUSB @I557@
+1 WIFE @I558@
+1 CHIL @I529@
+1 CHIL @I559@
+1 CHIL @I560@
+0 @F28@ FAM
+1 HUSB @I559@
+1 CHIL @I590@
+0 @F29@ FAM
+1 HUSB @I560@
+1 CHIL @I586@
+0 @F30@ FAM
+1 HUSB @I566@
+1 WIFE @I565@
+1 CHIL @I567@
+0 @F31@ FAM
+1 HUSB @I567@
+1 CHIL @I568@
+0 @F32@ FAM
+1 HUSB @I568@
+1 WIFE @I569@
+1 CHIL @I570@
+0 @F33@ FAM
+1 HUSB @I582@
+1 WIFE @I583@
+1 CHIL @I518@
+0 @F34@ FAM
+1 HUSB @I584@
+1 WIFE @I585@
+1 CHIL @I528@
+0 @F35@ FAM
+1 HUSB @I586@
+1 CHIL @I587@
+1 CHIL @I588@
+0 @F36@ FAM
+1 WIFE @I587@
+1 CHIL @I589@
+0 @F37@ FAM
+1 HUSB @I590@
+1 WIFE @I591@
+1 CHIL @I592@
+1 CHIL @I593@
+0 @F38@ FAM
+1 HUSB @I592@
+1 CHIL @I594@
+0 @F39@ FAM
+1 HUSB @I595@
+1 WIFE @I594@
+1 CHIL @I596@
+1 CHIL @I597@
+0 TRLR

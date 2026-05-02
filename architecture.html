@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Androsov Family Site — Architecture</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #020617; font-family: 'JetBrains Mono', monospace; color: #e2e8f0; min-height: 100vh; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+    .header { text-align: center; margin-bottom: 40px; }
+    .header h1 { font-size: 28px; font-weight: 700; color: #f1f5f9; margin-bottom: 8px; }
+    .header .status { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; color: #94a3b8; }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #10b981; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.5} }
+    .diagram-container { background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 30px; margin-bottom: 30px; position: relative; overflow: hidden; }
+    .diagram-container::before { content:''; position:absolute; inset:0; background-image: linear-gradient(#1e293b 1px,transparent 1px),linear-gradient(90deg,#1e293b 1px,transparent 1px); background-size:40px 40px; opacity:.3; }
+    svg { width: 100%; height: auto; display: block; position: relative; z-index: 1; }
+    .cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 30px; }
+    .card { background: #0f172a; border: 1px solid #1e293b; border-radius: 8px; padding: 20px; }
+    .card-label { font-size: 10px; color: #64748b; text-transform: uppercase; letter-spacing: .1em; margin-bottom: 8px; }
+    .card-value { font-size: 18px; font-weight: 600; color: #f1f5f9; }
+    .footer { text-align: center; font-size: 11px; color: #475569; }
+    .comp { filter: drop-shadow(0 4px 6px rgba(0,0,0,.5)); }
+    .comp-label { font-size: 13px; font-weight: 600; fill: #f1f5f9; font-family: 'JetBrains Mono', monospace; }
+    .comp-sublabel { font-size: 10px; fill: #94a3b8; font-family: 'JetBrains Mono', monospace; }
+    .arrow { stroke: #334155; stroke-width: 1.5; fill: none; marker-end: url(#arrowhead); }
+    .arrow-dashed { stroke: #334155; stroke-width: 1.5; fill: none; stroke-dasharray: 5,3; marker-end: url(#arrowhead); }
+    .arrow-label { font-size: 10px; fill: #64748b; font-family: 'JetBrains Mono', monospace; }
+    .section-label { font-size: 11px; fill: #475569; font-family: 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>Androsov Family Site — Architecture</h1>
+    <div class="status"><span class="status-dot"></span>v1 · май 2026 · 97 персон · 8 поколений</div>
+  </div>
+  <div class="diagram-container">
+    <svg viewBox="0 0 1100 680" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+          <polygon points="0 0, 10 3.5, 0 7" fill="#475569"/>
+        </marker>
+      </defs>
+
+      <!-- Section labels -->
+      <text x="30" y="28" class="section-label">User</text>
+      <text x="210" y="28" class="section-label">Frontend · index.html</text>
+      <text x="680" y="28" class="section-label">Data</text>
+      <text x="890" y="28" class="section-label">Future / External</text>
+
+      <!-- Section dividers -->
+      <line x1="190" y1="15" x2="190" y2="665" stroke="#1e293b" stroke-width="1" stroke-dasharray="4,4"/>
+      <line x1="660" y1="15" x2="660" y2="665" stroke="#1e293b" stroke-width="1" stroke-dasharray="4,4"/>
+      <line x1="870" y1="15" x2="870" y2="665" stroke="#1e293b" stroke-width="1" stroke-dasharray="4,4"/>
+
+      <!-- ── ARROWS first (behind components) ── -->
+
+      <!-- User → Browser -->
+      <line class="arrow" x1="95" y1="75" x2="215" y2="75"/>
+
+      <!-- Browser → index.html -->
+      <line class="arrow" x1="295" y1="75" x2="390" y2="75"/>
+      <text class="arrow-label" x="343" y="69" text-anchor="middle">loads</text>
+
+      <!-- index.html → Nav -->
+      <line class="arrow" x1="470" y1="105" x2="470" y2="148"/>
+
+      <!-- index.html → Animated BG -->
+      <path class="arrow" d="M 390 88 C 310 130 310 180 390 195"/>
+
+      <!-- Nav → Views -->
+      <line class="arrow" x1="440" y1="198" x2="390" y2="248"/>
+      <line class="arrow" x1="470" y1="198" x2="470" y2="248"/>
+      <line class="arrow" x1="500" y1="198" x2="540" y2="248"/>
+      <line class="arrow" x1="510" y1="198" x2="570" y2="248"/>
+
+      <!-- Tree view → buildNodes -->
+      <line class="arrow" x1="550" y1="398" x2="700" y2="308"/>
+      <text class="arrow-label" x="620" y="345" text-anchor="middle">calls</text>
+
+      <!-- buildNodes → PP Array -->
+      <line class="arrow" x1="760" y1="298" x2="760" y2="398"/>
+
+      <!-- PP Array → family.ged (manual) -->
+      <line class="arrow-dashed" x1="760" y1="468" x2="760" y2="538"/>
+      <text class="arrow-label" x="774" y="510" text-anchor="start">manual</text>
+      <text class="arrow-label" x="774" y="522" text-anchor="start">sync</text>
+
+      <!-- PP → Search view -->
+      <line class="arrow" x1="700" y1="430" x2="610" y2="398"/>
+
+      <!-- family.ged → ged2site (future) -->
+      <line class="arrow-dashed" x1="820" y1="568" x2="900" y2="568"/>
+      <text class="arrow-label" x="855" y="562" text-anchor="middle">Phase 3</text>
+
+      <!-- ged2site → GitHub Pages -->
+      <line class="arrow-dashed" x1="970" y1="548" x2="970" y2="468"/>
+
+      <!-- Research Skill → Archives -->
+      <line class="arrow-dashed" x1="970" y1="408" x2="970" y2="348"/>
+      <text class="arrow-label" x="984" y="382" text-anchor="start">Phase 4</text>
+
+      <!-- GitHub Pages → Browser (deploy loop) -->
+      <path class="arrow-dashed" d="M 930 438 C 850 430 820 200 730 130 C 680 100 450 90 295 78"/>
+      <text class="arrow-label" x="720" y="124" text-anchor="middle">deployed</text>
+
+
+      <!-- ── COMPONENTS ── -->
+
+      <!-- User -->
+      <g class="comp" transform="translate(20,55)">
+        <rect width="130" height="60" fill="#0f172a" stroke="#475569" rx="8"/>
+        <text x="65" y="27" text-anchor="middle" class="comp-label">Пользователь</text>
+        <text x="65" y="43" text-anchor="middle" class="comp-sublabel">Browser</text>
+      </g>
+
+      <!-- Browser / index.html -->
+      <g class="comp" transform="translate(210,55)">
+        <rect width="160" height="60" fill="#0e4654" stroke="#06b6d4" rx="8"/>
+        <text x="80" y="27" text-anchor="middle" class="comp-label">index.html</text>
+        <text x="80" y="43" text-anchor="middle" class="comp-sublabel">Single-file app</text>
+      </g>
+
+      <!-- Animated BG -->
+      <g class="comp" transform="translate(210,175)">
+        <rect width="160" height="60" fill="#0e4654" stroke="#06b6d4" rx="8"/>
+        <text x="80" y="27" text-anchor="middle" class="comp-label">Animated BG</text>
+        <text x="80" y="43" text-anchor="middle" class="comp-sublabel">#bgc canvas · orbs</text>
+      </g>
+
+      <!-- Nav -->
+      <g class="comp" transform="translate(390,148)">
+        <rect width="160" height="50" fill="#0e4654" stroke="#06b6d4" rx="8"/>
+        <text x="80" y="24" text-anchor="middle" class="comp-label">Nav · 4 tabs</text>
+        <text x="80" y="38" text-anchor="middle" class="comp-sublabel">Главная/Древо/Фам./Поиск</text>
+      </g>
+
+      <!-- View: Главная -->
+      <g class="comp" transform="translate(210,248)">
+        <rect width="150" height="55" fill="#052e16" stroke="#10b981" rx="8"/>
+        <text x="75" y="24" text-anchor="middle" class="comp-label">Главная</text>
+        <text x="75" y="38" text-anchor="middle" class="comp-sublabel">Hero + 5 cards + CTAs</text>
+      </g>
+
+      <!-- View: Древо -->
+      <g class="comp" transform="translate(390,248)">
+        <rect width="165" height="150" fill="#052e16" stroke="#10b981" rx="8"/>
+        <text x="82" y="24" text-anchor="middle" class="comp-label">Древо (canvas)</text>
+        <text x="82" y="40" text-anchor="middle" class="comp-sublabel">#tc · drag/zoom/pan</text>
+        <text x="82" y="56" text-anchor="middle" class="comp-sublabel">97 nodes, reveal anim</text>
+        <text x="82" y="74" text-anchor="middle" class="comp-sublabel">Filter: Все / Прямые</text>
+        <text x="82" y="92" text-anchor="middle" class="comp-sublabel">Modal on click</text>
+        <rect x="10" y="105" width="145" height="30" fill="#0a3a1a" stroke="#10b981" rx="5" opacity=".6"/>
+        <text x="82" y="124" text-anchor="middle" class="comp-sublabel" fill="#6ee7b7">Phase 2: SunTree SVG</text>
+      </g>
+
+      <!-- View: Фамилии -->
+      <g class="comp" transform="translate(575,248)">
+        <rect width="155" height="55" fill="#052e16" stroke="#10b981" rx="8"/>
+        <text x="77" y="24" text-anchor="middle" class="comp-label">Фамилии</text>
+        <text x="77" y="38" text-anchor="middle" class="comp-sublabel">12 surname cards</text>
+      </g>
+
+      <!-- View: Поиск -->
+      <g class="comp" transform="translate(575,330)">
+        <rect width="155" height="55" fill="#052e16" stroke="#10b981" rx="8"/>
+        <text x="77" y="24" text-anchor="middle" class="comp-label">Поиск</text>
+        <text x="77" y="38" text-anchor="middle" class="comp-sublabel">Live filter · PP array</text>
+      </g>
+
+      <!-- buildNodes() -->
+      <g class="comp" transform="translate(680,268)">
+        <rect width="165" height="60" fill="#052e16" stroke="#10b981" rx="8"/>
+        <text x="82" y="27" text-anchor="middle" class="comp-label">buildNodes()</text>
+        <text x="82" y="43" text-anchor="middle" class="comp-sublabel">groups by gn, XY layout</text>
+      </g>
+
+      <!-- PP Array -->
+      <g class="comp" transform="translate(680,398)">
+        <rect width="165" height="70" fill="#2e1065" stroke="#8b5cf6" rx="8"/>
+        <text x="82" y="24" text-anchor="middle" class="comp-label">PP Array</text>
+        <text x="82" y="40" text-anchor="middle" class="comp-sublabel">97 объектов · JS</text>
+        <text x="82" y="55" text-anchor="middle" class="comp-sublabel">id,n,r,s,gn,dr,b,d,pl,st</text>
+      </g>
+
+      <!-- family.ged -->
+      <g class="comp" transform="translate(680,538)">
+        <rect width="165" height="60" fill="#2e1065" stroke="#8b5cf6" rx="8"/>
+        <text x="82" y="27" text-anchor="middle" class="comp-label">family.ged</text>
+        <text x="82" y="43" text-anchor="middle" class="comp-sublabel">GEDCOM · 97 персон</text>
+      </g>
+
+      <!-- GitHub Pages -->
+      <g class="comp" transform="translate(885,428)">
+        <rect width="165" height="60" fill="#431407" stroke="#f59e0b" rx="8"/>
+        <text x="82" y="27" text-anchor="middle" class="comp-label">GitHub Pages</text>
+        <text x="82" y="43" text-anchor="middle" class="comp-sublabel">Static hosting · CDN</text>
+      </g>
+
+      <!-- ged2site (Phase 3) -->
+      <g class="comp" transform="translate(885,538)">
+        <rect width="165" height="60" fill="#431407" stroke="#f59e0b" rx="8" opacity=".7"/>
+        <text x="82" y="27" text-anchor="middle" class="comp-label" opacity=".7">ged2site</text>
+        <text x="82" y="43" text-anchor="middle" class="comp-sublabel" opacity=".7">Perl · Phase 3</text>
+      </g>
+
+      <!-- Research / Archives -->
+      <g class="comp" transform="translate(885,308)">
+        <rect width="165" height="60" fill="#431407" stroke="#f59e0b" rx="8" opacity=".7"/>
+        <text x="82" y="27" text-anchor="middle" class="comp-label" opacity=".7">Архивы / ФСБ</text>
+        <text x="82" y="43" text-anchor="middle" class="comp-sublabel" opacity=".7">FamilySearch · Phase 4</text>
+      </g>
+
+      <!-- Research Skill badge -->
+      <g class="comp" transform="translate(885,608)">
+        <rect width="165" height="50" fill="#1e293b" stroke="#475569" rx="8"/>
+        <text x="82" y="22" text-anchor="middle" class="comp-sublabel" fill="#94a3b8">Claude Skill:</text>
+        <text x="82" y="38" text-anchor="middle" class="comp-sublabel" fill="#94a3b8">family-history-research</text>
+      </g>
+
+    </svg>
+  </div>
+  <div class="cards">
+    <div class="card">
+      <div class="card-label">Архитектура</div>
+      <div class="card-value">Single HTML File</div>
+    </div>
+    <div class="card">
+      <div class="card-label">База данных</div>
+      <div class="card-value">97 персон · GEDCOM</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Стек</div>
+      <div class="card-value">Vanilla JS + Canvas</div>
+    </div>
+  </div>
+  <p class="footer">Сгенерировано через Claude Architecture Diagram Skill · Андросовы 1812–2026 · для Оливии Германовны</p>
+</div>
+</body>
+</html>
