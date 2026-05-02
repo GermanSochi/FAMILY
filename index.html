@@ -655,6 +655,24 @@ Object.entries(LINKS).forEach(([c,{fa,mo}])=>{
   }
 });
 
+// Двунаправленный граф для BFS-дистанции родства
+const GRAPH={};
+Object.entries(LINKS).forEach(([c,{fa,mo}])=>{
+  [fa,mo].filter(Boolean).forEach(p=>{
+    (GRAPH[c]||(GRAPH[c]=[])).push(p);
+    (GRAPH[p]||(GRAPH[p]=[])).push(c);
+  });
+});
+Object.entries(SPOUSES).forEach(([a,bs])=>bs.forEach(b=>{
+  if(!(GRAPH[a]||[]).includes(b))(GRAPH[a]||(GRAPH[a]=[])).push(b);
+  if(!(GRAPH[b]||[]).includes(a))(GRAPH[b]||(GRAPH[b]=[])).push(a);
+}));
+function kdistMap(fromId){
+  const d={[fromId]:0},q=[fromId];
+  while(q.length){const c=q.shift();(GRAPH[c]||[]).forEach(nb=>{if(!(nb in d)){d[nb]=d[c]+1;q.push(nb);}});}
+  return d;
+}
+
 function ancMap(id){
   const m={},q=[{id,g:0}];
   while(q.length){const {id:c,g}=q.shift();if(g>8)continue;
@@ -790,12 +808,14 @@ function buildNodes(){
   nodes=[];
   const fAnc=selfId?ancMap(selfId):null;
   const fDesc=selfId?descMap(selfId):null;
+  const kd=selfId?kdistMap(selfId):{};
   gks.forEach((g,gi)=>{
     const ids=bg[g];const rw=ids.length*(NW+HG)-HG;
     const y=gi*(NH+VG)+40;
     ids.forEach((p,i)=>{
       const dynR=p.me?"Я ★":(selfId?getRel(selfId,p.id,fAnc,fDesc)||p.r:p.r);
-      nodes.push({...p,x:-rw/2+i*(NW+HG),y,w:NW,h:NH,gi,revealDelay:Math.min(0.7,gi*.08+i*.02),r:dynR});
+      const kdist=p.me?0:(kd[p.id]??99);
+      nodes.push({...p,x:-rw/2+i*(NW+HG),y,w:NW,h:NH,gi,revealDelay:Math.min(0.7,gi*.08+i*.02),r:dynR,kdist});
     });
   });
   const xs=nodes.map(n=>n.x),ys=nodes.map(n=>n.y);
@@ -814,9 +834,24 @@ function setTF(f){
 function resize2(){TW=cv2.width=window.innerWidth;TH=cv2.height=window.innerHeight-58;}
 
 function nc(n){
-  if(n.me) return{f:"rgba(212,168,67,.22)",s:"rgba(212,168,67,.95)",g:"rgba(212,168,67,.5)"};
-  if(n.s==="M") return{f:"rgba(20,50,115,.6)",s:"rgba(59,107,202,.92)",g:"rgba(59,107,202,.4)"};
-  return{f:"rgba(95,28,65,.6)",s:"rgba(196,90,138,.92)",g:"rgba(196,90,138,.4)"};
+  const kd=n.kdist??99,M=n.s==="M";
+  if(n.me)return{f:"rgba(38,28,4,.95)",s:"rgba(212,175,55,1)",g:"rgba(212,175,55,.65)"};
+  // Уровень 1: родители/дети/сиблинги/супруг — молочно-белый
+  if(kd<=2)return M
+    ?{f:"rgba(14,20,48,.88)",s:"rgba(198,215,248,.88)",g:"rgba(198,215,248,.18)"}
+    :{f:"rgba(36,10,26,.88)",s:"rgba(248,208,224,.88)",g:"rgba(248,208,224,.18)"};
+  // Уровень 2: дедушки/бабушки/дяди/тёти — голубовато-белый
+  if(kd<=4)return M
+    ?{f:"rgba(12,17,38,.72)",s:"rgba(138,168,212,.72)",g:"rgba(138,168,212,.07)"}
+    :{f:"rgba(30,8,22,.72)",s:"rgba(212,152,182,.72)",g:"rgba(212,152,182,.07)"};
+  // Уровень 3: двоюродные/троюродные — дымчатый
+  if(kd<=7)return M
+    ?{f:"rgba(10,13,26,.55)",s:"rgba(92,118,158,.55)",g:"rgba(0,0,0,0)"}
+    :{f:"rgba(22,7,16,.55)",s:"rgba(158,106,132,.55)",g:"rgba(0,0,0,0)"};
+  // Уровень 4: очень дальние — минимальный
+  return M
+    ?{f:"rgba(8,10,20,.38)",s:"rgba(64,82,110,.4)",g:"rgba(0,0,0,0)"}
+    :{f:"rgba(18,6,13,.38)",s:"rgba(112,72,94,.4)",g:"rgba(0,0,0,0)"};
 }
 
 function rr(ctx,x,y,w,h,r){
@@ -844,7 +879,7 @@ function drawFrame(){
   for(let x=bounds.x0-20;x<bounds.x1+20;x+=gs){cx2.beginPath();cx2.moveTo(x,bounds.y0);cx2.lineTo(x,bounds.y1);cx2.stroke()}
   for(let y=bounds.y0;y<bounds.y1+20;y+=gs){cx2.beginPath();cx2.moveTo(bounds.x0-20,y);cx2.lineTo(bounds.x1+20,y);cx2.stroke()}
 
-  // Connection lines — real parent-child from LINKS (GEDCOM-derived)
+  // Connection lines — цвет и толщина по kdist
   const nodeById={};
   nodes.forEach(n=>nodeById[n.id]=n);
   nodes.forEach(child=>{
@@ -856,89 +891,117 @@ function drawFrame(){
     [link.fa,link.mo].filter(Boolean).forEach(pid=>{
       const par=nodeById[pid];
       if(!par) return;
+      const lv=Math.min(child.kdist??99,par.kdist??99);
       const px_=par.x+NW/2,py_=par.y+NH;
-      const mid=(py_+cy_)/2+10*Math.sin(aT*1.2+child.x*.005);
+      const mid=(py_+cy_)/2+8*Math.sin(aT*1.2+child.x*.005);
       cx2.save();
-      cx2.globalAlpha=prog*.75;
-      cx2.shadowColor="rgba(212,168,67,.55)";cx2.shadowBlur=8;
-      const lg=cx2.createLinearGradient(px_,py_,cx_,cy_);
-      lg.addColorStop(0,"rgba(212,168,67,.45)");
-      lg.addColorStop(.5,"rgba(212,168,67,.85)");
-      lg.addColorStop(1,"rgba(212,168,67,.45)");
-      cx2.strokeStyle=lg;cx2.lineWidth=1.6;
+      cx2.setLineDash([]);
+      if(lv<=2){
+        cx2.globalAlpha=prog*.82;
+        cx2.shadowColor="rgba(210,220,248,.2)";cx2.shadowBlur=6;
+        const lg=cx2.createLinearGradient(px_,py_,cx_,cy_);
+        lg.addColorStop(0,"rgba(198,215,248,.35)");
+        lg.addColorStop(.5,"rgba(220,228,250,.9)");
+        lg.addColorStop(1,"rgba(198,215,248,.35)");
+        cx2.strokeStyle=lg;cx2.lineWidth=1.8;
+      } else if(lv<=4){
+        cx2.globalAlpha=prog*.52;
+        cx2.shadowBlur=0;
+        const lg=cx2.createLinearGradient(px_,py_,cx_,cy_);
+        lg.addColorStop(0,"rgba(138,168,212,.28)");
+        lg.addColorStop(.5,"rgba(155,185,228,.68)");
+        lg.addColorStop(1,"rgba(138,168,212,.28)");
+        cx2.strokeStyle=lg;cx2.lineWidth=1.1;
+      } else if(lv<=7){
+        cx2.globalAlpha=prog*.3;
+        cx2.shadowBlur=0;
+        cx2.strokeStyle="rgba(92,118,158,.55)";
+        cx2.lineWidth=0.6;
+        cx2.setLineDash([4,4]);
+      } else {
+        cx2.globalAlpha=prog*.15;
+        cx2.shadowBlur=0;
+        cx2.strokeStyle="rgba(64,82,110,.4)";
+        cx2.lineWidth=0.5;
+        cx2.setLineDash([3,6]);
+      }
       cx2.beginPath();cx2.moveTo(px_,py_);cx2.bezierCurveTo(px_,mid,cx_,mid,cx_,cy_);cx2.stroke();
+      cx2.setLineDash([]);
       cx2.restore();
     });
   });
 
   // Draw nodes
-  const _sGn=selfId?(PP.find(p=>p.id===selfId)?.gn??0):0;
   nodes.forEach(n=>{
     const prog=Math.max(0,Math.min(1,(nodeRevealProgress-n.revealDelay*.8)*4));
     if(prog<=0) return;
     const isH=n.id===hov;
     const c=nc(n);
     const {x,y,w,h}=n;
+    const kd=n.kdist??99;
     const pulse=n.me?(.05*Math.sin(aT*2)):0;
-    const sc=1+(.06*(prog<1?prog:0));// pop-in scale
+    const sc=1+(.06*(prog<1?prog:0));
+
+    // Opacity по дистанции родства
+    const kAlpha=n.me?1:kd<=2?1:kd<=4?.88:kd<=7?.72:.52;
 
     cx2.save();
-    // Pop-in transform
-    if(prog<1){
-      cx2.translate(x+w/2,y+h/2);cx2.scale(prog*sc,prog*sc);cx2.translate(-(x+w/2),-(y+h/2));
-    }
-    cx2.globalAlpha=prog*(n.me?1:Math.max(.5,1-Math.abs(n.gn-_sGn)/14));
+    if(prog<1){cx2.translate(x+w/2,y+h/2);cx2.scale(prog*sc,prog*sc);cx2.translate(-(x+w/2),-(y+h/2));}
+    cx2.globalAlpha=prog*kAlpha;
 
-    // Glow
-    if(isH||n.me){
-      cx2.shadowColor=c.g;cx2.shadowBlur=isH?26:18+pulse*8;
-    }
+    // Glow — только для близких и hover
+    if(isH){cx2.shadowColor=c.g;cx2.shadowBlur=22;}
+    else if(n.me){cx2.shadowColor=c.g;cx2.shadowBlur=18+pulse*8;}
+    else if(kd<=2){cx2.shadowColor=c.g;cx2.shadowBlur=8;}
 
     // Card fill
     rr(cx2,x,y,w,h,9);cx2.fillStyle=c.f;cx2.fill();
 
     // Inner glass shine
     const hg2=cx2.createLinearGradient(x,y,x,y+h*.35);
-    hg2.addColorStop(0,"rgba(255,255,255,.08)");hg2.addColorStop(1,"rgba(255,255,255,0)");
+    hg2.addColorStop(0,"rgba(255,255,255,.07)");hg2.addColorStop(1,"rgba(255,255,255,0)");
     rr(cx2,x+1,y+1,w-2,h*.4,9);cx2.fillStyle=hg2;cx2.fill();
 
-    // Border
+    // Border — толщина по близости
     rr(cx2,x,y,w,h,9);
-    cx2.strokeStyle=c.s;cx2.lineWidth=n.me?(1.6+pulse):isH?1.8:1;cx2.stroke();
+    cx2.strokeStyle=c.s;
+    cx2.lineWidth=n.me?(1.6+pulse):isH?1.8:kd<=2?1.3:kd<=4?1:0.75;
+    cx2.stroke();
 
-    // Top highlight line
-    cx2.strokeStyle=isH?"rgba(255,255,255,.18)":"rgba(255,255,255,.08)";
-    cx2.lineWidth=.8;
+    // Top highlight
+    cx2.strokeStyle=isH?"rgba(255,255,255,.14)":"rgba(255,255,255,.06)";
+    cx2.lineWidth=.7;
     cx2.beginPath();cx2.moveTo(x+9,y+.6);cx2.lineTo(x+w-9,y+.6);cx2.stroke();
 
-    // Text — 4 lines: surname / first name / role / dates
+    // Text — цвет по уровню
     const parts=n.n.split(" ");
     const sn=parts[0]||"";
     let fn=(parts[1]||"");if(parts[2])fn+=` ${parts[2].charAt(0)}.`;
-
     cx2.shadowColor="transparent";cx2.shadowBlur=0;
     cx2.textAlign="center";cx2.textBaseline="middle";
 
-    // Line 1: Surname
-    cx2.fillStyle=n.me?"rgba(240,200,90,.98)":"rgba(230,234,245,.92)";
+    // Surname
+    const snCol=n.me?"rgba(240,200,90,.98)":kd<=2?"rgba(232,228,222,.95)":kd<=4?"rgba(185,205,235,.88)":kd<=7?"rgba(138,158,188,.78)":"rgba(98,115,145,.65)";
+    cx2.fillStyle=snCol;
     cx2.font=`600 ${Math.min(10,66/Math.max(sn.length,1))}px "DM Sans",sans-serif`;
     cx2.fillText(sn.substring(0,13),x+w/2,y+h*.18);
 
-    // Line 2: First name
-    cx2.fillStyle="rgba(190,200,230,.72)";
+    // First name
+    const fnCol=n.me?"rgba(225,195,85,.82)":kd<=2?"rgba(210,206,200,.72)":kd<=4?"rgba(158,178,210,.65)":"rgba(110,132,162,.55)";
+    cx2.fillStyle=fnCol;
     cx2.font=`400 9px "DM Sans",sans-serif`;
     cx2.fillText(fn.substring(0,15),x+w/2,y+h*.37);
 
-    // Line 3: Role (родство) — gold tint
+    // Role
     if(n.r){
-      cx2.fillStyle=n.me?"rgba(240,200,90,.88)":"rgba(200,170,90,.75)";
+      cx2.fillStyle=n.me?"rgba(240,200,90,.88)":kd<=2?"rgba(195,175,95,.82)":"rgba(165,148,80,.65)";
       cx2.font=`500 8px "DM Sans",sans-serif`;
       cx2.fillText(n.r.substring(0,14),x+w/2,y+h*.57);
     }
 
-    // Line 4: Dates
+    // Dates
     if(n.b||n.d){
-      cx2.fillStyle="rgba(140,150,180,.48)";
+      cx2.fillStyle=kd<=2?"rgba(165,170,195,.52)":"rgba(120,135,162,.4)";
       cx2.font=`400 7.5px "DM Sans",sans-serif`;
       const ds=(n.b?n.b.slice(-4):"?")+(n.d?" — "+n.d.slice(-4):"");
       cx2.fillText(ds.substring(0,14),x+w/2,y+h*.77);
