@@ -680,6 +680,10 @@ const PHOTOS={
   "i517":"assets/photo_I517_olga_solomina.jpg",
   "i56":"assets/photo_group_taya_family.jpg",
 };
+const imgCache={};
+Object.entries(PHOTOS).forEach(([id,src])=>{
+  const img=new Image();img.src=src;imgCache[id]=img;
+});
 
 // Derived maps from LINKS
 const CHILDREN={},SPOUSES={};
@@ -1066,31 +1070,51 @@ function drawFrame(){
     cx2.lineWidth=.7;
     cx2.beginPath();cx2.moveTo(x+9,y+.6);cx2.lineTo(x+w-9,y+.6);cx2.stroke();
 
+    // Photo (left side, circle)
+    const cimg=imgCache[n.id];
+    const hasImg=cimg&&cimg.complete&&cimg.naturalWidth>0;
+    const pr=13,phX=x+pr+3,phY=y+h/2;
+    if(hasImg){
+      cx2.save();
+      cx2.beginPath();cx2.arc(phX,phY,pr+1.5,0,Math.PI*2);
+      cx2.fillStyle="rgba(0,0,0,.98)";cx2.fill();
+      cx2.beginPath();cx2.arc(phX,phY,pr,0,Math.PI*2);cx2.clip();
+      cx2.globalCompositeOperation="screen";
+      cx2.drawImage(cimg,phX-pr,phY-pr,pr*2,pr*2);
+      cx2.globalCompositeOperation="source-over";
+      cx2.restore();
+      cx2.beginPath();cx2.arc(phX,phY,pr+1,0,Math.PI*2);
+      cx2.strokeStyle=n.me?"rgba(212,175,55,.9)":"rgba(255,255,255,.65)";
+      cx2.lineWidth=1.3;cx2.stroke();
+    }
+
     // Text
     const parts=n.n.split(" ");
     const sn=parts[0]||"";
     let fn=(parts[1]||"");if(parts[2])fn+=` ${parts[2].charAt(0)}.`;
-    cx2.textAlign="center";cx2.textBaseline="middle";
+    const tX=hasImg?x+pr*2+8:x+w/2;
+    const tW=hasImg?w-pr*2-10:w;
+    cx2.textAlign=hasImg?"left":"center";cx2.textBaseline="middle";
 
     cx2.fillStyle=S.t1;
-    cx2.font=`600 ${Math.min(10,66/Math.max(sn.length,1))}px "DM Sans",sans-serif`;
-    cx2.fillText(sn.substring(0,13),x+w/2,y+h*.18);
+    cx2.font=`600 ${Math.min(10,54/Math.max(sn.length,1))}px "DM Sans",sans-serif`;
+    cx2.fillText(sn,tX,y+h*.2,tW);
 
     cx2.fillStyle=S.t2;
-    cx2.font=`400 9px "DM Sans",sans-serif`;
-    cx2.fillText(fn.substring(0,15),x+w/2,y+h*.37);
+    cx2.font=`400 8.5px "DM Sans",sans-serif`;
+    cx2.fillText(fn,tX,y+h*.38,tW);
 
     if(n.r){
       cx2.fillStyle=S.t3;
       cx2.font=`500 8px "DM Sans",sans-serif`;
-      cx2.fillText(n.r.substring(0,14),x+w/2,y+h*.57);
+      cx2.fillText(n.r,tX,y+h*.58,tW);
     }
 
     if(n.b||n.d){
       cx2.fillStyle=S.t4;
       cx2.font=`400 7.5px "DM Sans",sans-serif`;
       const ds=(n.b?n.b.slice(-4):"?")+(n.d?" — "+n.d.slice(-4):"");
-      cx2.fillText(ds.substring(0,14),x+w/2,y+h*.77);
+      cx2.fillText(ds,tX,y+h*.78,tW);
     }
 
     if(n.me){
