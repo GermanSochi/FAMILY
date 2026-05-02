@@ -839,7 +839,7 @@ function drawFrame(){
     if(prog<1){
       cx2.translate(x+w/2,y+h/2);cx2.scale(prog*sc,prog*sc);cx2.translate(-(x+w/2),-(y+h/2));
     }
-    cx2.globalAlpha=prog;
+    cx2.globalAlpha=prog*(n.me||n.dr?1:.87);
 
     // Glow
     if(isH||n.me){
