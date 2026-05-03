@@ -49,10 +49,30 @@ nav{
 .tab.on{color:var(--gold);background:rgba(212,168,67,.12);border:1px solid rgba(212,168,67,.22)}
 .nav-r{display:flex;gap:16px;font-size:12px;color:var(--ts);letter-spacing:.4px}
 .nv{font-family:"Cormorant Garamond",serif;font-size:18px;color:var(--gold2);font-weight:600;margin-right:3px}
-@media(max-width:640px){.nav-r{display:none}.tab{padding:6px 10px;font-size:12px}}
-@media(max-width:480px){.brand{font-size:15px;letter-spacing:0}.tab{padding:5px 8px;font-size:11px}}
-@media(max-width:420px){.tabs .tab:nth-child(n+4){display:none}}
-@media(max-width:360px){.brand{font-size:0}.brand::before{content:"✦";font-size:18px}}
+@media(max-width:640px){.nav-r{display:none}}
+@media(max-width:640px){
+  .tabs{
+    position:fixed;bottom:0;left:0;right:0;z-index:200;
+    display:flex;flex-wrap:nowrap;justify-content:space-around;align-items:center;
+    background:rgba(3,7,15,.92);
+    -webkit-backdrop-filter:blur(24px) saturate(1.4);
+    backdrop-filter:blur(24px) saturate(1.4);
+    border-top:1px solid rgba(255,255,255,.08);
+    padding:6px max(8px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom));
+    gap:0;
+  }
+  .tab{
+    flex:1;padding:8px 4px 4px;font-size:10px;letter-spacing:.3px;
+    border-radius:10px;display:flex;flex-direction:column;align-items:center;gap:3px;
+    border:none !important;
+  }
+  .tab::before{font-size:16px;line-height:1}
+  .tab:nth-child(1)::before{content:"🏠"}
+  .tab:nth-child(2)::before{content:"🌳"}
+  .tab:nth-child(3)::before{content:"📜"}
+  .tab:nth-child(4)::before{content:"🔍"}
+  main{bottom:calc(56px + env(safe-area-inset-bottom,0px))}
+}
 /* ── VIEWS ── */
 main{position:fixed;inset:0;top:58px;z-index:10}
 .view{position:absolute;inset:0;display:none;overflow:hidden}
