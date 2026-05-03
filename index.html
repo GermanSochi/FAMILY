@@ -374,19 +374,23 @@ main{position:fixed;inset:0;top:58px;z-index:10}
 .pdev{margin-top:16px;font-size:11px;color:rgba(240,237,232,.25);letter-spacing:.3px}
 .psgrid{max-width:600px;margin:0 auto}
 .pfooter{text-align:center;color:rgba(240,237,232,.18);font-size:11px;letter-spacing:1px;margin-top:28px;padding-bottom:20px}
+.brand-wrap{display:flex;align-items:center;gap:8px}
+.prof-ico{font-size:18px;padding:4px 6px;background:none;border:none;cursor:pointer;line-height:1}
 </style>
 </head>
 <body>
 <canvas id="bgc"></canvas>
 <nav>
   <div class="nav-inner">
-    <div class="brand">✦ Родословная</div>
+    <div class="brand-wrap">
+      <div class="brand">✦ Родословная</div>
+      <button type="button" class="prof-ico" id="tabP" onclick="show('p',this)">👤</button>
+    </div>
     <div class="tabs">
       <button class="tab on" onclick="show('h',this)">Главная</button>
       <button class="tab" onclick="show('t',this)">Древо</button>
       <button class="tab" onclick="show('n',this)">Фамилии</button>
       <button class="tab" onclick="show('s',this)">Поиск</button>
-      <button class="tab" id="tabP" onclick="show('p',this)">Профиль</button>
     </div>
     <div class="nav-r">
       <span><span class="nv">97</span>персон</span>
